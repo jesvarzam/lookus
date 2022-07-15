@@ -19,3 +19,9 @@ def add(request):
     else:
         form = DetectionForm()
     return render(request, 'add.html', {'form': form})
+
+
+def list_devices(request):
+
+    devices = Device.objects.filter(user=User.objects.get(id=request.user.id))
+    return render(request, 'list.html', {'devices': devices})

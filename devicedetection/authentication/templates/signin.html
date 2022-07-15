@@ -2,13 +2,13 @@
 <html>
     <head>
         <title>LookUS</title>
+        <meta charset="UTF-8">
     </head>
     <body>
-        <h2>Sign in</h2>
         <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-            <button type="submit">Sign in now!</button>
+            <button type="submit">Iniciar sesión</button>
         </form>
     </body>
 </html>
