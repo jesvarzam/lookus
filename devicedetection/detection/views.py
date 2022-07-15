@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import DetectionForm
 from .models import Device
@@ -25,3 +26,10 @@ def list_devices(request):
 
     devices = Device.objects.filter(user=User.objects.get(id=request.user.id))
     return render(request, 'list.html', {'devices': devices})
+
+
+def remove(request, device_id):
+
+    device = Device.objects.get(id=device_id)
+    device.delete()
+    return HttpResponse('Dispositivo borrado correctamente')

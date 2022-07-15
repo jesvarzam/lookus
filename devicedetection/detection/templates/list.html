@@ -12,6 +12,7 @@
         <h2>Lista de dispositivos</h2>
         {% for d in devices %}
             <p>{{ d.name }}</p>
+            <a href="/detection/remove/{{ d.id }}">Borrar este dispositivo</a>
         {% endfor %}
         {% endif %}
     </body>
