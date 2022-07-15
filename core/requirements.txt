@@ -1,0 +1,2 @@
+pwn==1.0
+validators==0.14.2

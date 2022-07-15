@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LookUS</title>
+    </head>
+    <body>
+        <h1>Welcome to LookUS</h1>
+
+        {% if user.is_authenticated %}
+        <p>Sesión iniciada como {{user.username}}</p>
+
+            <div class="uk-navbar-dropdown">
+                <ul class="uk-nav uk-navbar-dropdown-nav">
+                    <li><a href="/detection/add">Add a device</a></li>
+                </ul>
+                <ul class="uk-nav uk-navbar-dropdown-nav">
+                    <li><a href="/authentication/log_out">Cerrar sesión</a></li>
+                </ul>
+                <ul class="uk-nav uk-navbar-dropdown-nav">
+                    {% if user.is_staff %}
+                        <li><a href="/admin">Admin panel</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </li>
+
+        {% else %}
+        <li><a href="authentication/sign_in">Sign in</a></li>
+        <li><a href="authentication/sign_up">Register</a></li>
+        {% endif %}
+    </body>
+</html>

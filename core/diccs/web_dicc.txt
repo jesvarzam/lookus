@@ -1,0 +1,14 @@
+login
+register
+username
+email
+password
+pass
+crear cuenta
+registrarse
+iniciar sesión
+usuario
+contraseña
+correo electrónico
+bienvenido
+welcome

@@ -1,0 +1,8 @@
+gateway
+login
+username
+password
+usuario
+contraseña
+iniciar sesión
+admin
