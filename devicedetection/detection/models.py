@@ -1,10 +1,21 @@
 from django.db import models
+from django.contrib.auth.models import User
 from datetime import datetime
+
 
 class Device(models.Model):
 
     name = models.CharField(max_length=50)
-    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='device_user', verbose_name='User')
+
+    def __str__(self):
+        return self.name
+
+
+class Detection(models.Model):
+
+    device = models.OneToOneField(Device, on_delete=models.CASCADE)
+
     class DeviceType(models.TextChoices):
         PERSONAL_WEB_SERVER = 'PWS'
         ROUTER = 'R'
@@ -18,12 +29,5 @@ class Device(models.Model):
         default=DeviceType.UNKNOWN
     )
 
-    def __str__(self):
-        return self.name
-
-
-class Detection(models.Model):
-
-    device = models.ForeignKey(Device, on_delete=models.CASCADE)
     detection_date = models.DateTimeField(default=datetime.now)
-    open_ports = models.JSONField()
+    open_ports = models.CharField(max_length=100)

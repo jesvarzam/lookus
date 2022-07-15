@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LookUS</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        {% if not devices %}
+        <p>No tienes ningún dispositivo añadido<p>
+        {% else %}
+        
+        <h2>Lista de dispositivos</h2>
+        {% for d in devices %}
+            <p>{{ d.name }}</p>
+        {% endfor %}
+        {% endif %}
+    </body>
+</html>

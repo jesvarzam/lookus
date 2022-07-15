@@ -2,13 +2,13 @@
 <html>
     <head>
         <title>LookUS</title>
+        <meta charset="UTF-8">
     </head>
     <body>
-        <h2>Create device</h2>
         <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-            <button type="submit">Add device</button>
+            <button type="submit">Añadir dispositivo</button>
         </form>
     </body>
 </html>
