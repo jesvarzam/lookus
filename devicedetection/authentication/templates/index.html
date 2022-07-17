@@ -10,6 +10,11 @@
         {% if user.is_authenticated %}
         <p>Sesión iniciada como {{user.username}}</p>
 
+        {% if messages %}
+        {% for message in messages %}
+            <p>{{message}}</p>
+        {% endfor %}
+        {% endif %}
             <div class="uk-navbar-dropdown">
                 {% if user.is_staff %}
                 <ul class="uk-nav uk-navbar-dropdown-nav">

@@ -7,6 +7,7 @@ class Device(models.Model):
 
     name = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='device_user', verbose_name='User')
+    detected = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -29,5 +30,8 @@ class Detection(models.Model):
         default=DeviceType.UNKNOWN
     )
 
-    detection_date = models.DateTimeField(default=datetime.now)
+    detection_date = models.DateTimeField(default=datetime.now())
     open_ports = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.device.name + ' detection'

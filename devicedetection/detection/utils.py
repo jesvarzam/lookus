@@ -1,12 +1,13 @@
-import re, validators
-# from urllib3.exceptions import InsecureRequestWarning
-# from urllib3 import disable_warnings
+import re, validators, os, socket, platform, concurrent.futures, requests
+from urllib3.exceptions import InsecureRequestWarning
+from urllib3 import disable_warnings
+from .models import Device, Detection
 
-# disable_warnings(InsecureRequestWarning)
+disable_warnings(InsecureRequestWarning)
 
-PRINTER_PORTS = [80, 443, 161, 631, 2501, 5001, 6310, 9100, 9101, 9102, 9600]
+P_PORTS = [80, 443, 161, 631, 2501, 5001, 6310, 9100, 9101, 9102, 9600]
 WEB_SERVER_PORTS = [22, 80, 443, 8080]
-ROUTER_PORTS = [53, 80, 443]
+R_PORTS = [53, 80, 443]
     
 
 def checkSingleFormat(device):
@@ -23,224 +24,135 @@ def checkRangeFormat(device):
     return False
 
 
-# def deviceInDatabase(device):
+def deviceActive(device):
 
-#     try:
-#         existing_device = Device.objects.get(name=device)
-#         return existing_device.name == device
-#     except:
-#         pass
+    if validators.url(device):
+        device = getIP(device)
 
-
-# # def removeDeviceFromDatabase(device):
+    if platform.system().lower()=='windows':
+        command = os.system('ping -n 1 {} >nul'.format(device))
     
-# #     try:
-# #         conn = sqlite3.connect('devices.db')
-# #         cursor = conn.cursor()
-# #         cursor.execute('delete from devices where device = ?', (device,))
-# #         conn.close()
-# #     except sqlite3.DatabaseError as e:
-# #         print(e)
-# #         sys.exit(1)
-
-
-# # def saveDeviceInDatabase(device, detection_date, open_ports):
-
-# #     try:
-# #         conn = sqlite3.connect('devices.db')
-# #         cursor = conn.cursor()
-# #         cursor.execute("""insert into devices(device, detection_date, open_ports) 
-# #                         values (?, ?, ?)""", (device, detection_date, str(open_ports)))
-# #         conn.commit()
-# #         conn.close()
-# #     except sqlite3.DatabaseError as e:
-# #         print(e)
-# #         sys.exit(1)
-
-
-
-# def deviceActive(device):
-
-#     if validators.url(device):
-#         device = getIP(device)
-
-#     if platform.system().lower()=='windows':
-#         command = os.system('ping -n 1 {} >nul'.format(device))
-    
-#     else:
-#         command = os.system('ping -c 1 {} > /dev/null'.format(device))
+    else:
+        command = os.system('ping -c 1 {} > /dev/null'.format(device))
         
-#     return command == 0
+    return command == 0
 
 
-# def getIP(device):
+def getIP(device):
 
-#     if device.startswith('https://www'):
-#         if device[-1] == '/':
-#             device = device[:-1]
-#         return socket.gethostbyname(device[12:])
-#     elif device.startswith('http://www'):
-#         if device[-1] == '/':
-#             device = device[:-1]
-#         return socket.gethostbyname(device[11:])
-#     elif device.startswith('https') and 'www' not in device:
-#         if device[-1] == '/':
-#             device = device[:-1]
-#         return socket.gethostbyname(device[8:])
-#     elif device.startswith('http') and 'www' not in device:
-#         if device[-1] == '/':
-#             device = device[:-1]
-#         return socket.gethostbyname(device[7:])
-#     return socket.gethostbyname(device[7:])
-
-
-# def scanPort(device, port, total_open_ports):
-
-#     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#     s.settimeout(1)
-#     try:
-#         s.connect((device, port))
-#         s.close()
-#         total_open_ports.append(port)
-#     except:
-#         pass
+    if device.startswith('https://www'):
+        if device[-1] == '/':
+            device = device[:-1]
+        return socket.gethostbyname(device[12:])
+    elif device.startswith('http://www'):
+        if device[-1] == '/':
+            device = device[:-1]
+        return socket.gethostbyname(device[11:])
+    elif device.startswith('https') and 'www' not in device:
+        if device[-1] == '/':
+            device = device[:-1]
+        return socket.gethostbyname(device[8:])
+    elif device.startswith('http') and 'www' not in device:
+        if device[-1] == '/':
+            device = device[:-1]
+        return socket.gethostbyname(device[7:])
+    return socket.gethostbyname(device[7:])
 
 
-# def detectPorts(total_open_ports):
+def scanPort(device, port, total_open_ports):
 
-#     possible_devices = {'Personal web server': 0, 'Router': 0, 'Printer': 0}
-
-#     for port in total_open_ports:
-#         if port in WEB_SERVER_PORTS:
-#             possible_devices['Personal web server'] += 1
-#         if port in ROUTER_PORTS:
-#             possible_devices['Router'] += 1
-#         if port in PRINTER_PORTS:
-#             possible_devices['Printer'] += 1
-
-#     return possible_devices
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(1)
+    try:
+        s.connect((device, port))
+        s.close()
+        total_open_ports.append(port)
+    except:
+        pass
 
 
-# def detectServices(device, total_open_ports, possible_devices):
+def detectPorts(total_open_ports):
 
-#     if not validators.url(device):
-#         device = 'http://' + device
+    possible_devices = {'PWS': 0, 'R': 0, 'P': 0}
 
-#     if 80 in total_open_ports:
-#         response = requests.get(device, verify=False).text.lower()
-#         possible_devices = analyzeHTTP(possible_devices, response)
+    for port in total_open_ports:
+        if port in WEB_SERVER_PORTS:
+            possible_devices['PWS'] += 1
+        if port in R_PORTS:
+            possible_devices['R'] += 1
+        if port in P_PORTS:
+            possible_devices['P'] += 1
 
-#     return possible_devices
-
-
-# def detectDevice(device, total_open_ports):
-
-#     possible_devices = detectPorts(total_open_ports)
-#     possible_devices = detectServices(device, total_open_ports, possible_devices)
-
-#     #print('\nResultado final: ' + str(possible_devices))
-
-#     return possible_devices
+    return possible_devices
 
 
-# def analyzeHTTP(possible_devices, response):
+def detectServices(device, total_open_ports, possible_devices):
 
-#     f = open('diccs/web_dicc.txt')
-#     for line in f:
-#         if line.strip() in response:
-#             possible_devices['Personal web server'] += 1
+    if not validators.url(device):
+        device = 'http://' + device
+
+    if 80 in total_open_ports:
+        response = requests.get(device, verify=False).text.lower()
+        possible_devices = analyzeHTTP(possible_devices, response)
+
+    return possible_devices
+
+
+def detectDevice(device, total_open_ports):
+
+    possible_devices = detectPorts(total_open_ports)
+    possible_devices = detectServices(device, total_open_ports, possible_devices)
+
+    return possible_devices
+
+
+def analyzeHTTP(possible_devices, response):
+
+    f = open('detection/diccs/web_dicc.txt')
+    for line in f:
+        if line.strip() in response:
+            possible_devices['PWS'] += 1
     
-#     f = open('diccs/router_dicc.txt')
-#     for line in f:
-#         if line.strip() in response:
-#             possible_devices['Router'] += 1
+    f = open('detection/diccs/router_dicc.txt')
+    for line in f:
+        if line.strip() in response:
+            possible_devices['R'] += 1
     
-#     f = open('diccs/printer_dicc.txt')
-#     for line in f:
-#         if line.strip() in response:
-#             possible_devices['Printer'] += 1
+    f = open('detection/diccs/printer_dicc.txt')
+    for line in f:
+        if line.strip() in response:
+            possible_devices['P'] += 1
 
-#     return possible_devices
+    return possible_devices
 
 
-# def create_table_html(data):
+def create_table_html(data, detection):
 
-#     headers = ['Device', 'Open ports', 'Detected device']
+    headers = ['Device', 'Open ports', 'Detected device']
 
-#     pre_existing_template="<!DOCTYPE html>" + "<html>" + "<head>" + "<style>"
-#     pre_existing_template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing:8px}"
-#     pre_existing_template+="</style>" + "</head>"
-#     pre_existing_template+="<body>" + "<strong>" + "REPORT DATE: " + datetime.now().strftime("%d/%m/%Y %H:%M:%S") + "</strong>" 
-#     pre_existing_template+="<table style='width:50%'>"
-#     pre_existing_template+='<tr>'
-#     for header_name in headers:
-#         pre_existing_template+="<th style='background-color:#3DBBDB;width:85;color:white'>" + header_name + "</th>"
-#     pre_existing_template+="</tr>"
+    pre_existing_template="<!DOCTYPE html>" + "<html>" + "<head>" + "<style>"
+    pre_existing_template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing:8px}"
+    pre_existing_template+="</style>" + "</head>"
+    pre_existing_template+="<body>" + "<strong>" + "REPORT DATE: " + detection.detection_date.strftime("%d-%b-%Y-%H-%M-%S") + "</strong>"
+    pre_existing_template+="<br>"
+    pre_existing_template+="<table style='width:50%'>"
+    pre_existing_template+='<tr>'
+    for header_name in headers:
+        pre_existing_template+="<th style='background-color:#3DBBDB;width:85;color:white'>" + header_name + "</th>"
+    pre_existing_template+="</tr>"
     
-#     sub_template="<tr style='text-align:center'>"
-#     sub_template+="<td>" + str(data[0]) + "</td>"
-#     sub_template+="<td>" + str(data[1]) + "</td>"
-#     sub_template+="<td>" + str(data[2]) + "</td>"
-#     sub_template+="<tr/>"
-#     pre_existing_template+=sub_template
-#     pre_existing_template+="</table>" + "</body>" + "</html>"
+    sub_template="<tr style='text-align:center'>"
+    sub_template+="<td>" + str(data[0]) + "</td>"
+    sub_template+="<td>" + str(data[1]) + "</td>"
+    sub_template+="<td>" + str(data[2]) + "</td>"
+    sub_template+="<tr/>"
+    pre_existing_template+=sub_template
+    pre_existing_template+="</table>" + "</body>" + "</html>"
 
-#     name=str(datetime.today().strftime("%d-%b-%Y-%H-%M-%S"))+".html"
-#     file = open('reports/' + name, "w")
-#     file.write(pre_existing_template)
-#     file.close()
-
-
-# def singleDeviceDetection(single_device):
-#     print('')
-#     p1 = log.progress('')
-#     p1.status('Checking if the device {} is active'.format(single_device))
-#     sleep(2)
-
-#     if not deviceActive(single_device):
-#         p1.failure('Device {} is not active'.format(single_device))
-#         sys.exit(1)
-    
-#     p1.success('Device {} is active'.format(single_device))
-#     sleep(1)
-
-#     print('')
-#     p2 = log.progress('')
-#     p2.status('Starting port scanning on ' + single_device)
-#     sleep(2)
-    
-#     device = single_device
-#     total_open_ports = []
-
-#     if validators.url(single_device):
-#         device = getIP(device)
-
-#     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
-#         for port in range(1,1000):
-#             executor.submit(scanPort, device, port, total_open_ports)
-
-#     if len(total_open_ports) > 0:
-#         p2.success('Port scanning finished on {}, open ports are '.format(single_device) + ', '.join([str(p) for p in total_open_ports]))
-#         sleep(1)
-
-#         print('')
-#         p3 = log.progress('')
-#         p3.status('Detecting device {} (router, personal web server or printer)'.format(single_device))
-#         sleep(2)
-
-#         probabilities = detectDevice(single_device, total_open_ports)
-#         max_probability = max(probabilities, key=probabilities.get)
-#         p3.success('Device {} is a {}'.format(single_device, max_probability.lower()))
-        
-#         detection_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-#         saveDeviceInDatabase(single_device, detection_date, total_open_ports)
-
-#         create_table_html([single_device, ', '.join([str(p) for p in total_open_ports]), max_probability])
-#         sys.exit(0)
-    
-#     else:
-#         p2.failure('There are no open ports on device {}'.format(single_device))
-#         sys.exit(1)
+    name=str(detection.id) + ".html"
+    file = open('detection/templates/reports/' + name, "w")
+    file.write(pre_existing_template)
+    file.close()
 
 
 # def multipleDevicesDetection(ip_range):
@@ -280,7 +192,7 @@ def checkRangeFormat(device):
 
 #             print('')
 #             p3 = log.progress('')
-#             p3.status('Detecting device {} (router, personal web server or printer)'.format(ip))
+#             p3.status('Detecting device {} (R, PWS or P)'.format(ip))
 #             sleep(2)
 
 #             probabilities = detectDevice(device, total_open_ports)
@@ -295,3 +207,41 @@ def checkRangeFormat(device):
 #         else:
 #             p2.failure('There are no open ports on device {}'.format(ip))
 #             continue
+
+def single_device_detection(device):
+
+    res = {}
+
+    device_name = device.name
+
+    if not deviceActive(device_name):
+        res['Not active'] = 'El dispositivo no está activo, por lo que no se puede detectar'
+        return res
+    
+    temp_device = device_name
+    total_open_ports = []
+
+    if validators.url(temp_device):
+        device_name = getIP(device_name)
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+        for port in range(1,1000):
+            executor.submit(scanPort, device_name, port, total_open_ports)
+
+    if len(total_open_ports) > 0:
+
+        probabilities = detectDevice(device_name, total_open_ports)
+        max_probability = max(probabilities, key=probabilities.get)
+
+        res['Open ports'] = ', '.join([str(p) for p in total_open_ports])
+        res['Device type'] = max_probability
+
+        #saveDeviceInDatabase(single_device, detection_date, total_open_ports)
+
+        #create_table_html([single_device, ', '.join([str(p) for p in total_open_ports]), max_probability])
+    
+    else:
+        res['No open ports'] = 'There are no open ports on device {}'.format(device_name)
+        return res
+
+    return res

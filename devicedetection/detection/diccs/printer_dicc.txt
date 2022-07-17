@@ -1,0 +1,10 @@
+printer
+print
+queue
+cola
+impresora
+bandeja
+imprimir
+hp
+dispositivo
+device
