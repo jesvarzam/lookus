@@ -1,8 +1,6 @@
 import re, validators, os, socket, platform, concurrent.futures, requests
 from urllib3.exceptions import InsecureRequestWarning
 from urllib3 import disable_warnings
-from .models import Device, Detection
-
 disable_warnings(InsecureRequestWarning)
 
 P_PORTS = [80, 443, 161, 631, 2501, 5001, 6310, 9100, 9101, 9102, 9600]
@@ -73,15 +71,15 @@ def scanPort(device, port, total_open_ports):
 
 def detectPorts(total_open_ports):
 
-    possible_devices = {'PWS': 0, 'R': 0, 'P': 0}
+    possible_devices = {'Página web personal': 0, 'Router': 0, 'Impresora': 0}
 
     for port in total_open_ports:
         if port in WEB_SERVER_PORTS:
-            possible_devices['PWS'] += 1
+            possible_devices['Página web personal'] += 1
         if port in R_PORTS:
-            possible_devices['R'] += 1
+            possible_devices['Router'] += 1
         if port in P_PORTS:
-            possible_devices['P'] += 1
+            possible_devices['Impresora'] += 1
 
     return possible_devices
 
@@ -111,17 +109,17 @@ def analyzeHTTP(possible_devices, response):
     f = open('detection/diccs/web_dicc.txt')
     for line in f:
         if line.strip() in response:
-            possible_devices['PWS'] += 1
+            possible_devices['Página web personal'] += 1
     
     f = open('detection/diccs/router_dicc.txt')
     for line in f:
         if line.strip() in response:
-            possible_devices['R'] += 1
+            possible_devices['Router'] += 1
     
     f = open('detection/diccs/printer_dicc.txt')
     for line in f:
         if line.strip() in response:
-            possible_devices['P'] += 1
+            possible_devices['Impresora'] += 1
 
     return possible_devices
 
@@ -155,59 +153,6 @@ def create_table_html(data, detection):
     file.close()
 
 
-# def multipleDevicesDetection(ip_range):
-
-#     for ip in ipaddress.IPv4Network(ip_range):
-#         ip = str(ip)
-#         print('')
-#         p1 = log.progress('')
-#         p1.status('Checking if the device {} is active'.format(ip))
-#         sleep(2)
-
-#         if not deviceActive(ip):
-#             p1.failure('Device {} is not active'.format(ip))
-#             continue
-        
-#         p1.success('Device {} is active'.format(ip))
-#         sleep(1)
-
-#         print('')
-#         p2 = log.progress('')
-#         p2.status('Starting port scanning on ' + ip)
-#         sleep(2)
-        
-#         device = ip
-#         total_open_ports = []
-
-#         if validators.url(ip):
-#             device = getIP(device)
-
-#         with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
-#             for port in range(1,1000):
-#                 executor.submit(scanPort, device, port, total_open_ports)
-
-#         if len(total_open_ports) > 0:
-#             p2.success('Port scanning finished on device {}, open ports are '.format(ip) + ', '.join([str(p) for p in total_open_ports]))
-#             sleep(1)
-
-#             print('')
-#             p3 = log.progress('')
-#             p3.status('Detecting device {} (R, PWS or P)'.format(ip))
-#             sleep(2)
-
-#             probabilities = detectDevice(device, total_open_ports)
-#             print(str(probabilities))
-#             max_probability = max(probabilities, key=probabilities.get)
-#             p3.success('Device {} is a {}'.format(ip, max_probability.lower()))
-
-#             detection_date = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-#             saveDeviceInDatabase(device, detection_date, total_open_ports)
-#             continue
-        
-#         else:
-#             p2.failure('There are no open ports on device {}'.format(ip))
-#             continue
-
 def single_device_detection(device):
 
     res = {}
@@ -235,10 +180,6 @@ def single_device_detection(device):
 
         res['Open ports'] = ', '.join([str(p) for p in total_open_ports])
         res['Device type'] = max_probability
-
-        #saveDeviceInDatabase(single_device, detection_date, total_open_ports)
-
-        #create_table_html([single_device, ', '.join([str(p) for p in total_open_ports]), max_probability])
     
     else:
         res['No open ports'] = 'There are no open ports on device {}'.format(device_name)
