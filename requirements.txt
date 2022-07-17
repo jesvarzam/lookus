@@ -1,0 +1,4 @@
+validators==0.14.2
+django==4.0.6
+ldap3==2.8.1
+requests==2.20.1
