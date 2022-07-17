@@ -10,7 +10,17 @@
         {% if user.is_authenticated %}
         <p>Sesión iniciada como {{user.username}}</p>
 
+        {% if messages %}
+        {% for message in messages %}
+            <p>{{message}}</p>
+        {% endfor %}
+        {% endif %}
             <div class="uk-navbar-dropdown">
+                {% if user.is_staff %}
+                <ul class="uk-nav uk-navbar-dropdown-nav">
+                    <li><a href="/admin">Panel de administración</a></li>
+                </ul>
+                {% endif %}
                 <ul class="uk-nav uk-navbar-dropdown-nav">
                     <li><a href="/detection/add">Añadir un nuevo dispositivo</a></li>
                 </ul>
@@ -20,11 +30,7 @@
                 <ul class="uk-nav uk-navbar-dropdown-nav">
                     <li><a href="/authentication/log_out">Cerrar sesión</a></li>
                 </ul>
-                <ul class="uk-nav uk-navbar-dropdown-nav">
-                    {% if user.is_staff %}
-                        <li><a href="/admin">Panel de administración</a></li>
-                    {% endif %}
-                </ul>
+                
             </div>
         </li>
 
