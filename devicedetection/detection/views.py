@@ -1,12 +1,20 @@
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.http import FileResponse, Http404
 from .utils import single_device_detection, create_table_html
 from .forms import DetectionForm
 from .models import Device, Detection
 from authentication.views import *
 from django.contrib.auth.models import User
 from django.contrib import messages
-import os
+import os, pdfkit, subprocess, validators, re
+
+def save_http_info(device):
+
+    if not validators.url(device):
+            http_device = 'http://' + device
+    output = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+    output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output)
+    return output.replace(',', '\r')
 
 def add(request):
     if request.method == 'POST':
@@ -38,6 +46,7 @@ def remove(request, device_id):
     
     if device.detected:
         os.remove('detection/templates/reports/{}.html'.format(device.detection.id))
+        os.remove('detection/templates/reports/{}.pdf'.format(device.detection.id))
         
     device.delete()
     messages.success(request, 'Dispositivo borrado correctamente')
@@ -62,10 +71,24 @@ def detect(request, device_id):
     messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))
     device_to_detect.detected = True
     device_to_detect.save()
-    create_table_html([device_to_detect.name, detection.open_ports, detection.device_type], detection)
+
+    http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
+
+    if '80' in detection.open_ports:
+        http_info = save_http_info(device_to_detect.name)
+    
+    create_table_html([device_to_detect.name, detection.open_ports, detection.device_type, http_info], detection)
 
     return redirect(list_devices)
 
 
 def results(request, detection_id):
     return render(request, 'reports/{}.html'.format(detection_id))
+
+
+def pdf(request, detection_id):
+    pdfkit.from_file('detection/templates/reports/{}.html'.format(str(detection_id)), 'detection/templates/reports/{}.pdf'.format(str(detection_id)))
+    try:
+        return FileResponse(open('detection/templates/reports/{}.pdf'.format(str(detection_id)), 'rb'), content_type='application/pdf')
+    except FileNotFoundError:
+        raise Http404()

@@ -86,12 +86,22 @@ def detectPorts(total_open_ports):
 
 def detectServices(device, total_open_ports, possible_devices):
 
-    if not validators.url(device):
-        device = 'http://' + device
-
+    
     if 80 in total_open_ports:
-        response = requests.get(device, verify=False).text.lower()
+
+        if not validators.url(device):
+            http_device = 'http://' + device
+
+        response = requests.get(http_device, verify=False).text.lower()
         possible_devices = analyzeHTTP(possible_devices, response)
+
+    if 443 in total_open_ports:
+
+        if not validators.url(device):
+            https_device = 'https://' + device
+
+        response = requests.get(https_device, verify=False).text.lower()
+        possible_devices = analyzeHTTPS(possible_devices, response)
 
     return possible_devices
 
@@ -124,14 +134,34 @@ def analyzeHTTP(possible_devices, response):
     return possible_devices
 
 
+def analyzeHTTPS(possible_devices, response):
+
+    f = open('detection/diccs/web_dicc.txt')
+    for line in f:
+        if line.strip() in response:
+            possible_devices['Página web personal'] += 1
+    
+    f = open('detection/diccs/router_dicc.txt')
+    for line in f:
+        if line.strip() in response:
+            possible_devices['Router'] += 1
+    
+    f = open('detection/diccs/printer_dicc.txt')
+    for line in f:
+        if line.strip() in response:
+            possible_devices['Impresora'] += 1
+
+    return possible_devices
+
+
 def create_table_html(data, detection):
+    
+    headers = ['Dispositivo', 'Puertos abiertos', 'Dispositivo detectado', 'Cabeceras HTTP']
 
-    headers = ['Device', 'Open ports', 'Detected device']
-
-    pre_existing_template="<!DOCTYPE html>" + "<html>" + "<head>" + "<style>"
+    pre_existing_template="<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='UTF-8'>" + "<style>"
     pre_existing_template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing:8px}"
     pre_existing_template+="</style>" + "</head>"
-    pre_existing_template+="<body>" + "<strong>" + "REPORT DATE: " + detection.detection_date.strftime("%d-%b-%Y-%H-%M-%S") + "</strong>"
+    pre_existing_template+="<body>" + "<strong>" + "Fecha de detección: " + detection.detection_date.strftime("%d-%b-%Y-%H-%M-%S") + "</strong>"
     pre_existing_template+="<br>"
     pre_existing_template+="<table style='width:50%'>"
     pre_existing_template+='<tr>'
@@ -143,9 +173,11 @@ def create_table_html(data, detection):
     sub_template+="<td>" + str(data[0]) + "</td>"
     sub_template+="<td>" + str(data[1]) + "</td>"
     sub_template+="<td>" + str(data[2]) + "</td>"
+    sub_template+="<td>" + str(data[3]) + "</td>"
     sub_template+="<tr/>"
     pre_existing_template+=sub_template
-    pre_existing_template+="</table>" + "</body>" + "</html>"
+    pre_existing_template+="</table>" + "<form action='/detection/pdf/{}'>".format(str(detection.id)) + "<input type='submit' value='Exportar a PDF' />" + "</form>"
+    pre_existing_template+="</body>" + "</html>"
 
     name=str(detection.id) + ".html"
     file = open('detection/templates/reports/' + name, "w")
