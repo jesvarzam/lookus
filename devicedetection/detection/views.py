@@ -14,7 +14,8 @@ def save_http_info(device):
             http_device = 'http://' + device
     output = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
     output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output)
-    return output.replace(',', '\r')
+    output = output.replace('%', '')
+    return output.split(',')
 
 def add(request):
     if request.method == 'POST':
@@ -43,10 +44,16 @@ def list_devices(request):
 def remove(request, device_id):
 
     device = Device.objects.get(id=device_id)
+    html_path = 'detection/templates/reports/{}.html'.format(device.detection.id)
+    pdf_path = 'detection/templates/reports/{}.pdf'.format(device.detection.id)
     
     if device.detected:
-        os.remove('detection/templates/reports/{}.html'.format(device.detection.id))
-        os.remove('detection/templates/reports/{}.pdf'.format(device.detection.id))
+
+        if os.path.exists(html_path):
+            os.remove(html_path)
+        
+        if os.path.exists(pdf_path):
+            os.remove(pdf_path)
         
     device.delete()
     messages.success(request, 'Dispositivo borrado correctamente')

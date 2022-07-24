@@ -6,3 +6,10 @@ usuario
 contraseña
 iniciar sesión
 admin
+bienvenido
+welcome
+movistar
+vodafone
+orange
+yoigo
+reset

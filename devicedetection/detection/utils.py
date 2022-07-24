@@ -3,9 +3,10 @@ from urllib3.exceptions import InsecureRequestWarning
 from urllib3 import disable_warnings
 disable_warnings(InsecureRequestWarning)
 
-P_PORTS = [80, 443, 161, 631, 2501, 5001, 6310, 9100, 9101, 9102, 9600]
+PRINTER_PORTS = [80, 443, 161, 631, 2501, 5001, 6310, 9100, 9101, 9102, 9600]
 WEB_SERVER_PORTS = [22, 80, 443, 8080]
-R_PORTS = [53, 80, 443]
+ROUTER_PORTS = [53, 80, 443]
+CAMERA_PORTS = [80, 443, 554]
     
 
 def checkSingleFormat(device):
@@ -71,15 +72,17 @@ def scanPort(device, port, total_open_ports):
 
 def detectPorts(total_open_ports):
 
-    possible_devices = {'Página web personal': 0, 'Router': 0, 'Impresora': 0}
+    possible_devices = {'Página web personal': 0, 'Router': 0, 'Impresora': 0, 'Cámara': 0}
 
     for port in total_open_ports:
         if port in WEB_SERVER_PORTS:
             possible_devices['Página web personal'] += 1
-        if port in R_PORTS:
+        if port in ROUTER_PORTS:
             possible_devices['Router'] += 1
-        if port in P_PORTS:
+        if port in PRINTER_PORTS:
             possible_devices['Impresora'] += 1
+        if port in CAMERA_PORTS:
+            possible_devices['Cámara'] += 1
 
     return possible_devices
 
@@ -131,6 +134,11 @@ def analyzeHTTP(possible_devices, response):
         if line.strip() in response:
             possible_devices['Impresora'] += 1
 
+    f = open('detection/diccs/camera_dicc.txt')
+    for line in f:
+        if line.strip() in response:
+            possible_devices['Cámara'] += 1
+
     return possible_devices
 
 
@@ -151,38 +159,86 @@ def analyzeHTTPS(possible_devices, response):
         if line.strip() in response:
             possible_devices['Impresora'] += 1
 
+    f = open('detection/diccs/camera_dicc.txt')
+    for line in f:
+        if line.strip() in response:
+            possible_devices['Cámara'] += 1
+
     return possible_devices
 
 
-def create_table_html(data, detection):
+# def create_table_html(data, detection):
     
+#     headers = ['Dispositivo', 'Puertos abiertos', 'Dispositivo detectado', 'Cabeceras HTTP']
+
+#     template="<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='UTF-8'>" + "<style>"
+#     template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing:8px}"
+#     template+="</style>" + "</head>"
+#     template+="<body>" + "<strong>" + "Fecha de detección: " + detection.detection_date.strftime("%d-%b-%Y-%H-%M-%S") + "</strong>"
+#     template+="<br>"
+#     template+="<table style='width:50%'>"
+#     template+='<tr>'
+#     for header_name in headers:
+#         template+="<th style='background-color:#3DBBDB;width:85;color:white'>" + header_name + "</th>"
+#     template+="</tr>"
+    
+#     template+="<tr style='text-align:center'>"
+#     template+="<td>" + str(data[0]) + "</td>"
+#     template+="<td>" + str(data[1]) + "</td>"
+#     template+="<td>" + str(data[2]) + "</td>"
+#     template+="<td>" + str(data[3]) + "</td>"
+#     template+="<tr/>"
+#     template+="</table>" + "<form action='/detection/pdf/{}'>".format(str(detection.id)) + "<input type='submit' value='Exportar a PDF' />" + "</form>"
+#     template+="</body>" + "</html>"
+
+#     name=str(detection.id) + ".html"
+#     file = open('detection/templates/reports/' + name, "w")
+#     file.write(template)
+#     file.close()
+
+def create_table_html(data, detection):
+
     headers = ['Dispositivo', 'Puertos abiertos', 'Dispositivo detectado', 'Cabeceras HTTP']
 
-    pre_existing_template="<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='UTF-8'>" + "<style>"
-    pre_existing_template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing:8px}"
-    pre_existing_template+="</style>" + "</head>"
-    pre_existing_template+="<body>" + "<strong>" + "Fecha de detección: " + detection.detection_date.strftime("%d-%b-%Y-%H-%M-%S") + "</strong>"
-    pre_existing_template+="<br>"
-    pre_existing_template+="<table style='width:50%'>"
-    pre_existing_template+='<tr>'
-    for header_name in headers:
-        pre_existing_template+="<th style='background-color:#3DBBDB;width:85;color:white'>" + header_name + "</th>"
-    pre_existing_template+="</tr>"
-    
-    sub_template="<tr style='text-align:center'>"
-    sub_template+="<td>" + str(data[0]) + "</td>"
-    sub_template+="<td>" + str(data[1]) + "</td>"
-    sub_template+="<td>" + str(data[2]) + "</td>"
-    sub_template+="<td>" + str(data[3]) + "</td>"
-    sub_template+="<tr/>"
-    pre_existing_template+=sub_template
-    pre_existing_template+="</table>" + "<form action='/detection/pdf/{}'>".format(str(detection.id)) + "<input type='submit' value='Exportar a PDF' />" + "</form>"
-    pre_existing_template+="</body>" + "</html>"
+    template="<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='UTF-8'>" + "<style>"
+    template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing:8px;padding:0 15px}"
+    template+="</style>" + "</head>"
+    template+="<body>" + "<strong>" + "Fecha de detección: " + detection.detection_date.strftime("%d-%b-%Y-%H-%M-%S") + "</strong>"
+    template+="<table style='width:50%'>"
+    template+='<tr>'
+    template+="<th style='background-color:#3DBBDB;width:85;color:white'>" + headers[0] + "</th>"
+    template+="</tr>"
+    template+="<tr style='text-align:center'>"
+    template+="<td>" + str(data[0]) + " (" + str(data[2]) + ") " + "</td>"
+    template+="</tr>"
+    template+="</table>"
+    template+="<table style='width:50%'>"
+    template+='<tr>'
+    template+="<th style='background-color:#3DBBDB;width:85;color:white'>" + headers[1] + "</th>"
+    template+="</tr>"
+    template+="<tr style='text-align:center'>"
+    template+="<td>" + str(data[1]) + "</td>"
+    template+="</tr>"
+    template+="</table>"
+    template+="<table style='width:50%'>"
+    template+='<tr>'
+    template+="<th style='background-color:#3DBBDB;width:85;color:white'>" + headers[3] + "</th>"
+    template+="</tr>"
+    for http_info in data[3]:
+
+        template+="<tr style='text-align:center'>"
+        template+="<td>" + str(http_info) + "</td>"
+        template+="</tr>"
+
+    template+="</table>"
+    template+="<form action='/detection/pdf/{}'>".format(str(detection.id)) + "<input type='submit' value='Exportar a PDF' />" + "</form>"
+    template+="</body>" + "</html>"
 
     name=str(detection.id) + ".html"
     file = open('detection/templates/reports/' + name, "w")
-    file.write(pre_existing_template)
+    file.write(template)
     file.close()
+
 
 
 def single_device_detection(device):
@@ -191,9 +247,9 @@ def single_device_detection(device):
 
     device_name = device.name
 
-    if not deviceActive(device_name):
-        res['Not active'] = 'El dispositivo no está activo, por lo que no se puede detectar'
-        return res
+    # if not deviceActive(device_name):
+    #     res['Not active'] = 1
+    #     return res
     
     temp_device = device_name
     total_open_ports = []
@@ -214,7 +270,7 @@ def single_device_detection(device):
         res['Device type'] = max_probability
     
     else:
-        res['No open ports'] = 'There are no open ports on device {}'.format(device_name)
+        res['No open ports'] = 1
         return res
 
     return res
