@@ -10,8 +10,11 @@ import os, pdfkit, subprocess, validators, re
 
 def save_http_info(device):
 
+    http_device = device
+
     if not validators.url(device):
-            http_device = 'http://' + device
+        http_device = 'http://' + device
+    
     output = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
     output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output)
     output = output.replace('%', '')
@@ -94,8 +97,14 @@ def results(request, detection_id):
 
 
 def pdf(request, detection_id):
-    pdfkit.from_file('detection/templates/reports/{}.html'.format(str(detection_id)), 'detection/templates/reports/{}.pdf'.format(str(detection_id)))
+
+    pdf_path = 'detection/templates/reports/{}.pdf'.format(str(detection_id))
+
+    if os.path.exists(pdf_path):
+        return FileResponse(open(pdf_path, 'rb'), content_type='application/pdf')
+    
+    pdfkit.from_file('detection/templates/reports/{}pdf.html'.format(str(detection_id)), pdf_path)
     try:
-        return FileResponse(open('detection/templates/reports/{}.pdf'.format(str(detection_id)), 'rb'), content_type='application/pdf')
+        return FileResponse(open(pdf_path, 'rb'), content_type='application/pdf')
     except FileNotFoundError:
         raise Http404()

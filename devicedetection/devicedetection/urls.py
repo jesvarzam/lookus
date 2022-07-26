@@ -18,7 +18,7 @@ from django.urls import path, include
 from authentication import views as authViews
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('djangoadmin/', admin.site.urls),
     path('', authViews.index, name='index'),
     path('authentication/', include('authentication.urls')),
     path('detection/', include('detection.urls'))
