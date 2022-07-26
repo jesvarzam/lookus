@@ -5,7 +5,7 @@ disable_warnings(InsecureRequestWarning)
 
 PRINTER_PORTS = [80, 443, 161, 631, 2501, 5001, 6310, 9100, 9101, 9102, 9600]
 WEB_SERVER_PORTS = [22, 80, 443, 8080]
-ROUTER_PORTS = [53, 80, 443]
+ROUTER_PORTS = [22, 53, 80, 443]
 CAMERA_PORTS = [80, 443, 554]
     
 
@@ -92,6 +92,8 @@ def detectServices(device, total_open_ports, possible_devices):
     
     if 80 in total_open_ports:
 
+        http_device = device
+
         if not validators.url(device):
             http_device = 'http://' + device
 
@@ -99,6 +101,8 @@ def detectServices(device, total_open_ports, possible_devices):
         possible_devices = analyzeHTTP(possible_devices, response)
 
     if 443 in total_open_ports:
+
+        https_device = device
 
         if not validators.url(device):
             https_device = 'https://' + device
@@ -109,10 +113,41 @@ def detectServices(device, total_open_ports, possible_devices):
     return possible_devices
 
 
+def detectBrands(device, possible_devices):
+
+    http_device = device
+
+    if not validators.url(device):
+            http_device = 'http://' + device
+
+    response = requests.get(http_device, verify=False).text.lower()
+    print(response)
+
+    f = open('detection/diccs/camera_brands.txt')
+    for line in f:
+        if line.strip() in response:
+            possible_devices['Cámara'] += 3
+
+    f = open('detection/diccs/printer_brands.txt')
+    for line in f:
+        if line.strip() in response:
+            possible_devices['Impresora'] += 3
+
+    f = open('detection/diccs/cms_brands.txt')
+    for line in f:
+        if line.strip() in response:
+            print('holita')
+            possible_devices['Página web personal'] += 3
+
+
+    return possible_devices
+
+
 def detectDevice(device, total_open_ports):
 
     possible_devices = detectPorts(total_open_ports)
     possible_devices = detectServices(device, total_open_ports, possible_devices)
+    possible_devices = detectBrands(device, possible_devices)
 
     return possible_devices
 
@@ -167,35 +202,6 @@ def analyzeHTTPS(possible_devices, response):
     return possible_devices
 
 
-# def create_table_html(data, detection):
-    
-#     headers = ['Dispositivo', 'Puertos abiertos', 'Dispositivo detectado', 'Cabeceras HTTP']
-
-#     template="<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='UTF-8'>" + "<style>"
-#     template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing:8px}"
-#     template+="</style>" + "</head>"
-#     template+="<body>" + "<strong>" + "Fecha de detección: " + detection.detection_date.strftime("%d-%b-%Y-%H-%M-%S") + "</strong>"
-#     template+="<br>"
-#     template+="<table style='width:50%'>"
-#     template+='<tr>'
-#     for header_name in headers:
-#         template+="<th style='background-color:#3DBBDB;width:85;color:white'>" + header_name + "</th>"
-#     template+="</tr>"
-    
-#     template+="<tr style='text-align:center'>"
-#     template+="<td>" + str(data[0]) + "</td>"
-#     template+="<td>" + str(data[1]) + "</td>"
-#     template+="<td>" + str(data[2]) + "</td>"
-#     template+="<td>" + str(data[3]) + "</td>"
-#     template+="<tr/>"
-#     template+="</table>" + "<form action='/detection/pdf/{}'>".format(str(detection.id)) + "<input type='submit' value='Exportar a PDF' />" + "</form>"
-#     template+="</body>" + "</html>"
-
-#     name=str(detection.id) + ".html"
-#     file = open('detection/templates/reports/' + name, "w")
-#     file.write(template)
-#     file.close()
-
 def create_table_html(data, detection):
 
     headers = ['Dispositivo', 'Puertos abiertos', 'Dispositivo detectado', 'Cabeceras HTTP']
@@ -231,14 +237,18 @@ def create_table_html(data, detection):
         template+="</tr>"
 
     template+="</table>"
-    template+="<form action='/detection/pdf/{}'>".format(str(detection.id)) + "<input type='submit' value='Exportar a PDF' />" + "</form>"
+    template_pdf="<form action='/detection/pdf/{}'>".format(str(detection.id)) + "<input type='submit' value='Exportar a PDF' />" + "</form>"
     template+="</body>" + "</html>"
 
-    name=str(detection.id) + ".html"
-    file = open('detection/templates/reports/' + name, "w")
-    file.write(template)
-    file.close()
+    name1=str(detection.id) + ".html"
+    file1 = open('detection/templates/reports/' + name1, "w")
+    file1.write(template + template_pdf + "</body>" + "</html>")
+    file1.close()
 
+    name2=str(detection.id) + "pdf.html"
+    file2 = open('detection/templates/reports/' + name2, "w")
+    file2.write(template + "</body>" + "</html>")
+    file2.close()
 
 
 def single_device_detection(device):
@@ -255,11 +265,11 @@ def single_device_detection(device):
     total_open_ports = []
 
     if validators.url(temp_device):
-        device_name = getIP(device_name)
+        device_name_port_scan = getIP(device_name)
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
         for port in range(1,1000):
-            executor.submit(scanPort, device_name, port, total_open_ports)
+            executor.submit(scanPort, device_name_port_scan, port, total_open_ports)
 
     if len(total_open_ports) > 0:
 

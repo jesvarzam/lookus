@@ -5,6 +5,5 @@ cola
 impresora
 bandeja
 imprimir
-hp
 dispositivo
 device
