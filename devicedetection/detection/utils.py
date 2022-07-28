@@ -1,4 +1,4 @@
-import re, validators, os, socket, platform, concurrent.futures, requests
+import re, validators, os, socket, platform, concurrent.futures, requests, subprocess
 from urllib3.exceptions import InsecureRequestWarning
 from urllib3 import disable_warnings
 disable_warnings(InsecureRequestWarning)
@@ -98,6 +98,9 @@ def detectServices(device, total_open_ports, possible_devices):
             http_device = 'http://' + device
 
         response = requests.get(http_device, verify=False).text.lower()
+        output = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output).lower()
+        response+=output
         possible_devices = analyzeHTTP(possible_devices, response)
 
     if 443 in total_open_ports:
@@ -108,6 +111,9 @@ def detectServices(device, total_open_ports, possible_devices):
             https_device = 'https://' + device
 
         response = requests.get(https_device, verify=False).text.lower()
+        output = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output).lower()
+        response+=output
         possible_devices = analyzeHTTPS(possible_devices, response)
 
     return possible_devices
@@ -121,6 +127,10 @@ def detectBrands(device, possible_devices):
             http_device = 'http://' + device
 
     response = requests.get(http_device, verify=False).text.lower()
+    output = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+    output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output).lower()
+    response+=output
+
     print(response)
 
     f = open('detection/diccs/camera_brands.txt')
@@ -261,10 +271,10 @@ def single_device_detection(device):
     #     res['Not active'] = 1
     #     return res
     
-    temp_device = device_name
     total_open_ports = []
+    device_name_port_scan = device.name
 
-    if validators.url(temp_device):
+    if validators.url(device_name):
         device_name_port_scan = getIP(device_name)
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
@@ -274,6 +284,7 @@ def single_device_detection(device):
     if len(total_open_ports) > 0:
 
         probabilities = detectDevice(device_name, total_open_ports)
+        print(probabilities)
         max_probability = max(probabilities, key=probabilities.get)
 
         res['Open ports'] = ', '.join([str(p) for p in total_open_ports])
