@@ -1,29 +1,101 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>LookUS</title>
-        <meta charset="UTF-8">
-    </head>
-    <body>
-        {% if not devices %}
-        <p>No tienes ningún dispositivo añadido<p>
-        {% else %}
-        
-        <h2>Lista de dispositivos</h2>
-        {% for d in devices %}
-            {% if messages %}
-            {% for message in messages %}
-                <p>{{message}}</p>
-            {% endfor %}
-            {% endif %}
-            <p>{{ d.name }}</p>
-            {% if not d.detected %}
-            <a href="/detection/detect/{{ d.id }}">Detectar</a>
-            {% else %}
-            <p>DIspositivo detectado, pulsa <a href="/detection/results/{{ d.detection.id }}">aquí</a> para ver los resultados</p>
-            {% endif %}
-            <a href="/detection/remove/{{ d.id }}">Borrar este dispositivo</a>
-        {% endfor %}
-        {% endif %}
-    </body>
+<html lang="es">
+<head>
+<title>LookUS</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+<meta name="robots" content="noindex, follow">
+</head>
+<body>
+<div class="limiter">
+<div class="container-table100">
+<div class="wrap-table100">
+<div class="table">
+<div class="row header">
+{% if not devices %}
+<div class="cell">
+No tienes ningún dispositivo añadido
+</div>
+{% else %}
+<div class="cell">
+Dispositivo
+</div>
+<div class="cell">
+Detectado
+</div>
+<div class="cell">
+Acciones
+</div>
+<div class="cell">
+Resultados
+</div>
+</div>
+{% for d in devices %}
+	<div class="row">
+	<div class="cell" data-title="Dispositivo">
+	{{ d.name }}
+	</div>
+	{% if not d.detected %}
+	<div class="cell" data-title="Detectado">
+	No
+	</div>
+	<div class="cell" data-title="Acciones">
+	<a href="/detection/detect/{{ d.id }}">Detectar</a> | <a href="/detection/remove/{{ d.id }}">Borrar</a>
+	</div>
+	<div class="cell" data-title="Resultados">
+	El dispositivo aún no ha sido detectado
+	</div>
+	{% else %}
+	<div class="cell" data-title="Detectado">
+	<img source="{% static 'icons/tick.png' %}" alt="Sí" width="10" height="10">
+	</div>
+	<div class="cell" data-title="Acciones">
+	<a href="/detection/remove/{{ d.id }}">Borrar</a>
+	</div>
+	<div class="cell" data-title="Resultados">
+	<a href="/detection/results/{{ d.detection.id }}">Ver resultados</a>
+	</div>
+	{% endif %}
+</div>
+{% endfor %}
+{% endif %}
+</div>
+</div>
+</div>
+
+<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+
+<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+
+<script src="{% static 'js/main.js' %}"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-23581568-13');
+	</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194" integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw==" data-cf-beacon='{"rayId":"731ed2f5cbd86689","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2022.6.0","si":100}' crossorigin="anonymous"></script>
+</body>
 </html>

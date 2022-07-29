@@ -1,42 +1,104 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
     <head>
         <title>LookUS</title>
         <meta charset="UTF-8">
+        <style>
+            body {
+                background-color: #DBF9FC;
+            }
+
+            h1 {
+                color: #111; 
+                font-family: 'Open Sans Condensed', sans-serif; 
+                font-size: 64px; 
+                font-weight: 700; 
+                line-height: 64px; 
+                margin: 0 0 0; 
+                padding: 20px 30px; 
+                text-align: center; 
+                text-transform: uppercase;
+                float: left;
+            }
+
+            #loggeduser {
+                float: right;
+                margin-right: 20px;
+                margin-top: 10px;
+                position: relative;
+                right: 140px;
+            }
+
+            #loggeduserimg {
+                margin-right: 20px;
+                margin-top: 5px;
+                width: 40px;
+                height: 40px;
+                right: 10px;
+            }
+
+            @import url(https://fonts.googleapis.com/css?family=Oswald:400);
+            .navigation {
+                width: 100%;
+                background-color: black;
+            }
+            .logout {
+                font-size: .8em;
+                font-family: 'Oswald', sans-serif;
+                    position: relative;
+                right: -18px;
+                bottom: -4px;
+                overflow: hidden;
+                letter-spacing: 3px;
+                opacity: 0;
+                transition: opacity .45s;
+                -webkit-transition: opacity .35s;
+                
+                }
+
+            .button {
+                text-decoration: none;
+                float: right;
+                padding: 12px;
+                margin: 15px;
+                color: white;
+                width: 75px;
+                background-color: black;
+                transition: width .35s;
+                -webkit-transition: width .35s;
+                overflow: hidden;
+                right: -10px;
+                }
+
+
+            .button:hover {
+                width: 100px;
+                }
+            
+            .button:hover .logout {
+                opacity: .9;
+            }
+
+        </style>
     </head>
     <body>
         <h1>Bienvenido a LookUS</h1>
 
         {% if user.is_authenticated %}
-        <p>Sesión iniciada como {{user.username}}</p>
 
-        {% if messages %}
-        {% for message in messages %}
-            <p>{{message}}</p>
-        {% endfor %}
+        {% if user.is_staff %}
+        <a href="/admin">Panel de administración</a>
         {% endif %}
-            <div class="uk-navbar-dropdown">
-                {% if user.is_staff %}
-                <ul class="uk-nav uk-navbar-dropdown-nav">
-                    <li><a href="/admin">Panel de administración</a></li>
-                </ul>
-                {% endif %}
-                <ul class="uk-nav uk-navbar-dropdown-nav">
-                    <li><a href="/detection/add">Añadir un nuevo dispositivo</a></li>
-                </ul>
-                <ul class="uk-nav uk-navbar-dropdown-nav">
-                    <li><a href="/detection/list">Ver dispositivos añadidos</a></li>
-                </ul>
-                <ul class="uk-nav uk-navbar-dropdown-nav">
-                    <li><a href="/authentication/log_out">Cerrar sesión</a></li>
-                </ul>
-                
-            </div>
-        </li>
-
+        <a href="/detection/add">Añadir un nuevo dispositivo</a>
+        <a href="/detection/list">Ver dispositivos añadidos</a>
+        <div class="navigation">
+        <a class="button" href="/authentication/log_out">{{user.username}} <div class="logout">LOGOUT</div></a>
+        </div>
         {% else %}
-        <li><a href="authentication/sign_in">Iniciar sesión</a></li>
-        <li><a href="authentication/sign_up">Registrarse</a></li>
+        <a style="position: sticky;" href="authentication/sign_in">Iniciar sesión</a>
+        <a style="position: sticky;" href="authentication/sign_up">Registrarse</a>
         {% endif %}
     </body>
 </html>
