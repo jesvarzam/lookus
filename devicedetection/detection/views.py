@@ -48,7 +48,7 @@ def remove(request, device_id):
 
     device = Device.objects.get(id=device_id)
     if device.detected:
-        
+
         html_path = 'detection/templates/reports/{}.html'.format(device.detection.id)
         pdf_path = 'detection/templates/reports/{}.pdf'.format(device.detection.id)
         temp_html_path = 'detection/templates/reports/{}pdf.html'.format(device.detection.id)
@@ -72,13 +72,21 @@ def detect(request, device_id):
     device_to_detect = Device.objects.get(id=device_id)
     res = single_device_detection(device_to_detect)
 
-    if 'Not active' in res:
-        messages.error(request, 'El dispositivo {} no está activo, por lo que no se puede detectar'.format(device_to_detect.name))
-        return redirect(list_devices)
+    # if 'Not active' in res:
+    #     messages.error(request, 'El dispositivo {} no está activo, por lo que no se puede detectar'.format(device_to_detect.name))
+    #     return redirect(list_devices)
     
     if 'No open ports' in res:
-        messages.error(request, 'El dispositivo {} no tiene puertos abiertos, por lo que no se puede detectar'.format(device_to_detect.name))
+        detection = Detection(device=device_to_detect, device_type='Desconocido', open_ports='Ninguno')
+        detection.save()
+        messages.success(request, 'Detección del dispositivo {} finalizada'.format(device_to_detect.name))
+        device_to_detect.detected = True
+        device_to_detect.save()
+
+        create_table_html([device_to_detect.name, detection.open_ports, detection.device_type, 'No es posible obtener información'], detection)
         return redirect(list_devices)
+        # messages.error(request, 'El dispositivo {} no tiene puertos abiertos, por lo que no se puede detectar'.format(device_to_detect.name))
+        # return redirect(list_devices)
     
     detection = Detection(device=device_to_detect, device_type=res['Device type'], open_ports=res['Open ports'])
     detection.save()

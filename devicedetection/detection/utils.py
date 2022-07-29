@@ -1,4 +1,4 @@
-import re, validators, os, socket, platform, concurrent.futures, requests, subprocess
+import re, validators, socket, concurrent.futures, requests, subprocess
 from urllib3.exceptions import InsecureRequestWarning
 from urllib3 import disable_warnings
 disable_warnings(InsecureRequestWarning)
@@ -14,27 +14,6 @@ def checkSingleFormat(device):
     if re.search(r"^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$", device) or validators.url(device):
         return True
     return False
-
-
-def checkRangeFormat(device):
-    
-    if re.search(r"^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\/(\d{1,2})$", device) or validators.url(device):
-        return True
-    return False
-
-
-def deviceActive(device):
-
-    if validators.url(device):
-        device = getIP(device)
-
-    if platform.system().lower()=='windows':
-        command = os.system('ping -n 1 {} >nul'.format(device))
-    
-    else:
-        command = os.system('ping -c 1 {} > /dev/null'.format(device))
-        
-    return command == 0
 
 
 def getIP(device):
@@ -131,8 +110,6 @@ def detectBrands(device, possible_devices):
     output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output).lower()
     response+=output
 
-    print(response)
-
     f = open('detection/diccs/camera_brands.txt')
     for line in f:
         if line.strip() in response:
@@ -146,7 +123,6 @@ def detectBrands(device, possible_devices):
     f = open('detection/diccs/cms_brands.txt')
     for line in f:
         if line.strip() in response:
-            print('holita')
             possible_devices['Página web personal'] += 3
 
 
@@ -217,7 +193,7 @@ def create_table_html(data, detection):
     headers = ['Dispositivo', 'Puertos abiertos', 'Dispositivo detectado', 'Cabeceras HTTP']
 
     template="<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='UTF-8'>" + "<style>"
-    template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing:8px;padding:0 15px}"
+    template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing: 15px;padding: 10px; margin-top: 20px}"
     template+="</style>" + "</head>"
     template+="<body>" + "<strong>" + "Fecha de detección: " + detection.detection_date.strftime("%d-%b-%Y-%H-%M-%S") + "</strong>"
     template+="<table style='width:50%'>"
@@ -240,14 +216,20 @@ def create_table_html(data, detection):
     template+='<tr>'
     template+="<th style='background-color:#3DBBDB;width:85;color:white'>" + headers[3] + "</th>"
     template+="</tr>"
-    for http_info in data[3]:
 
+    if data[3] == 'No es posible obtener información':
         template+="<tr style='text-align:center'>"
-        template+="<td>" + str(http_info) + "</td>"
+        template+="<td>" + str(data[3]) + "</td>"
         template+="</tr>"
+    
+    else:
+        for http_info in data[3]:
+            template+="<tr style='text-align:center'>"
+            template+="<td>" + str(http_info) + "</td>"
+            template+="</tr>"
 
     template+="</table>"
-    template_pdf="<form action='/detection/pdf/{}'>".format(str(detection.id)) + "<input type='submit' value='Exportar a PDF' />" + "</form>"
+    template_pdf="<form style='margin-top: 20px' action='/detection/pdf/{}'>".format(str(detection.id)) + "<input type='submit' value='Exportar a PDF' />" + "</form>"
     template+="</body>" + "</html>"
 
     name1=str(detection.id) + ".html"
@@ -266,10 +248,6 @@ def single_device_detection(device):
     res = {}
 
     device_name = device.name
-
-    # if not deviceActive(device_name):
-    #     res['Not active'] = 1
-    #     return res
     
     total_open_ports = []
     device_name_port_scan = device.name

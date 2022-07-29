@@ -63,7 +63,7 @@ Resultados
 	</div>
 	{% else %}
 	<div class="cell" data-title="Detectado">
-	Sí
+	<img source="{% static 'icons/tick.png' %}" alt="Sí" width="10" height="10">
 	</div>
 	<div class="cell" data-title="Acciones">
 	<a href="/detection/remove/{{ d.id }}">Borrar</a>
@@ -72,9 +72,9 @@ Resultados
 	<a href="/detection/results/{{ d.detection.id }}">Ver resultados</a>
 	</div>
 	{% endif %}
+</div>
 {% endfor %}
 {% endif %}
-</div>
 </div>
 </div>
 </div>
