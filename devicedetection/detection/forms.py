@@ -1,6 +1,7 @@
 from django import forms
+
 from .models import Device
-from .utils import *
+from .utils import checkSingleFormat, checkRangeFormat
 
 class DetectionForm(forms.ModelForm):
 
@@ -15,7 +16,7 @@ class DetectionForm(forms.ModelForm):
 
         device_name = self.cleaned_data['name']
 
-        if not checkSingleFormat(device_name):
+        if not checkSingleFormat(device_name) and not checkRangeFormat(device_name):
             self.errors['name'] = self.error_class(['Invalid format for this device'])
 
         return self.cleaned_data

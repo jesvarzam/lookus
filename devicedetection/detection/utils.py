@@ -1,4 +1,4 @@
-import re, validators, socket, concurrent.futures, requests, subprocess
+import re, validators, socket, concurrent.futures, requests, subprocess, ipaddress
 from urllib3.exceptions import InsecureRequestWarning
 from urllib3 import disable_warnings
 disable_warnings(InsecureRequestWarning)
@@ -12,6 +12,13 @@ CAMERA_PORTS = [80, 443, 554]
 def checkSingleFormat(device):
 
     if re.search(r"^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$", device) or validators.url(device):
+        return True
+    return False
+
+
+def checkRangeFormat(device):
+    
+    if re.search(r"^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\/(\d{1,2})$", device) or validators.url(device):
         return True
     return False
 
@@ -272,4 +279,49 @@ def single_device_detection(device):
         res['No open ports'] = 1
         return res
 
+    return res
+
+
+def range_device_detection(range_device):
+
+    res = []
+
+    for device in ipaddress.IPv4Network(range_device.name):
+
+        device = str(device)
+
+        detection = {}
+        detection['Device'] = device
+        
+        total_open_ports = []
+        device_name_port_scan = device
+
+        if validators.url(device):
+            device_name_port_scan = getIP(device)
+
+        print('Escaneando puertos de ' + device)
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+            for port in range(1,100):
+                executor.submit(scanPort, device_name_port_scan, port, total_open_ports)
+            
+        
+
+        if len(total_open_ports) > 0:
+
+            print('Escaneo terminado, detectando servicios de ' + device)
+
+            probabilities = detectDevice(device, total_open_ports)
+            max_probability = max(probabilities, key=probabilities.get)
+
+            detection['Open ports'] = ', '.join([str(p) for p in total_open_ports])
+            detection['Device type'] = max_probability
+            
+        
+        else:
+            print(device + ' no tiene puertos abiertos')
+            detection['No open ports'] = 1
+        
+        res.append(detection)
+            
     return res
