@@ -4,35 +4,35 @@
 <html lang="es">
 <head>
 
-	<script language="JavaScript">
+	<script>
 		function detectarRango(){
 			if (confirm('La detección en un rango de red se puede demorar varios minutos. ¿Está seguro de continuar?')){
-			   document.detectrangeform.submit()
+			   document.detectrangeform.submit();
 			}
 		}
-		</script>
+	</script>
 	
-	<script language="JavaScript">
+	<script>
 		function detectarUnico(){
 			if (confirm('¿Está seguro de que quiere detectar este dispositivo?')){
 			   document.detectsingleform.submit()
 			}
 		}
-		</script>
+	</script>
 
-	<script language="JavaScript">
+	<script>
 		function borrar(){
 			if (confirm('¿Está seguro de que quiere borrar este disposito?')){
 			   document.removeform.submit()
 			}
 		}
-		</script> 
+	</script> 
 		
 <title>LookUS</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
 
 <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
 
@@ -40,7 +40,7 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
 
-<link rel="stylesheet" type="text/css" href="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.css' %}"> -->
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
@@ -118,7 +118,7 @@ Resultados
 </div>
 </div>
 
-<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!-- <script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
 
 <script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
 <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
@@ -135,6 +135,6 @@ Resultados
 
 	  gtag('config', 'UA-23581568-13');
 	</script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194" integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw==" data-cf-beacon='{"rayId":"731ed2f5cbd86689","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2022.6.0","si":100}' crossorigin="anonymous"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194" integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw==" data-cf-beacon='{"rayId":"731ed2f5cbd86689","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2022.6.0","si":100}' crossorigin="anonymous"></script> -->
 </body>
 </html>

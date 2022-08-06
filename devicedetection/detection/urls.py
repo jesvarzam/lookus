@@ -8,5 +8,6 @@ urlpatterns = [
     path('remove/<int:device_id>', remove),
     path('detect/<int:device_id>', detect),
     path('results/<int:detection_id>', results),
-    path('pdf/<int:detection_id>', pdf)
+    path('pdf/<int:detection_id>', pdf),
+    path('training/', training)
 ]

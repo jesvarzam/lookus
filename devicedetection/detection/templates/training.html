@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>LookUS</title>
+        <meta charset="UTF-8">
+    </head>
+    <p>LookUS posee diccionarios predeterminados para la detección de dispositivos. Sin embargo, el usuario puede entrenar estos diccionarios añadiendo
+        los dispositivos que considere, de manera que la detección puede ser más precisa.
+    </p>
+    <p>Introduce los dispositivos que quieras utilizar para entrenar aquí separados por comas y en el formato correcto (IP o URL)</p>
+    <body>
+        <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+            <button type="submit">Enviar y entrenar</button>
+        </form>
+    </body>
+</html>

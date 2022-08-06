@@ -1,4 +1,4 @@
-import re, validators, socket, concurrent.futures, requests, subprocess, ipaddress
+import re, validators, socket, requests, subprocess, ipaddress, nmap, os
 from urllib3.exceptions import InsecureRequestWarning
 from urllib3 import disable_warnings
 disable_warnings(InsecureRequestWarning)
@@ -7,7 +7,39 @@ PRINTER_PORTS = [80, 443, 161, 631, 2501, 5001, 6310, 9100, 9101, 9102, 9600]
 WEB_SERVER_PORTS = [22, 80, 443, 8080]
 ROUTER_PORTS = [22, 53, 80, 443]
 CAMERA_PORTS = [80, 443, 554]
+
+PRINTER_KEYWORDS = ['printer', 'impresora']
+ROUTER_KEYWORDS = ['router', 'gateway']
+CAMERA_KEYWORDS = ['cámara', 'camera']
+
+
+def train_devices(devices, user):
+
+    folder = str(user.username) + str(user.id)
+    if not os.path.exists('detection/diccs/' + folder):
+        os.mkdir('detection/diccs/' + folder)
+        os.system('cp detection/diccs/*_dicc.txt detection/diccs/' + folder)
     
+    for d in devices:
+        
+        f = open('detection/diccs/' + folder + '/' + d, 'a')
+
+        for device in devices[d]:
+
+            http_device = device
+
+            if not validators.url(device):
+                http_device = 'http://' + device
+
+            response = requests.get(http_device, verify=False).text.lower()
+            output = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+            output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output).lower()
+            response+=output
+
+            f.write('\n' + response)
+        
+        f.close()
+
 
 def checkSingleFormat(device):
 
@@ -75,7 +107,6 @@ def detectPorts(total_open_ports):
 
 def detectServices(device, total_open_ports, possible_devices):
 
-    
     if 80 in total_open_ports:
 
         http_device = device
@@ -105,33 +136,63 @@ def detectServices(device, total_open_ports, possible_devices):
     return possible_devices
 
 
-def detectBrands(device, possible_devices):
+def detectBrands(device, total_open_ports, possible_devices):
 
-    http_device = device
+    if 80 in total_open_ports:
 
-    if not validators.url(device):
-            http_device = 'http://' + device
+        http_device = device
 
-    response = requests.get(http_device, verify=False).text.lower()
-    output = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-    output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output).lower()
-    response+=output
+        if not validators.url(device):
+                http_device = 'http://' + device
 
-    f = open('detection/diccs/camera_brands.txt')
-    for line in f:
-        if line.strip() in response:
-            possible_devices['Cámara'] += 3
+        response = requests.get(http_device, verify=False).text.lower()
+        output = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output).lower()
+        response+=output
 
-    f = open('detection/diccs/printer_brands.txt')
-    for line in f:
-        if line.strip() in response:
-            possible_devices['Impresora'] += 3
+        f = open('detection/diccs/camera_brands.txt')
+        for line in f:
+            if line.strip() in response:
+                possible_devices['Cámara'] += 3
 
-    f = open('detection/diccs/cms_brands.txt')
-    for line in f:
-        if line.strip() in response:
-            possible_devices['Página web personal'] += 3
+        f = open('detection/diccs/printer_brands.txt')
+        for line in f:
+            if line.strip() in response:
+                possible_devices['Impresora'] += 3
 
+        f = open('detection/diccs/cms_brands.txt')
+        for line in f:
+            if line.strip() in response:
+                possible_devices['Página web personal'] += 3
+
+    
+    if 443 in total_open_ports:
+
+        http_device = device
+
+        if not validators.url(device):
+                http_device = 'https://' + device
+
+        response = requests.get(http_device, verify=False).text.lower()
+        output = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output).lower()
+        response+=output
+
+        f = open('detection/diccs/camera_brands.txt')
+        for line in f:
+            if line.strip() in response:
+                possible_devices['Cámara'] += 3
+
+        f = open('detection/diccs/printer_brands.txt')
+        for line in f:
+            if line.strip() in response:
+                possible_devices['Impresora'] += 3
+
+        f = open('detection/diccs/cms_brands.txt')
+        for line in f:
+            if line.strip() in response:
+                possible_devices['Página web personal'] += 3
+    
 
     return possible_devices
 
@@ -140,7 +201,7 @@ def detectDevice(device, total_open_ports):
 
     possible_devices = detectPorts(total_open_ports)
     possible_devices = detectServices(device, total_open_ports, possible_devices)
-    possible_devices = detectBrands(device, possible_devices)
+    possible_devices = detectBrands(device, total_open_ports, possible_devices)
 
     return possible_devices
 
@@ -154,17 +215,23 @@ def analyzeHTTP(possible_devices, response):
     
     f = open('detection/diccs/router_dicc.txt')
     for line in f:
-        if line.strip() in response:
+        if line.strip() in response and line.strip() in ROUTER_KEYWORDS:
+            possible_devices['Router'] += 3
+        else:
             possible_devices['Router'] += 1
     
     f = open('detection/diccs/printer_dicc.txt')
     for line in f:
-        if line.strip() in response:
+        if line.strip() in response and line.strip() in PRINTER_KEYWORDS:
+            possible_devices['Impresora'] += 3
+        else:
             possible_devices['Impresora'] += 1
 
     f = open('detection/diccs/camera_dicc.txt')
     for line in f:
-        if line.strip() in response:
+        if line.strip() in response and line.strip() in CAMERA_KEYWORDS:
+            possible_devices['Cámara'] += 3
+        else:
             possible_devices['Cámara'] += 1
 
     return possible_devices
@@ -179,17 +246,23 @@ def analyzeHTTPS(possible_devices, response):
     
     f = open('detection/diccs/router_dicc.txt')
     for line in f:
-        if line.strip() in response:
+        if line.strip() in response and line.strip() in ROUTER_KEYWORDS:
+            possible_devices['Router'] += 3
+        else:
             possible_devices['Router'] += 1
     
     f = open('detection/diccs/printer_dicc.txt')
     for line in f:
-        if line.strip() in response:
+        if line.strip() in response and line.strip() in PRINTER_KEYWORDS:
+            possible_devices['Impresora'] += 3
+        else:
             possible_devices['Impresora'] += 1
 
     f = open('detection/diccs/camera_dicc.txt')
     for line in f:
-        if line.strip() in response:
+        if line.strip() in response and line.strip() in CAMERA_KEYWORDS:
+            possible_devices['Cámara'] += 3
+        else:
             possible_devices['Cámara'] += 1
 
     return possible_devices
@@ -224,7 +297,7 @@ def create_table_html(data, detection):
     template+="<th style='background-color:#3DBBDB;width:85;color:white'>" + headers[3] + "</th>"
     template+="</tr>"
 
-    if data[3] == 'No es posible obtener información':
+    if data[3] == 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información':
         template+="<tr style='text-align:center'>"
         template+="<td>" + str(data[3]) + "</td>"
         template+="</tr>"
@@ -255,16 +328,18 @@ def single_device_detection(device):
     res = {}
 
     device_name = device.name
-    
-    total_open_ports = []
     device_name_port_scan = device.name
 
     if validators.url(device_name):
         device_name_port_scan = getIP(device_name)
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
-        for port in range(1,1000):
-            executor.submit(scanPort, device_name_port_scan, port, total_open_ports)
+    # with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+    #     for port in range(1,1000):
+    #         executor.submit(scanPort, device_name_port_scan, port, total_open_ports)
+
+    nm = nmap.PortScanner()
+    port_scan = nm.scan(device_name_port_scan, arguments='-p- --open -sS --min-rate 5000 -n -Pn')['scan'][device_name_port_scan]['tcp'].keys()
+    total_open_ports = [*port_scan]
 
     if len(total_open_ports) > 0:
 
@@ -293,7 +368,6 @@ def range_device_detection(range_device):
         detection = {}
         detection['Device'] = device
         
-        total_open_ports = []
         device_name_port_scan = device
 
         if validators.url(device):
@@ -301,15 +375,19 @@ def range_device_detection(range_device):
 
         print('Escaneando puertos de ' + device)
 
-        with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
-            for port in range(1,100):
-                executor.submit(scanPort, device_name_port_scan, port, total_open_ports)
-            
-        
+        # with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+        #     for port in range(1,100):
+        #         executor.submit(scanPort, device_name_port_scan, port, total_open_ports)
+
+        nm = nmap.PortScanner()
+        total_open_ports = nm.scan(device_name_port_scan, arguments='-p- --open -sS --min-rate 5000 -n -Pn')['scan']
 
         if len(total_open_ports) > 0:
 
-            print('Escaneo terminado, detectando servicios de ' + device)
+            total_open_ports = total_open_ports[device_name_port_scan]['tcp'].keys()
+            total_open_ports = [*total_open_ports]
+
+            print('Escaneo de puertos terminado ' + str(total_open_ports) + ', detectando servicios de ' + device)
 
             probabilities = detectDevice(device, total_open_ports)
             max_probability = max(probabilities, key=probabilities.get)
@@ -317,7 +395,6 @@ def range_device_detection(range_device):
             detection['Open ports'] = ', '.join([str(p) for p in total_open_ports])
             detection['Device type'] = max_probability
             
-        
         else:
             print(device + ' no tiene puertos abiertos')
             detection['No open ports'] = 1

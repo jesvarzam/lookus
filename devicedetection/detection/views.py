@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import FileResponse, Http404
-
-from .utils import checkRangeFormat, single_device_detection, create_table_html, range_device_detection
-from .forms import DetectionForm
+from .utils import checkRangeFormat, single_device_detection, create_table_html, range_device_detection, train_devices
+from .forms import DetectionForm, TrainingForm
 from .models import Device, Detection
 from authentication.views import *
 from django.contrib.auth.models import User
@@ -18,8 +17,9 @@ def save_http_info(device):
     
     output = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
     output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output)
-    output = output.replace('%', '')
-    return output.split(',')
+    output = output.replace('%', '').split('\n')
+    output = ', '.join(output).split(', ')[:-1]
+    return list(set(output))
 
 def add(request):
     if request.method == 'POST':
@@ -75,6 +75,8 @@ def remove(request, device_id):
 
 def detect(request, device_id):
 
+    print('hola aqui estoy')
+
     device_to_detect = Device.objects.get(id=device_id)
 
     if device_to_detect.format == 'Único':
@@ -107,6 +109,8 @@ def detect(request, device_id):
                     http_info = save_http_info(r['Device'])
                 
                 create_table_html([r['Device'], detection.open_ports, detection.device_type, http_info], detection)
+        
+        device_to_detect.delete()
             
         return redirect(list_devices)
          
@@ -153,3 +157,29 @@ def pdf(request, detection_id):
         return FileResponse(open(pdf_path, 'rb'), content_type='application/pdf')
     except FileNotFoundError:
         raise Http404()
+
+    
+def training(request):
+    if request.method == 'POST':
+        form = TrainingForm(request.POST)
+        if form.is_valid():
+
+            devices = {}
+            
+            web_servers = form.cleaned_data['web_servers'].strip().split(',')
+            routers = form.cleaned_data['routers'].strip().split(',')
+            printers = form.cleaned_data['printers'].strip().split(',')
+            cameras = form.cleaned_data['cameras'].strip().split(',')
+
+            devices['web_dicc.txt'] = web_servers
+            devices['router_dicc.txt'] = routers
+            devices['printer_dicc.txt'] = printers
+            devices['camera_dicc.txt'] = cameras
+
+            train_devices(devices, request.user)
+
+            return redirect(index)
+    
+    else:
+        form = TrainingForm()
+    return render(request, 'training.html', {'form':form})

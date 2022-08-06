@@ -91,14 +91,15 @@
         {% if user.is_staff %}
         <a href="/admin">Panel de administración</a>
         {% endif %}
+        <a href="/detection/training">Entrenar modelo de datos</a>
         <a href="/detection/add">Añadir un nuevo dispositivo</a>
         <a href="/detection/list">Ver dispositivos añadidos</a>
         <div class="navigation">
         <a class="button" href="/authentication/log_out">{{user.username}} <div class="logout">LOGOUT</div></a>
         </div>
         {% else %}
-        <a style="position: sticky;" href="authentication/sign_in">Iniciar sesión</a>
-        <a style="position: sticky;" href="authentication/sign_up">Registrarse</a>
+        <a style="position: sticky;" href="/authentication/sign_in">Iniciar sesión</a>
+        <a style="position: sticky;" href="/authentication/sign_up">Registrarse</a>
         {% endif %}
     </body>
 </html>
