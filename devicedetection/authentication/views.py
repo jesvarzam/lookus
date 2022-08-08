@@ -1,43 +1,56 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, authenticate, logout
-from devicedetection import settings
+from django.contrib.auth.models import User
+import re
 
 def index(request):
-    return render(request, 'index.html', {'STATIC_URL':settings.STATIC_URL})
+    return render(request, 'index.html')
+
+
+def validate(username, password, confirmed_password):
+
+    if len(username) > 20:
+        return 'El usuario debe ser menor a 20 caracteres'
+    elif User.objects.filter(username=username).exists():
+        return 'Ya existe un usuario con ese nombre'
+    elif not re.search(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", password):
+        return 'La contraseña debe tener al menos 8 caracteres, una minúscula, una mayúscula y un número'
+    elif confirmed_password != password:
+        return 'Las contraseñas deben ser iguales'
+    return ''
 
 
 def sign_in(request):
     if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            username=form.cleaned_data.get('username')
-            password=form.cleaned_data.get('password')
-            user=authenticate(request, username=username,password=password)
-            
-            if user is not None:
-                login(request, user)
-                
-                return redirect(index)
+        username=request.POST['username']
+        password=request.POST['password']
+        user=authenticate(request, username=username,password=password)
+        if user is not None:
+            login(request, user)
+            return redirect(index)
     
-    else:
-        form=AuthenticationForm()
-    return render(request, 'signin.html', {'form': form, 'STATIC_URL':settings.STATIC_URL})
+        else:
+            messages.error(request, 'Usuario o contraseña incorrectos')
+            return render(request, 'signin.html')
+    return render(request, 'signin.html')
 
 
 def sign_up(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
+
+    if request.method == "POST":
+        username=request.POST['username']
+        password=request.POST['password']
+        confirmed_password=request.POST['confirmed_password']
+        validation = validate(username, password, confirmed_password)
+        if validation == '':
+            user = authenticate(username=username, password=password)
             login(request, user)
             return redirect(index)
-    else:
-        form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+        else:
+            messages.error(request, validation)
+            return render(request, 'signup.html')
+    return render(request, 'signup.html')
 
 
 def log_out(request):

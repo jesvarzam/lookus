@@ -1,14 +1,63 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>LookUS</title>
-        <meta charset="UTF-8">
-    </head>
-    <body>
-        <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-            <button type="submit">Registrarse</button>
-        </form>
-    </body>
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+<title>Registro</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet"> -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'signup/css/A.style.css.pagespeed.cf.ggHLq1BZoJ.css' %}">
+</head>
+<body>
+<section class="ftco-section">
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-md-6 text-center mb-5">
+<h2 class="heading-section">LookUS</h2>
+</div>
+</div>
+<div class="row justify-content-center">
+<div class="col-md-7 col-lg-5">
+<div class="login-wrap p-4 p-md-5">
+<h3 class="mb-4">Registro</h3>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger">
+{{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<form method="post" action="/authentication/sign_up" class="signup-form">
+{% csrf_token %}
+<div class="form-group">
+<label class="label">Usuario</label>
+<input type="text" name="username" class="form-control" placeholder="Usuario">
+</div>
+<div class="form-group">
+<label class="label">Contraseña</label>
+<input id="password-field" type="password" name="password" class="form-control" placeholder="Contraseña">
+</div>
+<div class="form-group">
+<label class="label">Confirmar contraseña</label>
+<input id="password-field" type="password" name="confirmed_password" class="form-control" placeholder="Confirmar contraseña">
+</div>
+<div class="form-group d-flex justify-content-end mt-5">
+<button type="submit" class="btn btn-primary submit"><span>¡Regístrate ahora!</span></button>
+<!-- <button type="submit" class="btn btn-primary submit"><span class="fa fa-paper-plane"></span></button> -->
+</div>
+</form>
+<p class="text-center">¿Ya tienes una cuenta? <a href="/authentication/sign_in">Inicia sesión</a></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- <script src="js/jquery.min.js"></script>
+<script src="js/popper.js+bootstrap.min.js+main.js.pagespeed.jc.0C0pa_4bpq.js"></script><script>eval(mod_pagespeed_AVKzbBNhqi);</script>
+<script>eval(mod_pagespeed_JJzVTlObqB);</script>
+<script>eval(mod_pagespeed_8332Mhp72W);</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194" integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw==" data-cf-beacon='{"rayId":"737987542c8e65fb","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2022.6.0","si":100}' crossorigin="anonymous"></script> -->
+</body>
 </html>
