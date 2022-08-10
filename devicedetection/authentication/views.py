@@ -2,10 +2,19 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 import re
 
 def index(request):
-    return render(request, 'index.html')
+    if request.user.is_authenticated:
+        return render(request, 'index.html')
+    return redirect(sign_in)
+
+
+def services(request):
+    if request.user.is_authenticated:
+        return render(request, 'services.html')
+    return redirect(sign_in)
 
 
 def validate(username, password, confirmed_password):
@@ -37,13 +46,14 @@ def sign_in(request):
 
 
 def sign_up(request):
-
     if request.method == "POST":
         username=request.POST['username']
-        password=request.POST['password']
-        confirmed_password=request.POST['confirmed_password']
+        password=request.POST['password1']
+        confirmed_password=request.POST['password2']
         validation = validate(username, password, confirmed_password)
         if validation == '':
+            form=UserCreationForm(request.POST)
+            form.save()
             user = authenticate(username=username, password=password)
             login(request, user)
             return redirect(index)

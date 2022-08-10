@@ -1,7 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="es">
+<html>
     <head>
         <title>LookUS</title>
         <meta charset="UTF-8">
@@ -9,20 +9,19 @@
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
         <link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
+        
     </head>
-
-
     <body>
         <div id="colorlib-page">
             <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
             <aside id="colorlib-aside" role="complementary" class="js-fullheight">
             <nav id="colorlib-main-menu" role="navigation">
             <ul>
-            <li class="colorlib-active"><a href="/">Inicio</a></li>
+            <li><a href="/">Inicio</a></li>
             {% if user.is_staff %}
             <li><a href="/djangoadmin">Panel de administración</a></li>
             {% endif %}
-            <li><a href="#">Servicios</a></li>
+            <li class="colorlib-active"><a  href="#">Servicios</a></li>
             <li><a href="/detection/list">Dispositivos</a></li>
             <li><a href="#">Detecciones</a></li>
             <li><a href="#">Reportes</a></li>
@@ -31,15 +30,10 @@
             </nav>
             </aside>
             <div id="colorlib-main">
-                <p>LookUS posee diccionarios predeterminados para la detección de dispositivos. Sin embargo, el usuario puede entrenar estos diccionarios añadiendo
-                    los dispositivos que considere, de manera que la detección puede ser más precisa.
-                </p>
-                <p>Introduce los dispositivos que quieras utilizar para entrenar aquí separados por comas y en el formato correcto (IP o URL)</p>
-                <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                    <button type="submit">Enviar y entrenar</button>
-                </form>
+                <h1>Servicios de LookUS</h1>
+                <a href="/detection/training">Entrenar modelo de datos</a><br>
+                <a href="/detection/add">Añadir un nuevo dispositivo</a><br>
+                <a href="/detection/list">Ver dispositivos añadidos</a>
             </div>
         </div>
     </body>

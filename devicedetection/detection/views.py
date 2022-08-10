@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 import os, pdfkit, subprocess, validators, re
 
+
 def save_http_info(device):
 
     http_device = device
@@ -74,8 +75,6 @@ def remove(request, device_id):
 
 
 def detect(request, device_id):
-
-    print('hola aqui estoy')
 
     device_to_detect = Device.objects.get(id=device_id)
 

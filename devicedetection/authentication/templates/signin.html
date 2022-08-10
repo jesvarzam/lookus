@@ -1,44 +1,28 @@
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="es">
+<!doctype html>
+<html lang="en">
 <head>
 <title>Inicio de sesión</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
-
-<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-
-<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-
-<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
-
-<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-
-<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-
-<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-
-<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-
-<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css"> -->
-
-<link rel="stylesheet" type="text/css" href="{% static 'signin/css/util.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'signin/css/main.css' %}">
-
-<meta name="robots" content="noindex, follow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet"> -->
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+<link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'signup/css/A.style.css.pagespeed.cf.ggHLq1BZoJ.css' %}">
 </head>
 <body>
-<div class="limiter">
-<div class="container-login100">
-<div class="wrap-login100 p-t-90 p-b-30">
-<form class="login100-form validate-form" method="post" action="/authentication/sign_in">
-{% csrf_token %}
-<span class="login100-form-title p-b-40">
-Iniciar sesión
-</span>
+<section class="ftco-section">
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-md-6 text-center mb-5">
+<h2 class="heading-section">LookUS</h2>
+</div>
+</div>
+<div class="row justify-content-center">
+<div class="col-md-7 col-lg-5">
+<div class="login-wrap p-4 p-md-5">
+<h3 class="mb-4">Inicio de sesión</h3>
 {% if messages %}
 {% for message in messages %}
 <div class="alert alert-danger">
@@ -46,59 +30,31 @@ Iniciar sesión
 </div>
 {% endfor %}
 {% endif %}
-<div class="wrap-input100 validate-input m-b-16" data-validate="Introduce un usuario">
-<input class="input100" type="text" name="username" placeholder="Usuario">
-<span class="focus-input100"></span>
+<form method="post" action="/authentication/sign_in/" class="signup-form">
+{% csrf_token %}
+<div class="form-group">
+<label class="label">Usuario</label>
+<input type="text" name="username" class="form-control" placeholder="Usuario">
 </div>
-<div class="wrap-input100 validate-input m-b-20" data-validate="Introduce una contraseña">
-<span class="btn-show-pass">
-<i class="fa fa fa-eye"></i>
-</span>
-<input class="input100" type="password" name="password" placeholder="Contraseña">
-<span class="focus-input100"></span>
+<div class="form-group">
+<label class="label">Contraseña</label>
+<input id="password-field" type="password" name="password" class="form-control" placeholder="Contraseña">
 </div>
-<div class="container-login100-form-btn">
-<button type="submit" class="login100-form-btn">
-Iniciar sesión
-</button>
-</div>
-<div class="flex-col-c p-t-224">
-<span class="txt2 p-b-10">
-¿No tienes una cuenta?
-</span>
-<a href="/authentication/sign_up" class="txt3 bo1 hov1">
-Regístrate ahora
-</a>
+<div class="form-group d-flex justify-content-end mt-5">
+<button type="submit" class="btn btn-primary submit"><span>¡Inicia sesión ahora!</span></button>
+<!-- <button type="submit" class="btn btn-primary submit"><span class="fa fa-paper-plane"></span></button> -->
 </div>
 </form>
+<p class="text-center">¿No tienes una cuenta? <a href="/authentication/sign_up">Regístrate aquí</a></p>
 </div>
 </div>
 </div>
-
-<!-- <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-
-<script src="vendor/animsition/js/animsition.min.js"></script>
-
-<script src="vendor/bootstrap/js/popper.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-
-<script src="vendor/select2/select2.min.js"></script>
-
-<script src="vendor/daterangepicker/moment.min.js"></script>
-<script src="vendor/daterangepicker/daterangepicker.js"></script>
-
-<script src="vendor/countdowntime/countdowntime.js"></script>
-
-<script src="js/main.js"></script>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
-<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-
-	  gtag('config', 'UA-23581568-13');
-	</script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194" integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw==" data-cf-beacon='{"rayId":"73793199ac3f86bd","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2022.6.0","si":100}' crossorigin="anonymous"></script> -->
+</div>
+</section>
+<!-- <script src="js/jquery.min.js"></script>
+<script src="js/popper.js+bootstrap.min.js+main.js.pagespeed.jc.0C0pa_4bpq.js"></script><script>eval(mod_pagespeed_AVKzbBNhqi);</script>
+<script>eval(mod_pagespeed_JJzVTlObqB);</script>
+<script>eval(mod_pagespeed_8332Mhp72W);</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194" integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw==" data-cf-beacon='{"rayId":"737987542c8e65fb","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2022.6.0","si":100}' crossorigin="anonymous"></script> -->
 </body>
 </html>

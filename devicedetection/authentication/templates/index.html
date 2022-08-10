@@ -5,7 +5,11 @@
     <head>
         <title>LookUS</title>
         <meta charset="UTF-8">
-        <style>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
+        <!-- <style>
             body {
                 background-color: #DBF9FC;
             }
@@ -81,25 +85,44 @@
                 opacity: .9;
             }
 
-        </style>
+        </style> -->
     </head>
     <body>
-        <h1>Bienvenido a LookUS</h1>
-
-        {% if user.is_authenticated %}
-
-        {% if user.is_staff %}
-        <a href="/admin">Panel de administración</a>
-        {% endif %}
-        <a href="/detection/training">Entrenar modelo de datos</a>
-        <a href="/detection/add">Añadir un nuevo dispositivo</a>
-        <a href="/detection/list">Ver dispositivos añadidos</a>
-        <div class="navigation">
-        <a class="button" href="/authentication/log_out">{{user.username}} <div class="logout">LOGOUT</div></a>
+        <div id="colorlib-page">
+            <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+            <aside id="colorlib-aside" role="complementary" class="js-fullheight">
+            <nav id="colorlib-main-menu" role="navigation">
+            <ul>
+            <li class="colorlib-active"><a href="/">Inicio</a></li>
+            {% if user.is_staff %}
+            <li><a href="/djangoadmin">Panel de administración</a></li>
+            {% endif %}
+            <li><a href="/services">Servicios</a></li>
+            <li><a href="/detection/list">Dispositivos</a></li>
+            <li><a href="#">Detecciones</a></li>
+            <li><a href="#">Reportes</a></li>
+            <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
+            </ul>
+            </nav>
+            </aside>
+            <div id="colorlib-main">
+                <h1>¡Bienvenido a LookUS!</h1>
+                <strong>¿Qué ofrecemos?</strong>
+                <p>
+                    LookUS es una aplicación web que permite a los usuarios registrados de la empresa LookUS detectar los dispositivos que están en su zona de trabajo.
+                </p>
+                <strong>¿Cómo funciona?</strong>
+                <p>
+                    El usuario registrado podrá registrar un dispositivo en el sistema, el cual podrá ser detectado posteriormente.
+                </p>
+                <strong>¿Cómo detectar un dispositivo?</strong>
+                <p>
+                    Pulsa en el menú Servicios que se encuentra en el panel izquierdo de la página.
+                </p>
+                <!-- <div class="navigation">
+                <a class="button" href="/authentication/log_out">{{user.username}} <div class="logout">LOGOUT</div></a>
+                </div> -->
+            </div>
         </div>
-        {% else %}
-        <a style="position: sticky;" href="/authentication/sign_in">Iniciar sesión</a>
-        <a style="position: sticky;" href="/authentication/sign_up">Registrarse</a>
-        {% endif %}
     </body>
 </html>
