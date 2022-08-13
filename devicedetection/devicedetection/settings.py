@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'detection',
-    'authentication'
+    'authentication',
+    'devices'
 ]
 
 MODULES = [

@@ -22,5 +22,6 @@ urlpatterns = [
     path('', authViews.index, name='index'),
     path('services/', authViews.services, name='services'),
     path('authentication/', include('authentication.urls')),
-    path('detection/', include('detection.urls'))
+    path('detection/', include('detection.urls')),
+    path('devices/', include('devices.urls'))
 ]

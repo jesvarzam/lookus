@@ -1,15 +1,14 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <title>LookUS</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
-        <link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
-        
+		<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
+		<link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
     </head>
     <body>
         <div id="colorlib-page">
@@ -21,8 +20,8 @@
             {% if user.is_staff %}
             <li><a href="/djangoadmin">Panel de administración</a></li>
             {% endif %}
-            <li class="colorlib-active"><a  href="#">Servicios</a></li>
-            <li><a href="/devices/list">Dispositivos</a></li>
+            <li><a href="/services">Servicios</a></li>
+            <li class="colorlib-active"><a href="/devices/list">Dispositivos</a></li>
             <li><a href="#">Detecciones</a></li>
             <li><a href="#">Reportes</a></li>
             <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
@@ -30,10 +29,11 @@
             </nav>
             </aside>
             <div id="colorlib-main">
-                <h1>Servicios de LookUS</h1>
-                <a href="/detection/training">Entrenar modelo de datos</a><br>
-                <a href="/devices/add">Añadir un nuevo dispositivo</a><br>
-                <a href="/devices/list">Ver dispositivos añadidos</a>
+                <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                    <button type="submit">Añadir dispositivo</button>
+                </form>
             </div>
         </div>
     </body>

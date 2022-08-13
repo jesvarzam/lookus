@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import FileResponse, Http404
-from .utils import checkRangeFormat, single_device_detection, create_table_html, range_device_detection, train_devices
-from .forms import DetectionForm, TrainingForm
+from .utils import single_device_detection, create_table_html, range_device_detection, train_devices
+from .forms import TrainingForm
 from .models import Device, Detection
 from authentication.views import *
+from devices.views import list_devices
 from django.contrib.auth.models import User
 from django.contrib import messages
 import os, pdfkit, subprocess, validators, re
@@ -21,57 +22,6 @@ def save_http_info(device):
     output = output.replace('%', '').split('\n')
     output = ', '.join(output).split(', ')[:-1]
     return list(set(output))
-
-def add(request):
-    if request.method == 'POST':
-        form = DetectionForm(request.POST)
-        if form.is_valid():
-
-            if checkRangeFormat(form.cleaned_data['name']):
-                d = Device(name=form.cleaned_data['name'], format='Rango', user=User.objects.get(id=request.user.id))
-            
-            else:
-                d = Device(name=form.cleaned_data['name'], user=User.objects.get(id=request.user.id))
-
-            d.save()
-            messages.success(request, 'Dispositivo añadido correctamente')
-            return redirect(index)
-        
-        else:
-            return render(request, 'add.html', {'form': form})
-    
-    else:
-        form = DetectionForm()
-    return render(request, 'add.html', {'form': form})
-
-
-def list_devices(request):
-
-    devices = Device.objects.filter(user=User.objects.get(id=request.user.id))
-    return render(request, 'list.html', {'devices': devices})
-
-
-def remove(request, device_id):
-
-    device = Device.objects.get(id=device_id)
-    if device.detected:
-
-        html_path = 'detection/templates/reports/{}.html'.format(device.detection.id)
-        pdf_path = 'detection/templates/reports/{}.pdf'.format(device.detection.id)
-        temp_html_path = 'detection/templates/reports/{}pdf.html'.format(device.detection.id)
-    
-        if os.path.exists(html_path):
-            os.remove(html_path)
-        
-        if os.path.exists(pdf_path):
-            os.remove(pdf_path)
-        
-        if os.path.exists(temp_html_path):
-            os.remove(temp_html_path)
-        
-    device.delete()
-    messages.success(request, 'Dispositivo borrado correctamente')
-    return redirect(list_devices)
 
 
 def detect(request, device_id):
