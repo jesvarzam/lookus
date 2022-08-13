@@ -29,9 +29,23 @@
             </nav>
             </aside>
             <div id="colorlib-main">
-                <form method="post">
+                <h1>Añadir un nuevo dispositivo</h1>
+                <strong>
+                    Puedes añadir un solo dispositivo o varios dispositivos separados por comas.<br>
+                    El formato correcto debe ser una dirección IP o una URL.
+                </strong>
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                            <div class="alert alert-danger">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <form method="post" action="/devices/add/">
                 {% csrf_token %}
-                {{ form.as_p }}
+                    <textarea type="textarea" name="device_name" placeholder="Nombre o nombres de los dispositivos"></textarea><br>
                     <button type="submit">Añadir dispositivo</button>
                 </form>
             </div>

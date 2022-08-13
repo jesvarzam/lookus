@@ -1,40 +1,47 @@
 from django.shortcuts import render, redirect
-from detection.utils import checkRangeFormat
+from detection.utils import checkRangeFormat, checkSingleFormat
 from detection.models import Device
-from .forms import DetectionForm
 from authentication.views import *
 from django.contrib.auth.models import User
 from django.contrib import messages
 import os
 
+def checkFormats(devices):
+
+    for d in devices:
+            device_name = d.strip()
+            if not checkRangeFormat(device_name) and not checkSingleFormat(device_name):
+                return False
+    return True
+
 
 def add(request):
     if request.method == 'POST':
-        form = DetectionForm(request.POST)
-        if form.is_valid():
+        devices = request.POST["device_name"].split(',')
 
-            if checkRangeFormat(form.cleaned_data['name']):
-                d = Device(name=form.cleaned_data['name'], format='Rango', user=User.objects.get(id=request.user.id))
-            
-            else:
-                d = Device(name=form.cleaned_data['name'], user=User.objects.get(id=request.user.id))
-
-            d.save()
-            messages.success(request, 'Dispositivo añadido correctamente')
-            return redirect(list_devices)
+        if not checkFormats(devices):
+            messages.error(request, 'El formato del dispositivo o de alguno de los dispositivos no es correcto, debe ser una dirección IP o una URL')
+            return render(request, 'add.html')
         
-        else:
-            return render(request, 'add.html', {'form': form})
-    
-    else:
-        form = DetectionForm()
-    return render(request, 'add.html', {'form': form})
+        for d in devices:
+            device_name = d.strip()
+
+            if checkRangeFormat(device_name):
+                d = Device(name=device_name, format='Rango', user=User.objects.get(id=request.user.id))
+
+            elif checkSingleFormat(device_name):
+                d = Device(name=device_name, user=User.objects.get(id=request.user.id))
+            
+            d.save()
+        messages.success(request, 'Dispositivo(s) añadido(s) correctamente')
+        return redirect(list_devices)
+    return render(request, 'add.html')
 
 
 def list_devices(request):
 
     devices = Device.objects.filter(user=User.objects.get(id=request.user.id))
-    return render(request, 'list.html', {'devices': devices})
+    return render(request, 'list_devices.html', {'devices': devices})
 
 
 def remove(request, device_id):

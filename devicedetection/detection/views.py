@@ -10,6 +10,11 @@ from django.contrib import messages
 import os, pdfkit, subprocess, validators, re
 
 
+def list_detections(request):
+    detections = Detection.objects.all()
+    return render(request, 'list_detections.html', {'detections': detections})
+
+
 def save_http_info(device):
 
     http_device = device

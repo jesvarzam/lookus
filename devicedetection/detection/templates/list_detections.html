@@ -3,31 +3,6 @@
 <!DOCTYPE html>
 <html lang="es">
 	<head>
-
-		<!-- <script>
-			function detectarRango(){
-				if (confirm('La detección en un rango de red se puede demorar varios minutos. ¿Está seguro de continuar?')){
-				document.detectrangeform.submit();
-				}
-			}
-		</script>
-		
-		<script>
-			function detectarUnico(){
-				if (confirm('¿Está seguro de que quiere detectar este dispositivo?')){
-				document.detectsingleform.submit()
-				}
-			}
-		</script>
-
-		<script>
-			function borrar(){
-				if (confirm('¿Está seguro de que quiere borrar este disposito?')){
-				document.removeform.submit()
-				}
-			}
-		</script>  -->
-			
 		<title>LookUS</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -54,59 +29,71 @@
             </nav>
             </aside>
 			<div id="colorlib-main">
-
+				<h1>Lista de detecciones</h1>
 				{% if messages %}
 					{% for message in messages %}
-						<div class="alert alert-success" role="alert">
-							{{ message }}
-						</div>
+						{% if message.tags == 'success' %}
+							<div class="alert alert-success">
+								{{ message }}
+							</div>
+						{% endif %}
+						{% if message.tags == 'error' %}
+							<div class="alert alert-danger">
+								{{ message }}
+							</div>
+						{% endif %}
 					{% endfor %}
 				{% endif %}
-				
-				<!-- {% if list_errors %}
-					<div class="alert alert-danger" role="alert">
-						{{ list_errors }}
-					</div>
-				{% endif %} -->
 
-				{% if not devices %}
-				<strong>Aún no tienes ningún dispositivo añadido.</strong><a href="/devices/add">¿Quieres añadir uno?</a>
-				{% else %}
-				<table class="table table-striped table-bordered">
-					<thead>
-						<tr>
-							<th>Nombre</th>
-							<th>Detectado</th>
-							<th>Acciones</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for device in devices %}
-						<tr>
-							<td>{{device.name}}</td>
-							{% if device.detected %}
-							<td>Sí</td>
-							
-							<td>
-								<a href="/devices/remove/{{device.id}}" onclick="return confirm('¿Está seguro de que quiere borrar este dispositivo?')">
-									Borrar
-								</a>
-							</td>
-							{% else %}
-							<td>No</td>
-							<td>
-								<a href="/detection/detect/{{device.id}}" onclick="return confirm('¿Está seguro de que quiere detectar este dispositivo?')">
-									Detectar
-								</a>
-								|
-								<a href="/devices/remove/{{device.id}}" onclick="return confirm('¿Está seguro de que quiere borrar este dispositivo?')">
-									Borrar
-								</a>
-							{% endif %}
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+				{% if not detections %}
+				<strong>
+                    Aún no has realizado ninguna detección.
+                </strong>
+                Si tienes dispositivos añadidos, pulsa <a href="/devices/list">aquí</a> para elegir un dispositivo a escanear.
+                {% else %}
+                {% for detection in detections %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>
+                                    Dispositivo: {{ detection.device.name }}
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>
+                                    Fecha de detección: {{ detection.detection_date }}
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>
+                                    Resultados
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>
+                                    Acciones:
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="/detection/results/{{ detection.id }}" class="btn btn-primary">
+                                    Ver resultados
+                                </a>
+                                <a href="/devices/remove/{{ detection.device.id }}" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar esta detección?')">
+                                    Eliminar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+				{% endfor %}
 				{% endif %}
 				<!-- {% if not devices %}
 				<div class="cell">
