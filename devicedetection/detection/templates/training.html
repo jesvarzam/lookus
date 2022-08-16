@@ -10,35 +10,54 @@
         <link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
         <link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
     </head>
-
-
     <body>
         <div id="colorlib-page">
             <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
             <aside id="colorlib-aside" role="complementary" class="js-fullheight">
             <nav id="colorlib-main-menu" role="navigation">
             <ul>
-            <li class="colorlib-active"><a href="/">Inicio</a></li>
+            <li><a href="/">Inicio</a></li>
             {% if user.is_staff %}
             <li><a href="/djangoadmin">Panel de administración</a></li>
             {% endif %}
-            <li><a href="#">Servicios</a></li>
-            <li><a href="/detection/list">Dispositivos</a></li>
-            <li><a href="#">Detecciones</a></li>
+            <li><a href="/devices/list">Dispositivos</a></li>
+            <li><a href="/detection/list">Detecciones</a></li>
             <li><a href="#">Reportes</a></li>
+            <li class="colorlib-active"><a href="/detection/training">Entrenar diccionario de datos</a></li>
             <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
             </ul>
             </nav>
             </aside>
             <div id="colorlib-main">
-                <p>LookUS posee diccionarios predeterminados para la detección de dispositivos. Sin embargo, el usuario puede entrenar estos diccionarios añadiendo
+                <h1>Entrenar diccionario de datos</h1>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <p>LookUS posee diccionarios predeterminados para la detección de dispositivos.<br> Sin embargo, el usuario puede entrenar estos diccionarios añadiendo
                     los dispositivos que considere, de manera que la detección puede ser más precisa.
                 </p>
-                <p>Introduce los dispositivos que quieras utilizar para entrenar aquí separados por comas y en el formato correcto (IP o URL)</p>
+                <strong>Introduce los dispositivos que quieras utilizar para entrenar aquí separados por comas y en el formato correcto (IP o URL)</strong>
                 <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
                     <button type="submit">Enviar y entrenar</button>
+                </form>
+                <hr>
+                <p>
+                    También ofrecemos la posibilidad de subir un archivo con todos los dispositivos que se quieran añadir para entrenar.
+                </p>
+                <strong>
+                    Los dispositivos que quieras utilizar para entrenar deben estar separados por comas y en el formato correcto (IP o URL).<br>
+                    Solo se admiten archivos con extensión .txt
+                </strong>
+                <form method="post" enctype="multipart/form-data" action="/detection/training_with_file/">
+                    {% csrf_token %}
+                    <input type="file" name="training_file">
+                    <button type="submit">Subir archivo y entrenar</button>
                 </form>
             </div>
         </div>

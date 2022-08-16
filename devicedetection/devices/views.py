@@ -38,6 +38,35 @@ def add(request):
     return render(request, 'add.html')
 
 
+def add_with_file(request):
+    if request.method == 'POST' and request.FILES['devices_file']:
+        devices = request.FILES['devices_file'].read().decode().split(',')
+        print(devices)
+        if not checkFormats(devices):
+            messages.error(request, """El archivo contiene algún dispositivo en formato incorrecto. 
+            Por favor, comprueba que el formato de todos los dispositivos es correcto y vuelve a intentarlo.""")
+            return redirect(add)
+        
+        for dev in devices:
+
+            dev = dev.strip()
+
+            format = 'Único'
+
+            if checkRangeFormat(dev):
+                format = 'Rango'
+
+            user = User.objects.get(id=request.user.id)
+            
+            d = Device.objects.create(name=dev, format=format, user=user)
+            d.save()
+        
+        messages.success(request, 'Dispositivo(s) guardado(s) correctamente')
+        return redirect(list_devices)
+    else:
+        return redirect(add)
+
+
 def list_devices(request):
 
     devices = Device.objects.filter(user=User.objects.get(id=request.user.id))

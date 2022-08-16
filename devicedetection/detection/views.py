@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import FileResponse, Http404
-from .utils import single_device_detection, create_table_html, range_device_detection, train_devices
+from .utils import checkRangeFormat, checkSingleFormat, single_device_detection, create_table_html, range_device_detection, train_devices
 from .forms import TrainingForm
 from .models import Device, Detection
 from authentication.views import *
-from devices.views import list_devices
+from devices.views import checkFormats, list_devices
 from django.contrib.auth.models import User
 from django.contrib import messages
 import os, pdfkit, subprocess, validators, re
@@ -15,6 +15,32 @@ def list_detections(request):
     return render(request, 'list_detections.html', {'detections': detections})
 
 
+def remove(request, detection_id):
+    
+    detection = Detection.objects.get(id=detection_id)
+    device = Device.objects.get(detection=detection)
+
+    html_path = 'detection/templates/reports/{}.html'.format(device.detection.id)
+    pdf_path = 'detection/templates/reports/{}.pdf'.format(device.detection.id)
+    temp_html_path = 'detection/templates/reports/{}pdf.html'.format(device.detection.id)
+
+    if os.path.exists(html_path):
+        os.remove(html_path)
+    
+    if os.path.exists(pdf_path):
+        os.remove(pdf_path)
+    
+    if os.path.exists(temp_html_path):
+        os.remove(temp_html_path)
+
+    detection.delete()
+    device.detected = False
+    device.save()
+
+    messages.success(request, 'Detección borrada satisfactoriamente')
+    return redirect(list_detections)
+
+
 def save_http_info(device):
 
     http_device = device
@@ -23,6 +49,19 @@ def save_http_info(device):
         http_device = 'http://' + device
     
     output = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+    output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output)
+    output = output.replace('%', '').split('\n')
+    output = ', '.join(output).split(', ')[:-1]
+    return list(set(output))
+
+def save_https_info(device):
+
+    https_device = device
+
+    if not validators.url(device):
+        https_device = 'https://' + device
+    
+    output = subprocess.run(['whatweb', https_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
     output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output)
     output = output.replace('%', '').split('\n')
     output = ', '.join(output).split(', ')[:-1]
@@ -48,10 +87,12 @@ def detect(request, device_id):
             loop_device.save()
 
             if 'No open ports' in r:
-                detection = Detection(device=loop_device, device_type='Desconocido', open_ports='Ninguno')
-                detection.save()
-                messages.success(request, 'Detección del dispositivo {} finalizada'.format(r['Device']))
-                create_table_html([r['Device'], detection.open_ports, detection.device_type, 'No es posible obtener información'], detection)
+                pass
+                # detection = Detection(device=loop_device, device_type='Desconocido', open_ports='Ninguno')
+                # detection.save()
+                # messages.success(request, 'Detección del dispositivo {} finalizada'.format(r['Device']))
+                # http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
+                # create_table_html([r['Device'], detection.open_ports, detection.device_type, http_info], detection)
                 
             else:
                 detection = Detection(device=loop_device, device_type=r['Device type'], open_ports=r['Open ports'])
@@ -59,10 +100,14 @@ def detect(request, device_id):
                 messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))
                 http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
 
-                if '80' in detection.open_ports:
-                    http_info = save_http_info(r['Device'])
-                
-                create_table_html([r['Device'], detection.open_ports, detection.device_type, http_info], detection)
+                if '80' in detection.open_ports or '443' in detection.open_ports:
+                    whatweb = r['Whatweb']
+                    whatweb = whatweb.replace('%', '').split('\n')
+                    whatweb = list(set(', '.join(whatweb).split(', ')[:-1]))
+                    http_info = whatweb
+
+                if detection.open_ports != '':
+                    create_table_html([r['Device'], detection.open_ports, detection.device_type, http_info], detection)
         
         device_to_detect.delete()
             
@@ -75,9 +120,11 @@ def detect(request, device_id):
         messages.success(request, 'Detección del dispositivo {} finalizada'.format(device_to_detect.name))
         device_to_detect.detected = True
         device_to_detect.save()
+        http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
 
-        create_table_html([device_to_detect.name, detection.open_ports, detection.device_type, 'No es posible obtener información'], detection)
+        create_table_html([device_to_detect.name, detection.open_ports, detection.device_type, http_info], detection)
         return redirect(list_devices)
+
     
     detection = Detection(device=device_to_detect, device_type=res['Device type'], open_ports=res['Open ports'])
     detection.save()
@@ -87,9 +134,12 @@ def detect(request, device_id):
 
     http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
 
-    if '80' in detection.open_ports:
-        http_info = save_http_info(device_to_detect.name)
-    
+    if '80' in detection.open_ports or '443' in detection.open_ports:
+        whatweb = res['Whatweb']
+        whatweb = whatweb.replace('%', '').split('\n')
+        whatweb = list(set(', '.join(whatweb).split(', ')[:-1]))
+        http_info = whatweb
+
     create_table_html([device_to_detect.name, detection.open_ports, detection.device_type, http_info], detection)
 
     return redirect(list_devices)
@@ -137,3 +187,17 @@ def training(request):
     else:
         form = TrainingForm()
     return render(request, 'training.html', {'form':form})
+
+
+def training_with_file(request):
+    if request.method == 'POST' and request.FILES['training_file']:
+        devices = request.FILES['training_file'].read().decode().strip().split(',')
+        if not checkFormats(devices):
+            messages.error(request, """El archivo contiene algún dispositivo en formato incorrecto. 
+            Por favor, comprueba que el formato de todos los dispositivos es correcto y vuelve a intentarlo.""")
+            return redirect(training)
+        
+        messages.success(request, 'Archivo guardado correctamente')
+        return redirect(training)
+    else:
+        return redirect(training)

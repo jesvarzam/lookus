@@ -20,10 +20,10 @@
             {% if user.is_staff %}
             <li><a href="/djangoadmin">Panel de administración</a></li>
             {% endif %}
-            <li><a href="/services">Servicios</a></li>
-            <li class="colorlib-active"><a href="/devices/list">Dispositivos</a></li>
-            <li><a href="#">Detecciones</a></li>
+            <li><a href="/devices/list">Dispositivos</a></li>
+            <li class="colorlib-active"><a href="/detection/list">Detecciones</a></li>
             <li><a href="#">Reportes</a></li>
+			<li><a href="/detection/training">Entrenar diccionario de datos</a></li>
             <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
             </ul>
             </nav>
@@ -44,42 +44,29 @@
 						{% endif %}
 					{% endfor %}
 				{% endif %}
-
 				{% if not detections %}
 				<strong>
                     Aún no has realizado ninguna detección.
                 </strong>
                 Si tienes dispositivos añadidos, pulsa <a href="/devices/list">aquí</a> para elegir un dispositivo a escanear.
                 {% else %}
-                {% for detection in detections %}
+				{% for detection in detections %}
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
                                 <strong>
-                                    Dispositivo: {{ detection.device.name }}
+                                    Dispositivo
                                 </strong>
+								<p>{{ detection.device.name }}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <strong>
-                                    Fecha de detección: {{ detection.detection_date }}
-                                </strong>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>
-                                    Resultados
-                                </strong>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>
-                                    Acciones:
-                                </strong>
+                                    Fecha de detección
+								</strong>
+								<p>{{ detection.detection_date }}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -87,78 +74,15 @@
                                 <a href="/detection/results/{{ detection.id }}" class="btn btn-primary">
                                     Ver resultados
                                 </a>
-                                <a href="/devices/remove/{{ detection.device.id }}" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar esta detección?')">
+                                <a href="/detection/remove/{{ detection.id }}" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar esta detección?')">
                                     Eliminar
                                 </a>
                             </div>
                         </div>
+						<hr style="border: 0; border-top: 2px solid red;">
+					{% endfor %}
                     </div>
-				{% endfor %}
 				{% endif %}
-				<!-- {% if not devices %}
-				<div class="cell">
-				No tienes ningún dispositivo añadido
-				</div>
-				{% else %}
-				<div class="cell">
-				Dispositivo
-				</div>
-				<div class="cell">
-				Detectado
-				</div>
-				<div class="cell">
-				Acciones
-				</div>
-				<div class="cell">
-				Resultados
-				</div>
-				</div>
-				{% for d in devices %}
-					<div class="row">
-					<div class="cell" data-title="Dispositivo">
-					{{ d.name }}
-					</div>
-					{% if not d.detected %}
-					<div class="cell" data-title="Detectado">
-					No
-					</div>
-					<div class="cell" data-title="Acciones">
-
-						{% if d.format == "Rango" %}
-						<form name=detectrangeform action="/detection/detect/{{ d.id }}">
-							<input type=button onclick="detectarRango()" value="Detectar">
-						</form><br>
-						{% else %}
-						<form name=detectsingleform action="/detection/detect/{{ d.id }}">
-							<input type=button onclick="detectarUnico()" value="Detectar">
-						</form><br>
-						{% endif %}
-						<form name=removeform action="/detection/remove/{{ d.id }}">
-							<input type=button onclick="borrar()" value="Borrar">
-						</form>
-					</div>
-					<div class="cell" data-title="Resultados">
-					El dispositivo aún no ha sido detectado
-					</div>
-					{% else %}
-					<div class="cell" data-title="Detectado">
-					<img source="{% static 'icons/tick.png' %}" alt="Sí" width="10" height="10">
-					</div>
-					<div class="cell" data-title="Acciones">
-						<form name=removeform action="/detection/remove/{{ d.id }}">
-							<input type=button onclick="borrar()" value="Borrar">
-						</form>
-					</div>
-					<div class="cell" data-title="Resultados">
-					<a href="/detection/results/{{ d.detection.id }}">Ver resultados</a>
-					</div>
-					{% endif %}
-				</div>
-				{% endfor %}
-				{% endif %}
-				</div>
-				</div>
-				</div> -->
 			</div>
 		</div>
 	</body>

@@ -23,8 +23,8 @@ def validate(username, password, confirmed_password):
         return 'El usuario debe ser menor a 20 caracteres'
     elif User.objects.filter(username=username).exists():
         return 'Ya existe un usuario con ese nombre'
-    elif not re.search(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", password):
-        return 'La contraseña debe tener al menos 8 caracteres, una minúscula, una mayúscula y un número'
+    elif not re.search(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$", password):
+        return 'La contraseña debe tener un mínimo 8 caracteres, y al menos una letra y un número'
     elif confirmed_password != password:
         return 'Las contraseñas deben ser iguales'
     return ''
@@ -35,13 +35,11 @@ def sign_in(request):
         username=request.POST['username']
         password=request.POST['password']
         user=authenticate(request, username=username,password=password)
-        if user is not None:
-            login(request, user)
-            return redirect(index)
-    
-        else:
+        if user is None:
             messages.error(request, 'Usuario o contraseña incorrectos')
             return render(request, 'signin.html')
+        login(request, user)
+        return redirect(index)
     return render(request, 'signin.html')
 
 
@@ -52,11 +50,18 @@ def sign_up(request):
         confirmed_password=request.POST['password2']
         validation = validate(username, password, confirmed_password)
         if validation == '':
-            form=UserCreationForm(request.POST)
-            form.save()
+            user = User.objects.create_user(username=username, password=password)
+            user.save()
+            # form=UserCreationForm(request.POST)
+            # if form.is_valid():
+            #     form.save()
             user = authenticate(username=username, password=password)
+            print(user)
             login(request, user)
             return redirect(index)
+            # else:
+            #     messages.error(request, validation)
+            #     return render(request, 'signup.html')
         else:
             messages.error(request, validation)
             return render(request, 'signup.html')
