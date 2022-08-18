@@ -94,3 +94,28 @@ def remove(request, device_id):
     device.delete()
     messages.success(request, 'Dispositivo borrado correctamente')
     return redirect(list_devices)
+
+
+def remove_all(request):
+
+    devices = Device.objects.all()
+
+    for device in devices:
+        if device.detected:
+            html_path = 'detection/templates/reports/{}.html'.format(device.detection.id)
+            pdf_path = 'detection/templates/reports/{}.pdf'.format(device.detection.id)
+            temp_html_path = 'detection/templates/reports/{}pdf.html'.format(device.detection.id)
+    
+            if os.path.exists(html_path):
+                os.remove(html_path)
+            
+            if os.path.exists(pdf_path):
+                os.remove(pdf_path)
+            
+            if os.path.exists(temp_html_path):
+                os.remove(temp_html_path)
+        
+        device.delete()
+    
+    messages.success(request, 'Dispositivos borrados correctamente')
+    return redirect(list_devices)

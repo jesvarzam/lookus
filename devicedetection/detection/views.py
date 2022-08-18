@@ -87,17 +87,16 @@ def detect(request, device_id):
             loop_device.save()
 
             if 'No open ports' in r:
-                pass
-                # detection = Detection(device=loop_device, device_type='Desconocido', open_ports='Ninguno')
-                # detection.save()
-                # messages.success(request, 'Detección del dispositivo {} finalizada'.format(r['Device']))
-                # http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
-                # create_table_html([r['Device'], detection.open_ports, detection.device_type, http_info], detection)
+                detection = Detection(device=loop_device, device_type='Desconocido', open_ports='No se han detectado puertos abiertos')
+                detection.save()
+                #messages.success(request, 'Detección del dispositivo {} finalizada'.format(r['Device']))
+                http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
+                create_table_html([r['Device'], detection.open_ports, detection.device_type, http_info], detection)
                 
             else:
                 detection = Detection(device=loop_device, device_type=r['Device type'], open_ports=r['Open ports'])
                 detection.save()
-                messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))
+                #messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))
                 http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
 
                 if '80' in detection.open_ports or '443' in detection.open_ports:
@@ -110,14 +109,14 @@ def detect(request, device_id):
                     create_table_html([r['Device'], detection.open_ports, detection.device_type, http_info], detection)
         
         device_to_detect.delete()
-            
+        messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))    
         return redirect(list_devices)
          
     
     if 'No open ports' in res:
-        detection = Detection(device=device_to_detect, device_type='Desconocido', open_ports='Ninguno')
+        detection = Detection(device=device_to_detect, device_type='Desconocido', open_ports='No se han detectado puertos abiertos')
         detection.save()
-        messages.success(request, 'Detección del dispositivo {} finalizada'.format(device_to_detect.name))
+        messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))
         device_to_detect.detected = True
         device_to_detect.save()
         http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'

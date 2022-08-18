@@ -150,27 +150,34 @@ def analyze_response(possible_devices, response):
     f = open('detection/diccs/web_dicc.txt')
     for line in f:
         if line.strip() in response:
+            print('Palabra de web encontrada: ' + line.strip())
             possible_devices['Página web personal'] += 1
     
     f = open('detection/diccs/router_dicc.txt')
     for line in f:
         if line.strip() in response and line.strip() in ROUTER_KEYWORDS:
+            print('Palabra de router keyword encontrada: ' + line.strip())
             possible_devices['Router'] += 3
         elif line.strip() in response:
+            print('Palabra de router normal encontrada: ' + line.strip())
             possible_devices['Router'] += 1
     
     f = open('detection/diccs/printer_dicc.txt')
     for line in f:
         if line.strip() in response and line.strip() in PRINTER_KEYWORDS:
+            print('Palabra de printer keyword encontrada: ' + line.strip())
             possible_devices['Impresora'] += 3
         elif line.strip() in response:
+            print('Palabra de printer keyword encontrada: ' + line.strip())
             possible_devices['Impresora'] += 1
 
     f = open('detection/diccs/camera_dicc.txt')
     for line in f:
         if line.strip() in response and line.strip() in CAMERA_KEYWORDS:
+            print('Palabra de camera keyword encontrada: ' + line.strip())
             possible_devices['Cámara'] += 3
         elif line.strip() in response:
+            print('Palabra de camera keyword encontrada: ' + line.strip())
             possible_devices['Cámara'] += 1
 
     return possible_devices
@@ -187,8 +194,6 @@ def detectDevice(total_open_ports, response):
 def create_table_html(data, detection):
 
     headers = ['Dispositivo', 'Puertos abiertos', 'Dispositivo detectado', 'Cabeceras HTTP']
-
-    print(data[3])
 
     template="<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='UTF-8'>" + "<style>"
     template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing: 15px;padding: 10px; margin-top: 20px}"
@@ -285,8 +290,10 @@ def single_device_detection(device):
             whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
             full_response = response + whatweb
 
-        if response!='':
+        if full_response!='':
             probabilities = detectDevice(total_open_ports, full_response)
+            print(full_response)
+            print(probabilities)
             max_probability = max(probabilities, key=probabilities.get)
             res['Open ports'] = ', '.join([str(p) for p in total_open_ports])
             res['Device type'] = max_probability
@@ -350,7 +357,8 @@ def range_device_detection(range_device):
                 whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
                 full_response = response + whatweb
 
-            if response!='':
+            if full_response!='':
+                print(full_response)
                 probabilities = detectDevice(total_open_ports, full_response)
                 max_probability = max(probabilities, key=probabilities.get)
                 detection['Open ports'] = ', '.join([str(p) for p in total_open_ports])
