@@ -1,0 +1,5 @@
+hola esto es una prueba
+otra línea
+se acaba el archivo
+quiero saber si un chunk es una línea o es algo más 
+se terminó

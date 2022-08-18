@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<title>LookUS</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
+		<link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
+	</head>
+	<body>
+		<div id="colorlib-page">
+            <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+            <aside id="colorlib-aside" role="complementary" class="js-fullheight">
+            <nav id="colorlib-main-menu" role="navigation">
+            <ul>
+            <li><a href="/">Inicio</a></li>
+            {% if user.is_staff %}
+            <li><a href="/djangoadmin">Panel de administración</a></li>
+            {% endif %}
+            <li><a href="/devices/list">Dispositivos</a></li>
+            <li class="colorlib-active"><a href="/detection/list">Detecciones</a></li>
+            <li><a href="#">Reportes</a></li>
+			<li><a href="/detection/training">Entrenar diccionario de datos</a></li>
+            <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
+            </ul>
+            </nav>
+            </aside>
+			<div id="colorlib-main">
+				<h1>Lista de detecciones</h1>
+				{% if messages %}
+					{% for message in messages %}
+						{% if message.tags == 'success' %}
+							<div class="alert alert-success">
+								{{ message }}
+							</div>
+						{% endif %}
+						{% if message.tags == 'error' %}
+							<div class="alert alert-danger">
+								{{ message }}
+							</div>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+				{% if not detections %}
+				<strong>
+                    Aún no has realizado ninguna detección.
+                </strong>
+                Si tienes dispositivos añadidos, pulsa <a href="/devices/list">aquí</a> para elegir un dispositivo a escanear.
+                {% else %}
+				{% for detection in detections %}
+                {% if detection.open_ports == 'No se han detectado puertos abiertos' %}
+                {% else %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>
+                                    Dispositivo
+                                </strong>
+								<p>{{ detection.device.name }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <strong>
+                                    Fecha de detección
+								</strong>
+								<p>{{ detection.detection_date }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="/detection/results/{{ detection.id }}" class="btn btn-primary">
+                                    Ver resultados
+                                </a>
+                                <a href="/detection/remove/{{ detection.id }}" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar esta detección?')">
+                                    Eliminar
+                                </a>
+                            </div>
+                        </div>
+						<hr style="border: 0; border-top: 2px solid red;">
+                    {% endif %}
+					{% endfor %}
+                    </div>
+				{% endif %}
+			</div>
+		</div>
+	</body>
+</html>

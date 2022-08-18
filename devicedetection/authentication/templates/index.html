@@ -5,100 +5,44 @@
     <head>
         <title>LookUS</title>
         <meta charset="UTF-8">
-        <style>
-            body {
-                background-color: #DBF9FC;
-            }
-
-            h1 {
-                color: #111; 
-                font-family: 'Open Sans Condensed', sans-serif; 
-                font-size: 64px; 
-                font-weight: 700; 
-                line-height: 64px; 
-                margin: 0 0 0; 
-                padding: 20px 30px; 
-                text-align: center; 
-                text-transform: uppercase;
-                float: left;
-            }
-
-            #loggeduser {
-                float: right;
-                margin-right: 20px;
-                margin-top: 10px;
-                position: relative;
-                right: 140px;
-            }
-
-            #loggeduserimg {
-                margin-right: 20px;
-                margin-top: 5px;
-                width: 40px;
-                height: 40px;
-                right: 10px;
-            }
-
-            @import url(https://fonts.googleapis.com/css?family=Oswald:400);
-            .navigation {
-                width: 100%;
-                background-color: black;
-            }
-            .logout {
-                font-size: .8em;
-                font-family: 'Oswald', sans-serif;
-                    position: relative;
-                right: -18px;
-                bottom: -4px;
-                overflow: hidden;
-                letter-spacing: 3px;
-                opacity: 0;
-                transition: opacity .45s;
-                -webkit-transition: opacity .35s;
-                
-                }
-
-            .button {
-                text-decoration: none;
-                float: right;
-                padding: 12px;
-                margin: 15px;
-                color: white;
-                width: 75px;
-                background-color: black;
-                transition: width .35s;
-                -webkit-transition: width .35s;
-                overflow: hidden;
-                right: -10px;
-                }
-
-
-            .button:hover {
-                width: 100px;
-                }
-            
-            .button:hover .logout {
-                opacity: .9;
-            }
-
-        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
     </head>
     <body>
-        <h1>Bienvenido a LookUS</h1>
-
-        {% if user.is_authenticated %}
-
-        {% if user.is_staff %}
-        <a href="/admin">Panel de administración</a>
-        {% endif %}
-        <a href="/detection/add">Añadir un nuevo dispositivo</a>
-        <a href="/detection/list">Ver dispositivos añadidos</a>
-        <div class="navigation">
-        <a class="button" href="/authentication/log_out">{{user.username}} <div class="logout">LOGOUT</div></a>
+        <div id="colorlib-page">
+            <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+            <aside id="colorlib-aside" role="complementary" class="js-fullheight">
+            <nav id="colorlib-main-menu" role="navigation">
+            <ul>
+            <li class="colorlib-active"><a href="/">Inicio</a></li>
+            {% if user.is_staff %}
+            <li><a href="/djangoadmin">Panel de administración</a></li>
+            {% endif %}
+            <li><a href="/devices/list">Dispositivos</a></li>
+            <li><a href="/detection/list">Detecciones</a></li>
+            <li><a href="#">Reportes</a></li>
+            <li><a href="/detection/training">Entrenar diccionario de datos</a></li>
+            <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
+            </ul>
+            </nav>
+            </aside>
+            <div id="colorlib-main">
+                <h1>¡Bienvenido a LookUS!</h1>
+                <strong>¿Qué ofrecemos?</strong>
+                <p>
+                    LookUS es una aplicación web que permite a los usuarios registrados de la empresa LookUS detectar los dispositivos que están en su zona de trabajo.
+                </p>
+                <strong>¿Cómo funciona?</strong>
+                <p>
+                    El usuario registrado podrá registrar un dispositivo en el sistema, el cual podrá ser detectado posteriormente.
+                </p>
+                <strong>¿Cómo detectar un dispositivo?</strong>
+                <p>
+                    Pulsa en el menú Servicios que se encuentra en el panel izquierdo de la página.
+                </p>
+            </div>
         </div>
-        {% else %}
-        <a style="position: sticky;" href="authentication/sign_in">Iniciar sesión</a>
-        <a style="position: sticky;" href="authentication/sign_up">Registrarse</a>
-        {% endif %}
     </body>
 </html>

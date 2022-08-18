@@ -1,14 +1,52 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>LookUS</title>
-        <meta charset="UTF-8">
-    </head>
-    <body>
-        <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-            <button type="submit">Iniciar sesión</button>
-        </form>
-    </body>
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+<title>Inicio de sesión</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'signup/css/A.style.css.pagespeed.cf.ggHLq1BZoJ.css' %}">
+</head>
+<body>
+<section class="ftco-section">
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-md-6 text-center mb-5">
+<h2 class="heading-section">LookUS</h2>
+</div>
+</div>
+<div class="row justify-content-center">
+<div class="col-md-7 col-lg-5">
+<div class="login-wrap p-4 p-md-5">
+<h3 class="mb-4">Inicio de sesión</h3>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger">
+{{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<form method="post" action="/authentication/sign_in/" class="signup-form">
+{% csrf_token %}
+<div class="form-group">
+<label class="label">Usuario</label>
+<input type="text" name="username" class="form-control" placeholder="Usuario">
+</div>
+<div class="form-group">
+<label class="label">Contraseña</label>
+<input id="password-field" type="password" name="password" class="form-control" placeholder="Contraseña">
+</div>
+<div class="form-group d-flex justify-content-end mt-5">
+<button type="submit" class="btn btn-primary submit"><span>¡Inicia sesión ahora!</span></button>
+</div>
+</form>
+<p class="text-center">¿No tienes una cuenta? <a href="/authentication/sign_up">Regístrate aquí</a></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</body>
 </html>

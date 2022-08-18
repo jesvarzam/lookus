@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>LookUS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
+		<link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
+    </head>
+    <body>
+        <div id="colorlib-page">
+            <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+            <aside id="colorlib-aside" role="complementary" class="js-fullheight">
+            <nav id="colorlib-main-menu" role="navigation">
+            <ul>
+            <li><a href="/">Inicio</a></li>
+            {% if user.is_staff %}
+            <li><a href="/djangoadmin">Panel de administración</a></li>
+            {% endif %}
+            <li class="colorlib-active"><a href="/devices/list">Dispositivos</a></li>
+            <li><a href="/detection/list">Detecciones</a></li>
+            <li><a href="#">Reportes</a></li>
+            <li><a href="/detection/training">Entrenar diccionario de datos</a></li>
+            <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
+            </ul>
+            </nav>
+            </aside>
+            <div id="colorlib-main">
+                <h1>Añadir un nuevo dispositivo</h1>
+                <p>Puedes añadir un solo dispositivo o varios dispositivos.</p>
+                <strong>
+                    Deben estar separados por comas y el formato correcto debe ser una dirección IP o una URL.
+                </strong>
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                            <div class="alert alert-danger">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <form method="post" action="/devices/add/">
+                {% csrf_token %}
+                    <textarea type="textarea" name="device_name" placeholder="Nombre o nombres de los dispositivos"></textarea><br>
+                    <button type="submit">Añadir dispositivo(s)</button>
+                </form><br>
+                <p>También ofrecemos la opción de subir un archivo de texto con los dispositivos que quieras añadir.
+                </p>
+                <strong>Recuerda que deben separados por comas y en el formato correcto, es decir, una IP o una URL.
+                    <br>
+                    Solo se admiten archivos con extensión .txt
+                </strong>
+                <form method="post" enctype="multipart/form-data" action="/devices/add_with_file/">
+                    {% csrf_token %}
+                    <input type="file" name="devices_file"><br>
+                    <button type="submit">Subir archivo para añadir los dispositivos</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
