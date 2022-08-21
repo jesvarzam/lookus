@@ -299,10 +299,15 @@ def single_device_detection(device):
             res['Device type'] = max_probability
             res['Response'] = response
             res['Whatweb'] = whatweb
+
+        else:
+            probabilities = detectPorts(total_open_ports)
+            max_probability = max(probabilities, key=probabilities.get)
+            res['Open ports'] = ', '.join([str(p) for p in total_open_ports])
+            res['Device type'] = max_probability
     
     else:
         res['No open ports'] = 1
-        return res
 
     return res
 
