@@ -12,6 +12,8 @@ PRINTER_KEYWORDS = ['printer', 'impresora']
 ROUTER_KEYWORDS = ['router', 'gateway']
 CAMERA_KEYWORDS = ['cámara', 'camera']
 
+TOTAL = 81
+
 
 def train_devices(devices, user):
 
@@ -73,6 +75,28 @@ def checkRangeFormat(device):
     if re.search(r"^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\/(\d{1,2})$", device):
         return True
     return False
+
+
+def check_redirects(whatweb):
+
+    headers = whatweb.split('\n')
+    print(headers)
+    for h in headers:
+
+        if '302 found' in h:
+            return True
+
+    return False
+
+
+def follow_redirect(whatweb):
+
+    headers = whatweb.split('\n')
+    for h in headers:
+
+        if '302 found' in h:
+            print(h.split(' ')[0])
+            return str(h.split(' ')[0])
 
 
 def getIP(device):
@@ -274,6 +298,11 @@ def single_device_detection(device):
             response = requests.get(device_name, verify=False).text.lower()
             whatweb = subprocess.run(['whatweb', device_name], stdout=subprocess.PIPE).stdout.decode('utf-8')
             whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
+            if check_redirects(whatweb):
+                device_name = follow_redirect(whatweb)
+                response = requests.get(device_name, verify=False).text.lower()
+                whatweb = subprocess.run(['whatweb', device_name], stdout=subprocess.PIPE).stdout.decode('utf-8')
+                whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
             full_response = response + whatweb
         
         elif 80 in total_open_ports and device_format == 'IP':
@@ -281,6 +310,12 @@ def single_device_detection(device):
             response = requests.get(http_device, verify=False).text.lower()
             whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
             whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
+            if check_redirects(whatweb):
+                http_device = follow_redirect(whatweb)
+                print(http_device)
+                response = requests.get(http_device, verify=False).text.lower()
+                whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+                whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
             full_response = response + whatweb
 
         elif 443 in total_open_ports and device_format == 'IP':
@@ -288,21 +323,36 @@ def single_device_detection(device):
             response = requests.get(http_device, verify=False).text.lower()
             whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
             whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
+            if check_redirects(whatweb):
+                http_device = follow_redirect(whatweb)
+                print(http_device)
+                response = requests.get(http_device, verify=False).text.lower()
+                whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+                whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
             full_response = response + whatweb
 
         if full_response!='':
             probabilities = detectDevice(total_open_ports, full_response)
-            print(full_response)
             print(probabilities)
-            max_probability = max(probabilities, key=probabilities.get)
+            #max_probability = max(probabilities, key=probabilities.get)
+            max_probability = max(probabilities)
+            temp = probabilities
+            for t in temp:
+                temp[t] = temp[t]/TOTAL * 100.00
+            print(temp)
             res['Open ports'] = ', '.join([str(p) for p in total_open_ports])
             res['Device type'] = max_probability
             res['Response'] = response
             res['Whatweb'] = whatweb
+
+        else:
+            probabilities = detectPorts(total_open_ports)
+            max_probability = max(probabilities, key=probabilities.get)
+            res['Open ports'] = ', '.join([str(p) for p in total_open_ports])
+            res['Device type'] = max_probability
     
     else:
         res['No open ports'] = 1
-        return res
 
     return res
 
@@ -360,7 +410,13 @@ def range_device_detection(range_device):
             if full_response!='':
                 print(full_response)
                 probabilities = detectDevice(total_open_ports, full_response)
-                max_probability = max(probabilities, key=probabilities.get)
+                print(probabilities)
+                # max_probability = max(probabilities, key=probabilities.get)
+                max_probability = max(probabilities)
+                temp = probabilities
+                for t in temp:
+                    temp[t] = temp[t]/TOTAL * 100.00
+                print(temp)
                 detection['Open ports'] = ', '.join([str(p) for p in total_open_ports])
                 detection['Device type'] = max_probability
                 detection['Response'] = response

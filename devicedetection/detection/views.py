@@ -11,8 +11,7 @@ import os, pdfkit, subprocess, validators, re
 
 
 def list_detections(request):
-    detections = Detection.objects.all()
-    return render(request, 'list_detections.html', {'detections': detections})
+    return render(request, 'list_detections.html', {'detections': Detection.objects.all().filter(device__user__id=request.user.id)})
 
 
 def remove(request, detection_id):
@@ -89,14 +88,12 @@ def detect(request, device_id):
             if 'No open ports' in r:
                 detection = Detection(device=loop_device, device_type='Desconocido', open_ports='No se han detectado puertos abiertos')
                 detection.save()
-                #messages.success(request, 'Detección del dispositivo {} finalizada'.format(r['Device']))
                 http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
                 create_table_html([r['Device'], detection.open_ports, detection.device_type, http_info], detection)
                 
             else:
                 detection = Detection(device=loop_device, device_type=r['Device type'], open_ports=r['Open ports'])
                 detection.save()
-                #messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))
                 http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
 
                 if '80' in detection.open_ports or '443' in detection.open_ports:
@@ -132,6 +129,7 @@ def detect(request, device_id):
     device_to_detect.save()
 
     http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
+    print(detection.open_ports)
 
     if '80' in detection.open_ports or '443' in detection.open_ports:
         whatweb = res['Whatweb']

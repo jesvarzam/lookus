@@ -9,6 +9,16 @@
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
 		<link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
+
+        <script>
+            function searchDeviceName() {
+                input = document.getElementById("search_device_name");
+                names = document.getElementsByClassName("pruebita");
+                Array.prototype.forEach.call(names, function(name) {
+                    alert(name);
+                });
+            }
+        </script>
 	</head>
 	<body>
 		<div id="colorlib-page">
@@ -50,6 +60,7 @@
                 </strong>
                 Si tienes dispositivos añadidos, pulsa <a href="/devices/list">aquí</a> para elegir un dispositivo a escanear.
                 {% else %}
+                <input type="button" id="search_device_name" onclick="searchDeviceName()" placeholder="Buscar dispositivo por nombre">
 				{% for detection in detections %}
                 {% if detection.open_ports == 'No se han detectado puertos abiertos' %}
                 {% else %}
@@ -60,7 +71,7 @@
                                 <strong>
                                     Dispositivo
                                 </strong>
-								<p>{{ detection.device.name }}</p>
+								<p class="pruebita">{{ detection.device.name }}</p>
                             </div>
                         </div>
                         <div class="row">
