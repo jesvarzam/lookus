@@ -11,8 +11,7 @@ import os, pdfkit, subprocess, validators, re
 
 
 def list_detections(request):
-    detections = Detection.objects.all()
-    return render(request, 'list_detections.html', {'detections': detections})
+    return render(request, 'list_detections.html', {'detections': Detection.objects.all().filter(device__user__id=request.user.id)})
 
 
 def remove(request, detection_id):

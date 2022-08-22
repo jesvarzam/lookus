@@ -5,5 +5,3 @@ cola
 impresora
 bandeja
 imprimir
-dispositivo
-device
