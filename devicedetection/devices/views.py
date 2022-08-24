@@ -7,7 +7,6 @@ from django.contrib import messages
 import os
 
 def checkFormats(devices):
-
     for d in devices:
             device_name = d.strip()
             if not checkRangeFormat(device_name) and not checkSingleFormat(device_name):
@@ -16,6 +15,7 @@ def checkFormats(devices):
 
 
 def add(request):
+    if not request.user.is_authenticated: return redirect(sign_in)
     if request.method == 'POST':
         devices = request.POST["device_name"].split(',')
 
@@ -39,6 +39,7 @@ def add(request):
 
 
 def add_with_file(request):
+    if not request.user.is_authenticated: return redirect(sign_in)
     if request.method == 'POST' and request.FILES['devices_file']:
         devices = request.FILES['devices_file'].read().decode().split(',')
         print(devices)
@@ -68,12 +69,13 @@ def add_with_file(request):
 
 
 def list_devices(request):
-
+    if not request.user.is_authenticated: return redirect(sign_in)
     devices = Device.objects.filter(user=User.objects.get(id=request.user.id))
     return render(request, 'list_devices.html', {'devices': devices})
 
 
 def remove(request, device_id):
+    if not request.user.is_authenticated: return redirect(sign_in)
 
     device = Device.objects.get(id=device_id)
     if device.detected:
@@ -97,6 +99,7 @@ def remove(request, device_id):
 
 
 def remove_all(request):
+    if not request.user.is_authenticated: return redirect(sign_in)
 
     devices = Device.objects.all()
 

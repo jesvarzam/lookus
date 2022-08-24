@@ -1,20 +1,23 @@
 from django.shortcuts import render, redirect
 from django.http import FileResponse, Http404
-from .utils import checkRangeFormat, checkSingleFormat, single_device_detection, create_table_html, range_device_detection, train_devices
+from django.http.response import HttpResponse
+from .utils import single_device_detection, create_table_html, range_device_detection, train_devices
 from .forms import TrainingForm
 from .models import Device, Detection
 from authentication.views import *
 from devices.views import checkFormats, list_devices
 from django.contrib.auth.models import User
 from django.contrib import messages
-import os, pdfkit, subprocess, validators, re
+import os, pdfkit, subprocess, validators, re, json
 
 
 def list_detections(request):
+    if not request.user.is_authenticated: return redirect(sign_in)
     return render(request, 'list_detections.html', {'detections': Detection.objects.all().filter(device__user__id=request.user.id)})
 
 
 def remove(request, detection_id):
+    if not request.user.is_authenticated: return redirect(sign_in)
     
     detection = Detection.objects.get(id=detection_id)
     device = Device.objects.get(detection=detection)
@@ -68,6 +71,7 @@ def save_https_info(device):
 
 
 def detect(request, device_id):
+    if not request.user.is_authenticated: return redirect(sign_in)
 
     device_to_detect = Device.objects.get(id=device_id)
 
@@ -131,7 +135,12 @@ def detect(request, device_id):
     http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
     print(detection.open_ports)
 
-    if '80' in detection.open_ports or '443' in detection.open_ports:
+    ports_open = []
+    temp_ports_open = detection.open_ports.split(', ')
+    for p in temp_ports_open:
+        ports_open.append(int(p))
+
+    if 80 in ports_open or 443 in ports_open:
         whatweb = res['Whatweb']
         whatweb = whatweb.replace('%', '').split('\n')
         whatweb = list(set(', '.join(whatweb).split(', ')[:-1]))
@@ -143,10 +152,12 @@ def detect(request, device_id):
 
 
 def results(request, detection_id):
+    if not request.user.is_authenticated: return redirect(sign_in)
     return render(request, 'reports/{}.html'.format(detection_id))
 
 
 def pdf(request, detection_id):
+    if not request.user.is_authenticated: return redirect(sign_in)
 
     pdf_path = 'detection/templates/reports/{}.pdf'.format(str(detection_id))
 
@@ -161,6 +172,9 @@ def pdf(request, detection_id):
 
     
 def training(request):
+
+    if not request.user.is_authenticated: return redirect(sign_in)
+
     if request.method == 'POST':
         form = TrainingForm(request.POST)
         if form.is_valid():
@@ -187,14 +201,35 @@ def training(request):
 
 
 def training_with_file(request):
+    if not request.user.is_authenticated: return redirect(sign_in)
+    
     if request.method == 'POST' and request.FILES['training_file']:
-        devices = request.FILES['training_file'].read().decode().strip().split(',')
-        if not checkFormats(devices):
-            messages.error(request, """El archivo contiene algún dispositivo en formato incorrecto. 
-            Por favor, comprueba que el formato de todos los dispositivos es correcto y vuelve a intentarlo.""")
-            return redirect(training)
+        devices_json = json.loads(request.FILES['training_file'].read().decode())
+
+        for k in devices_json:
+            devices = devices_json[k]
         
-        messages.success(request, 'Archivo guardado correctamente')
+            if (not checkFormats(devices) and len(devices) > 0) or k not in ['Página web personal', 'Router', 'Impresora', 'Cámara']:
+                messages.error(request, """El archivo contiene algún dispositivo en formato incorrecto. 
+                Por favor, comprueba que el formato de todos los dispositivos es correcto y vuelve a intentarlo.""")
+                return redirect(training)
+        
+        devices = {}
+        devices['web_dicc.txt'] = devices_json['Página web personal']
+        devices['router_dicc.txt'] = devices_json['Router']
+        devices['printer_dicc.txt'] = devices_json['Impresora']
+        devices['camera_dicc.txt'] = devices_json['Cámara']
+
+        train_devices(devices, request.user)
+        
+        messages.success(request, 'Modelo de datos entrenado correctamente')
         return redirect(training)
     else:
         return redirect(training)
+
+    
+def json_example(request):
+    json_path = 'detection/templates/example.json'
+    response = HttpResponse(open(json_path, 'rb'), content_type='application/json')
+    response['Content-Disposition'] = "attachment; filename=%s" % 'example.json'
+    return response

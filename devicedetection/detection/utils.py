@@ -36,8 +36,11 @@ def train_devices(devices, user):
 
                 if not validators.url(device):
                     http_device = 'http://' + device
-
-                response = requests.get(http_device, verify=False).text.lower()
+                
+                try:
+                    response = requests.get(http_device, verify=False, timeout=10).text.lower()
+                except:
+                    response = ''
                 whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
                 whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
                 response+=whatweb
@@ -169,6 +172,26 @@ def detectBrands(possible_devices, response):
     return possible_devices
 
 
+def check_keywords(possible_devices, response):
+
+    for keyword in PRINTER_KEYWORDS:
+        if keyword in response:
+            print('Palabra de printer keyword encontrada: ' + keyword)
+            possible_devices['Impresora'] += 3
+    
+    for keyword in ROUTER_KEYWORDS:
+        if keyword in response:
+            print('Palabra de router keyword encontrada: ' + keyword)
+            possible_devices['Router'] += 3
+    
+    for keyword in CAMERA_KEYWORDS:
+        if keyword in response:
+            print('Palabra de cámara keyword encontrada: ' + keyword)
+            possible_devices['Cámara'] += 3
+
+    return possible_devices
+
+
 def analyze_response(possible_devices, response):
 
     f = open('detection/diccs/web_dicc.txt')
@@ -179,29 +202,20 @@ def analyze_response(possible_devices, response):
     
     f = open('detection/diccs/router_dicc.txt')
     for line in f:
-        if line.strip() in response and line.strip() in ROUTER_KEYWORDS:
-            print('Palabra de router keyword encontrada: ' + line.strip())
-            possible_devices['Router'] += 3
-        elif line.strip() in response:
-            print('Palabra de router normal encontrada: ' + line.strip())
+        if line.strip() in response:
+            print('Palabra de router encontrada: ' + line.strip())
             possible_devices['Router'] += 1
     
     f = open('detection/diccs/printer_dicc.txt')
     for line in f:
-        if line.strip() in response and line.strip() in PRINTER_KEYWORDS:
-            print('Palabra de printer keyword encontrada: ' + line.strip())
-            possible_devices['Impresora'] += 3
-        elif line.strip() in response:
-            print('Palabra de printer keyword encontrada: ' + line.strip())
+        if line.strip() in response:
+            print('Palabra de printer encontrada: ' + line.strip())
             possible_devices['Impresora'] += 1
 
     f = open('detection/diccs/camera_dicc.txt')
     for line in f:
-        if line.strip() in response and line.strip() in CAMERA_KEYWORDS:
-            print('Palabra de camera keyword encontrada: ' + line.strip())
-            possible_devices['Cámara'] += 3
-        elif line.strip() in response:
-            print('Palabra de camera keyword encontrada: ' + line.strip())
+        if line.strip() in response:
+            print('Palabra de camera encontrada: ' + line.strip())
             possible_devices['Cámara'] += 1
 
     return possible_devices
@@ -211,6 +225,7 @@ def detectDevice(total_open_ports, response):
 
     possible_devices = detectPorts(total_open_ports)
     possible_devices = detectBrands(possible_devices, response)
+    possible_devices = check_keywords(possible_devices, response)
     possible_devices = analyze_response(possible_devices, response)
     return possible_devices
 
@@ -332,14 +347,13 @@ def single_device_detection(device):
             full_response = response + whatweb
 
         if full_response!='':
+            print(full_response)
             probabilities = detectDevice(total_open_ports, full_response)
-            print(probabilities)
-            #max_probability = max(probabilities, key=probabilities.get)
             max_probability = max(probabilities)
-            temp = probabilities
-            for t in temp:
-                temp[t] = temp[t]/TOTAL * 100.00
-            print(temp)
+            factor = 1.0/sum(probabilities.values())
+            for p in probabilities:
+                probabilities[p] = probabilities[p]*factor*100.00
+            max_probability = max(probabilities)
             res['Open ports'] = ', '.join([str(p) for p in total_open_ports])
             res['Device type'] = max_probability
             res['Response'] = response
@@ -413,10 +427,12 @@ def range_device_detection(range_device):
                 print(probabilities)
                 # max_probability = max(probabilities, key=probabilities.get)
                 max_probability = max(probabilities)
-                temp = probabilities
-                for t in temp:
-                    temp[t] = temp[t]/TOTAL * 100.00
-                print(temp)
+                factor=1.0/sum(probabilities.values())
+                normalised_d = probabilities
+                for k in normalised_d:
+                    normalised_d[k] = normalised_d[k] * factor
+                # normalised_d = {k: v*factor for k, v in probabilities}
+                print(normalised_d)
                 detection['Open ports'] = ', '.join([str(p) for p in total_open_ports])
                 detection['Device type'] = max_probability
                 detection['Response'] = response

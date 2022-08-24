@@ -9,6 +9,25 @@
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
         <link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
+        <script>
+            var slideIndex = 1;
+            showDivs(slideIndex);
+
+            function plusDivs(n) {
+                showDivs(slideIndex += n);
+            }
+
+            function showDivs(n) {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                if (n > x.length) {slideIndex = 1}
+                if (n < 1) {slideIndex = x.length} ;
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                x[slideIndex-1].style.display = "block";
+            }
+        </script>
     </head>
     <body>
         <div id="colorlib-page">
@@ -30,18 +49,20 @@
             </aside>
             <div id="colorlib-main">
                 <h1>¡Bienvenido a LookUS!</h1>
-                <strong>¿Qué ofrecemos?</strong>
+                <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                <button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
+                <img class="mySlides" src="{% static 'icons/mountain.jpg' %}">
+                <img class="mySlides" src="{% static 'icons/beach.jpg' %}">
+                <img class="mySlides" src="{% static 'icons/snow.jpeg' %}">
+                
+                <!-- <strong>¿Qué ofrecemos?</strong>
                 <p>
                     LookUS es una aplicación web que permite a los usuarios registrados de la empresa LookUS detectar los dispositivos que están en su zona de trabajo.
                 </p>
                 <strong>¿Cómo funciona?</strong>
                 <p>
                     El usuario registrado podrá registrar un dispositivo en el sistema, el cual podrá ser detectado posteriormente.
-                </p>
-                <strong>¿Cómo detectar un dispositivo?</strong>
-                <p>
-                    Pulsa en el menú Servicios que se encuentra en el panel izquierdo de la página.
-                </p>
+                </p> -->
             </div>
         </div>
     </body>

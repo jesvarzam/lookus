@@ -51,8 +51,16 @@
                     También ofrecemos la posibilidad de subir un archivo con todos los dispositivos que se quieran añadir para entrenar.
                 </p>
                 <strong>
-                    Los dispositivos que quieras utilizar para entrenar deben estar separados por comas y en el formato correcto (IP o URL).<br>
-                    Solo se admiten archivos con extensión .txt
+                    Solo se admiten archivos con extensión .json.<br>
+                    El formato correcto es:
+                        "Tipo de dispositivo": ["Dispositivo"]<br>
+                    En el caso de querer añadir varios, habría que separarlos por comas:
+                        "Tipo de dispositivo": ["Dispositivo 1", "Dispositivo 2"]<br>
+                    Por último, si no quieres añadir algún dispositivo debería ser indicado así:
+                        "Tipo de dispositivo": []<br>
+                    Los tipos de dispositivo a añadir son "Paǵina web personal", "Router", "Impresora" y "Cámara"<br>
+
+                    Pulsa <a href="/detection/training/json_example">aquí</a> para descargar un ejemplo de cómo sería el formato adecuado para subir el archivo .json.
                 </strong>
                 <form method="post" enctype="multipart/form-data" action="/detection/training_with_file/">
                     {% csrf_token %}

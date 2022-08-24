@@ -8,5 +8,6 @@ urlpatterns = [
     path('results/<int:detection_id>/', results),
     path('pdf/<int:detection_id>/', pdf),
     path('training/', training),
-    path('training_with_file/', training_with_file)
+    path('training_with_file/', training_with_file),
+    path('training/json_example/', json_example)
 ]

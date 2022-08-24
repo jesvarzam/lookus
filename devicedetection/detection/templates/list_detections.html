@@ -60,7 +60,7 @@
                 </strong>
                 Si tienes dispositivos añadidos, pulsa <a href="/devices/list">aquí</a> para elegir un dispositivo a escanear.
                 {% else %}
-                <input type="button" id="search_device_name" onclick="searchDeviceName()" placeholder="Buscar dispositivo por nombre">
+                <input type="text" id="search_device_name" onclick="searchDeviceName()" placeholder="Buscar dispositivo por nombre">
 				{% for detection in detections %}
                 {% if detection.open_ports == 'No se han detectado puertos abiertos' %}
                 {% else %}
