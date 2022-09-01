@@ -14,6 +14,27 @@ CAMERA_KEYWORDS = ['cámara', 'camera']
 
 TOTAL = 81
 
+def return_response(device):
+    http_device = device
+
+    if not validators.url(device):
+        http_device = 'http://' + device
+    
+    try:
+        response = requests.get(http_device, verify=False, timeout=10).text.lower()
+    except:
+        response = ''
+    whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+    whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
+    if check_redirects(whatweb):
+        http_device = follow_redirect(whatweb)
+        response = requests.get(http_device, verify=False).text.lower()
+        whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
+        response+=whatweb
+    
+    return response
+
 
 def train_devices(devices, user):
 
@@ -32,18 +53,24 @@ def train_devices(devices, user):
 
             if check_port_http(device):
 
-                http_device = device
+                # http_device = device
 
-                if not validators.url(device):
-                    http_device = 'http://' + device
+                # if not validators.url(device):
+                #     http_device = 'http://' + device
                 
-                try:
-                    response = requests.get(http_device, verify=False, timeout=10).text.lower()
-                except:
-                    response = ''
-                whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-                whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
-                response+=whatweb
+                # try:
+                #     response = requests.get(http_device, verify=False, timeout=10).text.lower()
+                # except:
+                #     response = ''
+                # whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+                # whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
+                # if check_redirects(whatweb):
+                #     http_device = follow_redirect(whatweb)
+                #     response = requests.get(http_device, verify=False).text.lower()
+                #     whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+                #     whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
+                #     response+=whatweb
+                response = return_response(device)
 
                 f.write('\n' + response)
         

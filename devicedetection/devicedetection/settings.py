@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'detection',
     'authentication',
-    'devices'
+    'devices',
+    'adminpanel'
 ]
 
 MODULES = [
