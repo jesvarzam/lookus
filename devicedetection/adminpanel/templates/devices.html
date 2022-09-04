@@ -47,20 +47,70 @@
             </nav>
             </aside>
             <div id="colorlib-main">
-                <h1>Panel de administración de LookUS</h1>
-                
-                <p>Aquí podrás ver todos los dispositivos añadidos por cada usuario, así como sus detecciones asociadas.</p>
-                <p>Por otro lado, tienes a tu disposición el listado de usuarios creados, con posibilidad de eliminarlos en el caso de que alguno 
-                    incumpla las normas de comportamiento.
-                </p>
-                <!-- <strong>¿Qué ofrecemos?</strong>
-                <p>
-                    LookUS es una aplicación web que permite a los usuarios registrados de la empresa LookUS detectar los dispositivos que están en su zona de trabajo.
-                </p>
-                <strong>¿Cómo funciona?</strong>
-                <p>
-                    El usuario registrado podrá registrar un dispositivo en el sistema, el cual podrá ser detectado posteriormente.
-                </p> -->
+                <h1>Dispositivos añadidos a LookUS</h1>
+                <p>Aquí podrás ver todos los dispositivos añadidos por cada usuario.</p>
+                {% if messages %}
+					{% for message in messages %}
+						{% if message.tags == 'success' %}
+							<div class="alert alert-success">
+								{{ message }}
+							</div>
+						{% endif %}
+						{% if message.tags == 'error' %}
+							<div class="alert alert-danger">
+								{{ message }}
+							</div>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+				{% if not devices %}
+				<strong>Aún no se ha añadido ningún dispositivo.</strong>
+				{% else %}
+				<a href="/devices/remove_all" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar todos los dispositivos?')">
+					Borrar todos los dispositivos
+				</a>
+				<br>
+				<br>
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+                            <th>Formato</th>
+                            <th>Usuario asociado</th>
+							<th>Detectado</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for device in devices %}
+						<tr>
+							<td>{{device.name}}</td>
+                            <td>{{device.format}}</td>
+                            <td>{{device.user}}</td>
+							{% if device.detected %}
+							<td><img src="{% static 'icons/tick.png' %}" width="25" height="25" alt="Sí"></td>
+							
+							<td>
+								<a href="/detection/list">
+									Ver detección
+								</a>
+								|
+								<a href="/devices/remove/{{device.id}}" onclick="return confirm('¿Está seguro de que quiere borrar este dispositivo?')">
+									Borrar
+								</a>
+							</td>
+							{% else %}
+							<td><img src="{% static 'icons/equis.png' %}" width="25" height="25" alt="No"></td>
+							<td>
+								<a href="/devices/remove/{{device.id}}" onclick="return confirm('¿Está seguro de que quiere borrar este dispositivo?')">
+									Borrar
+								</a>
+							{% endif %}
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% endif %}
             </div>
         </div>
     </body>

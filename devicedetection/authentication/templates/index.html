@@ -10,23 +10,37 @@
         <link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
         <link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
         <script>
-            var slideIndex = 1;
-            showDivs(slideIndex);
+            var slideIndex = 0;
+            carousel();
 
-            function plusDivs(n) {
-                showDivs(slideIndex += n);
-            }
-
-            function showDivs(n) {
+            function carousel() {
                 var i;
                 var x = document.getElementsByClassName("mySlides");
-                if (n > x.length) {slideIndex = 1}
-                if (n < 1) {slideIndex = x.length} ;
                 for (i = 0; i < x.length; i++) {
                     x[i].style.display = "none";
                 }
+                slideIndex++;
+                if (slideIndex > x.length) {slideIndex = 1}
                 x[slideIndex-1].style.display = "block";
+                setTimeout(carousel, 2000); // Change image every 2 seconds
             }
+            // var slideIndex = 1;
+            // showDivs(slideIndex);
+
+            // function plusDivs(n) {
+            //     showDivs(slideIndex += n);
+            // }
+
+            // function showDivs(n) {
+            //     var i;
+            //     var x = document.getElementsByClassName("mySlides");
+            //     if (n > x.length) {slideIndex = 1}
+            //     if (n < 1) {slideIndex = x.length} ;
+            //     for (i = 0; i < x.length; i++) {
+            //         x[i].style.display = "none";
+            //     }
+            //     x[slideIndex-1].style.display = "block";
+            // }
         </script>
     </head>
     <body>
@@ -48,21 +62,23 @@
             </nav>
             </aside>
             <div id="colorlib-main">
-                <h1>¡Bienvenido a LookUS!</h1>
-                <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-                <button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button>
-                <img class="mySlides" src="{% static 'icons/mountain.jpg' %}">
-                <img class="mySlides" src="{% static 'icons/beach.jpg' %}">
-                <img class="mySlides" src="{% static 'icons/snow.jpeg' %}">
-                
-                <!-- <strong>¿Qué ofrecemos?</strong>
+                <h1>¡Bienvenido a LookUS!</h1>             
+                <br>
+                <strong>¿Qué ofrecemos?</strong>
                 <p>
                     LookUS es una aplicación web que permite a los usuarios registrados de la empresa LookUS detectar los dispositivos que están en su zona de trabajo.
                 </p>
                 <strong>¿Cómo funciona?</strong>
                 <p>
-                    El usuario registrado podrá registrar un dispositivo en el sistema, el cual podrá ser detectado posteriormente.
-                </p> -->
+                    El usuario registrado podrá registrar uno o varios dispositivos en el sistema, los cuales podrán ser detectados posteriormente con el fin<br>
+                    de saber si se trata de un router, una cámara de seguridad o una impresora.
+                </p>
+
+                <img class="mySlides" src="{% static 'icons/mountain.jpg' %}" width="300px" height="300px">
+                <img class="mySlides" src="{% static 'icons/beach.jpg' %}" width="300px" height="300px">
+                <img class="mySlides" src="{% static 'icons/snow.jpeg' %}" width="300px" height="300px">
+                <!-- <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                <button class="w3-button w3-display-right" onclick="plusDivs(+1)">&#10095;</button> -->
             </div>
         </div>
     </body>

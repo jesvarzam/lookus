@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from detection.utils import checkRangeFormat, checkSingleFormat
 from detection.models import Device
+from adminpanel.views import devices as devices_admin
 from authentication.views import *
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -95,6 +96,9 @@ def remove(request, device_id):
         
     device.delete()
     messages.success(request, 'Dispositivo borrado correctamente')
+
+    if request.user.is_staff and request.user.id != device.user.id:
+        return redirect(devices_admin)
     return redirect(list_devices)
 
 
@@ -102,6 +106,8 @@ def remove_all(request):
     if not request.user.is_authenticated: return redirect(sign_in)
 
     devices = Device.objects.all()
+
+    different_user = False
 
     for device in devices:
         if device.detected:
@@ -121,4 +127,6 @@ def remove_all(request):
         device.delete()
     
     messages.success(request, 'Dispositivos borrados correctamente')
+    if request.user.is_staff:
+        return redirect(devices_admin)
     return redirect(list_devices)
