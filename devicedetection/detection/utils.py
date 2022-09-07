@@ -107,6 +107,12 @@ def checkRangeFormat(device):
     return False
 
 
+def get_single_format(device):
+    if re.search(r"^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$", device):
+        return 'Dirección IP'
+    return 'Dirección URL'
+
+
 def check_redirects(whatweb):
 
     headers = whatweb.split('\n')

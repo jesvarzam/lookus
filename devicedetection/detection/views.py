@@ -79,8 +79,8 @@ def detect(request, device_id):
 
         device_to_detect = Device.objects.get(id=device_id)
 
-        if device_to_detect.format == 'Único':
-            res = single_device_detection(device_to_detect, str(request.POST.get("own_dicc", None))=="own_dicc_true")
+        if device_to_detect.format == 'Dirección IP' or device_to_detect.format == 'Dirección URL':
+            res = single_device_detection(device_to_detect)
         
         else:
             res = range_device_detection(device_to_detect, str(request.POST.get("own_dicc", None))=="own_dicc_true")

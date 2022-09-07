@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from detection.utils import checkRangeFormat, checkSingleFormat
+from detection.utils import checkRangeFormat, checkSingleFormat, get_single_format
 from detection.models import Device
 from adminpanel.views import devices as devices_admin
 from authentication.views import *
@@ -31,7 +31,7 @@ def add(request):
                 d = Device(name=device_name, format='Rango', user=User.objects.get(id=request.user.id))
 
             elif checkSingleFormat(device_name):
-                d = Device(name=device_name, user=User.objects.get(id=request.user.id))
+                d = Device(name=device_name, format=get_single_format(device_name), user=User.objects.get(id=request.user.id))
             
             d.save()
         messages.success(request, 'Dispositivo(s) añadido(s) correctamente')
@@ -53,7 +53,7 @@ def add_with_file(request):
 
             dev = dev.strip()
 
-            format = 'Único'
+            format = get_single_format(dev)
 
             if checkRangeFormat(dev):
                 format = 'Rango'
