@@ -24,6 +24,7 @@ def add(request):
             messages.error(request, 'El formato del dispositivo o de alguno de los dispositivos no es correcto, debe ser una dirección IP o una URL')
             return render(request, 'add.html')
         
+        
         for d in devices:
             device_name = d.strip()
 

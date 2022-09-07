@@ -75,15 +75,20 @@ def detect(request, device_id):
 
     if request.method == 'POST':
 
-        print(str(request.POST.get("own_dicc", None))=="cacadeperro")
+        use_own_dicc = request.POST.get("own_dicc", None)=="own_dicc_true"
+        dictionary_path_exists = "detection/dicss/" + str(request.user.username)
+        if use_own_dicc and not os.path.exists(dictionary_path_exists):
+            print('te he pillao')
+            messages.error(request, 'No tienes un diccionario propio creado. Pulsa en el menú "Entrenar diccionario de datos" situado a la izquierda para añadirlo')
+            return redirect(list_devices)
 
         device_to_detect = Device.objects.get(id=device_id)
 
         if device_to_detect.format == 'Dirección IP' or device_to_detect.format == 'Dirección URL':
-            res = single_device_detection(device_to_detect)
+            res = single_device_detection(device_to_detect, request.user, request.POST.get("own_dicc", None)=="own_dicc_true")
         
         else:
-            res = range_device_detection(device_to_detect, str(request.POST.get("own_dicc", None))=="own_dicc_true")
+            res = range_device_detection(device_to_detect, request.user, request.POST.get("own_dicc", None)=="own_dicc_true")
 
             for r in res:
 

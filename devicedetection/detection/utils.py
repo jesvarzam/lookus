@@ -225,27 +225,31 @@ def check_keywords(possible_devices, response):
     return possible_devices
 
 
-def analyze_response(possible_devices, response):
+def analyze_response(possible_devices, response, user, use_own_dicc):
 
-    f = open('detection/diccs/web_dicc.txt')
+    if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/web_dicc.txt')
+    else: f = open('detection/diccs/web_dicc.txt')
     for line in f:
         if line.strip() in response:
             print('Palabra de web encontrada: ' + line.strip())
             possible_devices['Página web personal'] += 1
     
-    f = open('detection/diccs/router_dicc.txt')
+    if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/router_dicc.txt')
+    else: f = open('detection/diccs/router_dicc.txt')
     for line in f:
         if line.strip() in response:
             print('Palabra de router encontrada: ' + line.strip())
             possible_devices['Router'] += 1
     
-    f = open('detection/diccs/printer_dicc.txt')
+    if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/printer_dicc.txt')
+    else: f = open('detection/diccs/printer_dicc.txt')
     for line in f:
         if line.strip() in response:
             print('Palabra de printer encontrada: ' + line.strip())
             possible_devices['Impresora'] += 1
 
-    f = open('detection/diccs/camera_dicc.txt')
+    if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/camera_dicc.txt')
+    else: f = open('detection/diccs/camera_dicc.txt')
     for line in f:
         if line.strip() in response:
             print('Palabra de camera encontrada: ' + line.strip())
@@ -254,12 +258,12 @@ def analyze_response(possible_devices, response):
     return possible_devices
 
 
-def detectDevice(total_open_ports, response):
+def detectDevice(total_open_ports, response, user, use_own_dicc):
 
     possible_devices = detectPorts(total_open_ports)
     possible_devices = detectBrands(possible_devices, response)
     possible_devices = check_keywords(possible_devices, response)
-    possible_devices = analyze_response(possible_devices, response)
+    possible_devices = analyze_response(possible_devices, response, user, use_own_dicc)
     return possible_devices
 
 
@@ -318,7 +322,7 @@ def create_table_html(data, detection):
     file2.close()
 
 
-def single_device_detection(device):
+def single_device_detection(device, user, use_own_dicc):
 
     res = {}
 
@@ -381,7 +385,7 @@ def single_device_detection(device):
 
         if full_response!='':
             print(full_response)
-            probabilities = detectDevice(total_open_ports, full_response)
+            probabilities = detectDevice(total_open_ports, full_response, user, use_own_dicc)
             max_probability = max(probabilities)
             factor = 1.0/sum(probabilities.values())
             for p in probabilities:
@@ -404,7 +408,7 @@ def single_device_detection(device):
     return res
 
 
-def range_device_detection(range_device):
+def range_device_detection(range_device, user, use_own_dicc):
 
     res = []
 
