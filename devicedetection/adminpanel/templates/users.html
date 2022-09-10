@@ -16,13 +16,13 @@
             <aside id="colorlib-aside" role="complementary" class="js-fullheight">
             <nav id="colorlib-main-menu" role="navigation">
             <ul>
-            <li><a href="/">Inicio</a></li>
+			<li><a href="/">← Volver a inicio</a></li>
             {% if user.is_staff %}
-            <li class="colorlib-active"><a href="/admin">Panel de administración</a></li>
+            <li><a href="/admin">Panel de administración</a></li>
             {% endif %}
-            <li><a href="/admin/devices">Dispositivos</a></li>
-            <li><a href="/admin/detections">Detecciones</a></li>
-            <li><a href="/admin/users">Usuarios</a></li>
+            <li><a href="/admin/devices">Control de dispositivos</a></li>
+            <li><a href="/admin/detections">Control de detecciones</a></li>
+            <li class="colorlib-active"><a href="/admin/users">Control de usuarios</a></li>
             <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
             </ul>
             </nav>
@@ -43,7 +43,7 @@
 						{% endif %}
 					{% endfor %}
 				{% endif %}
-				{% if not users %}
+				{% if not users or users.count == 1 %}
 				<strong>Aún no hay ningún usuario registrado.</strong>
 				{% else %}
 				<table class="table table-striped table-bordered">

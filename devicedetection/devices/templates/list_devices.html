@@ -15,6 +15,26 @@
 					document.getElementById('detection_form').submit();
 				}
 			}
+
+			function searchingDeviceName() {
+				var input, filter, table, tr, td, i, txtValue;
+				input = document.getElementById("device_name_search");
+				filter = input.value.toUpperCase();
+				table = document.getElementById("devices_table");
+				tr = table.getElementsByTagName("tr");
+
+				for (i = 0; i < tr.length; i++) {
+					td = tr[i].getElementsByTagName("td")[0];
+					if (td) {
+						txtValue = td.textContent || td.innerText;
+						if (txtValue.toUpperCase().indexOf(filter) > -1) {
+							tr[i].style.display = "";
+						} else {
+							tr[i].style.display = "none";
+						}
+					}
+				}
+			}
 		</script>
 	</head>
 	<body>
@@ -29,7 +49,6 @@
             {% endif %}
             <li class="colorlib-active"><a href="/devices/list">Dispositivos</a></li>
             <li><a href="/detection/list">Detecciones</a></li>
-            <li><a href="#">Reportes</a></li>
 			<li><a href="/detection/training">Entrenar diccionario de datos</a></li>
             <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
             </ul>
@@ -60,11 +79,24 @@
 				</a>
 				<br>
 				<br>
-				<br>
-				<table class="table table-striped table-bordered">
+				<strong>Buscar dispositivo por nombre: </strong>
+				<input type="text" style="display:inline" id="device_name_search" onkeyup="searchingDeviceName()" placeholder="Introduce aquí el nombre">
+				    |  <strong>Filtrar dispositivos: </strong>
+				<form style="display:inline; left: 500px;"id="filter_checkbox_select">
+					<select name="filter">
+						<option value="ip_devices">Mostrar dispositivos con direcciones IP</option>
+						<option value="url_devices">Mostrar dispositivos con direcciones URL</option>
+						<option value="detected_devices">Mostrar dispositivos detectados</option>
+						<option value="undetected_devices">Mostrar dispositivos sin detectar</option>
+					</select>
+					<input style="height:25px; width:70px; display: inline ;" type="submit" value="Aplicar"/>  
+				</form>
+				<hr style="border:none;">
+				<table id="devices_table" class="table table-striped table-bordered display">
 					<thead>
 						<tr>
 							<th>Nombre</th>
+							<th>Formato</th>
 							<th>Detectado</th>
 							<th>Acciones</th>
 						</tr>
@@ -73,6 +105,7 @@
 						{% for device in devices %}
 						<tr>
 							<td>{{device.name}}</td>
+							<td>{{device.format}}</td>
 							{% if device.detected %}
 							<td><img src="{% static 'icons/tick.png' %}" width="25" height="25" alt="Sí"></td>
 							
@@ -86,7 +119,7 @@
 								</a>
 							</td>
 							{% else %}
-							<td><img src="{% static 'icons/equis.png' %}" width="23" height="23" alt="No"></td>
+							<td><img src="{% static 'icons/equis.png' %}" width="20" height="20" alt="No"></td>
 							<td>
 								<form id="detection_form" method="post" action="/detection/detect/{{device.id}}/">
 									{% csrf_token %}

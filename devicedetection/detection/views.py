@@ -8,7 +8,7 @@ from authentication.views import *
 from devices.views import checkFormats, list_devices
 from django.contrib.auth.models import User
 from django.contrib import messages
-import os, pdfkit, subprocess, validators, re, json
+import os, pdfkit, subprocess, validators, re, json, shutil
 
 
 def list_detections(request):
@@ -76,7 +76,8 @@ def detect(request, device_id):
     if request.method == 'POST':
 
         use_own_dicc = request.POST.get("own_dicc", None)=="own_dicc_true"
-        dictionary_path_exists = "detection/dicss/" + str(request.user.username)
+        dictionary_path_exists = "detection/diccs/" + str(request.user.username) + str(request.user.id)
+        print(dictionary_path_exists)
         if use_own_dicc and not os.path.exists(dictionary_path_exists):
             print('te he pillao')
             messages.error(request, 'No tienes un diccionario propio creado. Pulsa en el menú "Entrenar diccionario de datos" situado a la izquierda para añadirlo')
@@ -205,11 +206,12 @@ def training(request):
 
             train_devices(devices, request.user)
 
-            return redirect(index)
+            messages.success('Diccionario de datos entrenado correctamente')
+            return redirect(training)
     
-    else:
-        form = TrainingForm()
-    return render(request, 'training.html', {'form':form})
+        else:
+            form = TrainingForm()
+    return render(request, 'training.html')
 
 
 def training_with_file(request):
@@ -245,3 +247,14 @@ def json_example(request):
     response = HttpResponse(open(json_path, 'rb'), content_type='application/json')
     response['Content-Disposition'] = "attachment; filename=%s" % 'example.json'
     return response
+
+
+def remove_dicc(request):
+    if not request.user.is_authenticated: return redirect(sign_in)
+    dicc_path = 'detection/diccs/' + str(request.user.username) + str(request.user.id)
+    if not os.path.exists(dicc_path):
+        messages.error(request, 'No tienes ningún diccionario de datos añadido, completa el formulario situado en esta página para crear uno')
+        return redirect(training)
+    shutil.rmtree(dicc_path)
+    messages.success(request, 'Diccionario de datos eliminado correctamente')
+    return redirect(training)

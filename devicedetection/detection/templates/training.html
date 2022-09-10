@@ -22,7 +22,6 @@
             {% endif %}
             <li><a href="/devices/list">Dispositivos</a></li>
             <li><a href="/detection/list">Detecciones</a></li>
-            <li><a href="#">Reportes</a></li>
             <li class="colorlib-active"><a href="/detection/training">Entrenar diccionario de datos</a></li>
             <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
             </ul>
@@ -37,6 +36,10 @@
                         </div>
                     {% endfor %}
                 {% endif %}
+                <a href="/detection/training/remove_dicc" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quieres borrar tu diccionario de datos?')">
+					Borrar tu diccionario de datos
+				</a>
+                <hr>
                 <p>LookUS posee diccionarios predeterminados para la detección de dispositivos.<br> Sin embargo, el usuario puede entrenar estos diccionarios añadiendo
                     los dispositivos que considere, de manera que la detección puede ser más precisa.
                 </p>

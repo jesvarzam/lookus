@@ -9,25 +9,6 @@
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
         <link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
-        <script>
-            var slideIndex = 1;
-            showDivs(slideIndex);
-
-            function plusDivs(n) {
-                showDivs(slideIndex += n);
-            }
-
-            function showDivs(n) {
-                var i;
-                var x = document.getElementsByClassName("mySlides");
-                if (n > x.length) {slideIndex = 1}
-                if (n < 1) {slideIndex = x.length} ;
-                for (i = 0; i < x.length; i++) {
-                    x[i].style.display = "none";
-                }
-                x[slideIndex-1].style.display = "block";
-            }
-        </script>
     </head>
     <body>
         <div id="colorlib-page">
@@ -35,32 +16,23 @@
             <aside id="colorlib-aside" role="complementary" class="js-fullheight">
             <nav id="colorlib-main-menu" role="navigation">
             <ul>
-            <li><a href="/">Inicio</a></li>
+            <li><a href="/">← Volver a inicio</a></li>
             {% if user.is_staff %}
             <li class="colorlib-active"><a href="/admin">Panel de administración</a></li>
             {% endif %}
-            <li><a href="/admin/devices">Dispositivos</a></li>
-            <li><a href="/admin/detections">Detecciones</a></li>
-            <li><a href="/admin/users">Usuarios</a></li>
+            <li><a href="/admin/devices">Control de dispositivos</a></li>
+            <li><a href="/admin/detections">Control de detecciones</a></li>
+            <li><a href="/admin/users">Control de usuarios</a></li>
             <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
             </ul>
             </nav>
             </aside>
             <div id="colorlib-main">
                 <h1>Panel de administración de LookUS</h1>
-                
                 <p>Aquí podrás ver todos los dispositivos añadidos por cada usuario, así como sus detecciones asociadas.</p>
                 <p>Por otro lado, tienes a tu disposición el listado de usuarios creados, con posibilidad de eliminarlos en el caso de que alguno 
                     incumpla las normas de comportamiento.
                 </p>
-                <!-- <strong>¿Qué ofrecemos?</strong>
-                <p>
-                    LookUS es una aplicación web que permite a los usuarios registrados de la empresa LookUS detectar los dispositivos que están en su zona de trabajo.
-                </p>
-                <strong>¿Cómo funciona?</strong>
-                <p>
-                    El usuario registrado podrá registrar un dispositivo en el sistema, el cual podrá ser detectado posteriormente.
-                </p> -->
             </div>
         </div>
     </body>

@@ -72,7 +72,11 @@ def add_with_file(request):
 
 def list_devices(request):
     if not request.user.is_authenticated: return redirect(sign_in)
-    devices = Device.objects.filter(user=User.objects.get(id=request.user.id))
+    if len(request.GET) == 0: devices = Device.objects.filter(user=User.objects.get(id=request.user.id))
+    elif request.GET['filter'] == 'ip_devices': devices = Device.objects.filter(format='Dirección IP', user=User.objects.get(id=request.user.id))
+    elif request.GET['filter'] == 'url_devices': devices = Device.objects.filter(format='Dirección URL', user=User.objects.get(id=request.user.id))
+    elif request.GET['filter'] == 'detected_devices': devices = Device.objects.filter(detected=True, user=User.objects.get(id=request.user.id))
+    elif request.GET['filter'] == 'undetected_devices': devices = Device.objects.filter(detected=False, user=User.objects.get(id=request.user.id))
     return render(request, 'list_devices.html', {'devices': devices})
 
 
