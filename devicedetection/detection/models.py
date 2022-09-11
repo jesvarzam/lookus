@@ -12,6 +12,7 @@ class Detection(models.Model):
         ROUTER = 'Router'
         PRINTER = 'Impresora'
         CAMERA = 'Cámara'
+        RANGE = 'Rango'
         UNKNOWN = 'Desconocido'
     
     device_type = models.CharField(

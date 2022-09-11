@@ -36,4 +36,9 @@ def devices(request):
 def detections(request):
     if not request.user.is_authenticated: return redirect(sign_in)
     elif not request.user.is_staff: return HttpResponseForbidden()
-    return render(request, 'detections.html', {'detections': Detection.objects.all()})
+    if len(request.GET) == 0: detections = Detection.objects.all()
+    elif request.GET['filter'] == 'ip_detections': detections = Detection.objects.filter(device__user__id=request.user.id, device__format='Dirección IP')
+    elif request.GET['filter'] == 'url_detections': detections = Detection.objects.filter(device__user__id=request.user.id, device__format='Dirección URL')
+    elif request.GET['filter'] == 'open_ports_detections': detections = Detection.objects.filter(device__user__id=request.user.id).exclude(open_ports='No se han detectado puertos abiertos')
+    elif request.GET['filter'] == 'no_open_ports_detections': detections = Detection.objects.filter(device__user__id=request.user.id, open_ports='No se han detectado puertos abiertos')
+    return render(request, 'detections.html', {'detections': detections})

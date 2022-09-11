@@ -77,7 +77,9 @@ def list_devices(request):
     elif request.GET['filter'] == 'url_devices': devices = Device.objects.filter(format='Dirección URL', user=User.objects.get(id=request.user.id))
     elif request.GET['filter'] == 'detected_devices': devices = Device.objects.filter(detected=True, user=User.objects.get(id=request.user.id))
     elif request.GET['filter'] == 'undetected_devices': devices = Device.objects.filter(detected=False, user=User.objects.get(id=request.user.id))
-    return render(request, 'list_devices.html', {'devices': devices})
+    own_dicc_exists = False
+    if os.path.exists('detection/diccs/' + str(request.user.username) + str(request.user.id)): own_dicc_exists = True
+    return render(request, 'list_devices.html', {'devices': devices, 'own_dicc_exists': own_dicc_exists})
 
 
 def remove(request, device_id):

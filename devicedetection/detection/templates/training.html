@@ -36,10 +36,12 @@
                         </div>
                     {% endfor %}
                 {% endif %}
+                {% if own_dicc_exists %}
                 <a href="/detection/training/remove_dicc" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quieres borrar tu diccionario de datos?')">
 					Borrar tu diccionario de datos
 				</a>
                 <hr>
+                {% endif %}
                 <p>LookUS posee diccionarios predeterminados para la detección de dispositivos.<br> Sin embargo, el usuario puede entrenar estos diccionarios añadiendo
                     los dispositivos que considere, de manera que la detección puede ser más precisa.
                 </p>

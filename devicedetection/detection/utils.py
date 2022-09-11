@@ -100,7 +100,6 @@ def get_single_format(device):
 def check_redirects(whatweb):
 
     headers = whatweb.split('\n')
-    print(headers)
     for h in headers:
 
         if '302 found' in h:
@@ -115,7 +114,6 @@ def follow_redirect(whatweb):
     for h in headers:
 
         if '302 found' in h:
-            print(h.split(' ')[0])
             return str(h.split(' ')[0])
 
 
@@ -193,17 +191,14 @@ def check_keywords(possible_devices, response):
 
     for keyword in PRINTER_KEYWORDS:
         if keyword in response:
-            print('Palabra de printer keyword encontrada: ' + keyword)
             possible_devices['Impresora'] += 3
     
     for keyword in ROUTER_KEYWORDS:
         if keyword in response:
-            print('Palabra de router keyword encontrada: ' + keyword)
             possible_devices['Router'] += 3
     
     for keyword in CAMERA_KEYWORDS:
         if keyword in response:
-            print('Palabra de cámara keyword encontrada: ' + keyword)
             possible_devices['Cámara'] += 3
 
     return possible_devices
@@ -215,28 +210,24 @@ def analyze_response(possible_devices, response, user, use_own_dicc):
     else: f = open('detection/diccs/web_dicc.txt')
     for line in f:
         if line.strip() in response:
-            print('Palabra de web encontrada: ' + line.strip())
             possible_devices['Página web personal'] += 1
     
     if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/router_dicc.txt')
     else: f = open('detection/diccs/router_dicc.txt')
     for line in f:
         if line.strip() in response:
-            print('Palabra de router encontrada: ' + line.strip())
             possible_devices['Router'] += 1
     
     if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/printer_dicc.txt')
     else: f = open('detection/diccs/printer_dicc.txt')
     for line in f:
         if line.strip() in response:
-            print('Palabra de printer encontrada: ' + line.strip())
             possible_devices['Impresora'] += 1
 
     if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/camera_dicc.txt')
     else: f = open('detection/diccs/camera_dicc.txt')
     for line in f:
         if line.strip() in response:
-            print('Palabra de camera encontrada: ' + line.strip())
             possible_devices['Cámara'] += 1
 
     return possible_devices
@@ -306,6 +297,76 @@ def create_table_html(data, detection):
     file2.close()
 
 
+def create_table_html_for_range(devices, device_detected, detection):
+
+    headers = ['Dispositivo', 'Puertos abiertos', 'Dispositivo detectado', 'Cabeceras HTTP']
+
+    template="<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='UTF-8'>" + "<style>"
+    template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing: 15px;padding: 10px; margin-top: 20px}"
+    template+="</style>" + "</head>"
+    template+="<body>" + "<h1>Detección del rango de red " + device_detected + "</h1>" 
+    template+="<strong style='display:inline'>" + "Fecha de detección: <strong>" 
+    template+="<p style='display:inline'>" + detection.detection_date.strftime("%d-%b-%Y-%H-%M-%S") + "</p>"
+    template+="<hr>"
+
+    counter = 1
+    for d in devices:
+        http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
+        # template+="<p>Dispositivo " + str(counter) + "<p>"
+        template+="<table style='width:50%'>"
+        template+="<tr>"
+        template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[0] + "</th>"
+        template+="</tr>"
+        template+="<tr style='text-align:center'>"
+        template+="<td>" + str(d['Device']) + " (" + str(d['Device type']) + ") " + "</td>"
+        template+="</tr>"
+        template+="</table>"
+        template+="<table style='width:50%'>"
+        template+="<tr>"
+        template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[1] + "</th>"
+        template+="</tr>"
+        template+="<tr style='text-align:center'>"
+        if 'Open ports' in d: template+="<td>" + str(d['Open ports']) + "</td>"
+        if 'No open ports' in d: template+="<td>" + str(d['No open ports']) + "</td>"
+        template+="</tr>"
+        template+="</table>"
+        template+="<table style='width:50%'>"
+        template+="<tr>"
+        template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[3] + "</th>"
+        template+="</tr>"
+        if 'Whatweb' in d: 
+            whatweb = d['Whatweb']
+            whatweb = whatweb.replace('%', '').split('\n')
+            whatweb = list(set(', '.join(whatweb).split(', ')[:-1]))
+            http_info = whatweb
+            for h in http_info:
+                template+="<tr style='text-align:center'>"
+                template+="<td>" + str(h) + "</td>"
+                template+="</tr>"
+        if 'Whatweb' not in d:
+            template+="<tr style='text-align:center'>"
+            template+="<td>" + http_info + "</td>"
+            template+="</tr>"
+        
+        # template+="<br>"
+        template+="<hr>"
+        # counter+=1
+
+    template+="</table>"
+    template_pdf="<form style='margin-top: 20px' action='/detection/pdf/{}'>".format(str(detection.id)) + "<input type='submit' value='Exportar a PDF' />" + "</form>"
+    template+="</body>" + "</html>"
+
+    name1=str(detection.id) + ".html"
+    file1 = open('detection/templates/reports/' + name1, "w")
+    file1.write(template + template_pdf + "</body>" + "</html>")
+    file1.close()
+
+    name2=str(detection.id) + "pdf.html"
+    file2 = open('detection/templates/reports/' + name2, "w")
+    file2.write(template + "</body>" + "</html>")
+    file2.close()
+
+
 def single_device_detection(device, user, use_own_dicc):
 
     res = {}
@@ -348,7 +409,6 @@ def single_device_detection(device, user, use_own_dicc):
             whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
             if check_redirects(whatweb):
                 http_device = follow_redirect(whatweb)
-                print(http_device)
                 response = requests.get(http_device, verify=False).text.lower()
                 whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
                 whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
@@ -361,14 +421,12 @@ def single_device_detection(device, user, use_own_dicc):
             whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
             if check_redirects(whatweb):
                 http_device = follow_redirect(whatweb)
-                print(http_device)
                 response = requests.get(http_device, verify=False).text.lower()
                 whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
                 whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
             full_response = response + whatweb
 
         if full_response!='':
-            print(full_response)
             probabilities = detectDevice(total_open_ports, full_response, user, use_own_dicc)
             max_probability = max(probabilities)
             factor = 1.0/sum(probabilities.values())
@@ -387,7 +445,9 @@ def single_device_detection(device, user, use_own_dicc):
             res['Device type'] = max_probability
     
     else:
-        res['No open ports'] = 1
+        res['No open ports'] = 'No se han detectado puertos abiertos'
+        res['Device type'] = 'Desconocido'
+
 
     return res
 
@@ -443,24 +503,20 @@ def range_device_detection(range_device, user, use_own_dicc):
                 full_response = response + whatweb
 
             if full_response!='':
-                print(full_response)
-                probabilities = detectDevice(total_open_ports, full_response)
-                print(probabilities)
-                # max_probability = max(probabilities, key=probabilities.get)
+                probabilities = detectDevice(total_open_ports, full_response, user, use_own_dicc)
                 max_probability = max(probabilities)
                 factor=1.0/sum(probabilities.values())
                 normalised_d = probabilities
                 for k in normalised_d:
                     normalised_d[k] = normalised_d[k] * factor
-                # normalised_d = {k: v*factor for k, v in probabilities}
-                print(normalised_d)
                 detection['Open ports'] = ', '.join([str(p) for p in total_open_ports])
                 detection['Device type'] = max_probability
                 detection['Response'] = response
                 detection['Whatweb'] = whatweb
         
         else: 
-            detection['No open ports'] = 1
+            detection['No open ports'] = 'No se han detectado puertos abiertos'
+            detection['Device type'] = 'Desconocido'
 
         res.append(detection)
     

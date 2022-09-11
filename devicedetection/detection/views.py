@@ -1,7 +1,8 @@
+from venv import create
 from django.shortcuts import render, redirect
 from django.http import FileResponse, Http404
 from django.http.response import HttpResponse
-from .utils import single_device_detection, create_table_html, range_device_detection, train_devices
+from .utils import single_device_detection, create_table_html, create_table_html_for_range, range_device_detection, train_devices
 from .forms import TrainingForm
 from .models import Device, Detection
 from authentication.views import *
@@ -13,7 +14,12 @@ import os, pdfkit, subprocess, validators, re, json, shutil
 
 def list_detections(request):
     if not request.user.is_authenticated: return redirect(sign_in)
-    return render(request, 'list_detections.html', {'detections': Detection.objects.all().filter(device__user__id=request.user.id)})
+    if len(request.GET) == 0: detections = Detection.objects.filter(device__user__id=request.user.id)
+    elif request.GET['filter'] == 'ip_detections': detections = Detection.objects.filter(device__user__id=request.user.id, device__format='Dirección IP')
+    elif request.GET['filter'] == 'url_detections': detections = Detection.objects.filter(device__user__id=request.user.id, device__format='Dirección URL')
+    elif request.GET['filter'] == 'open_ports_detections': detections = Detection.objects.filter(device__user__id=request.user.id).exclude(open_ports='No se han detectado puertos abiertos')
+    elif request.GET['filter'] == 'no_open_ports_detections': detections = Detection.objects.filter(device__user__id=request.user.id, open_ports='No se han detectado puertos abiertos')
+    return render(request, 'list_detections.html', {'detections': detections})
 
 
 def remove(request, detection_id):
@@ -56,6 +62,7 @@ def save_http_info(device):
     output = ', '.join(output).split(', ')[:-1]
     return list(set(output))
 
+
 def save_https_info(device):
 
     https_device = device
@@ -70,98 +77,148 @@ def save_https_info(device):
     return list(set(output))
 
 
+# def detect(request, device_id):
+#     if not request.user.is_authenticated: return redirect(sign_in)
+
+#     if request.method == 'POST':
+
+#         use_own_dicc = request.POST.get("own_dicc", None)=="own_dicc_true"
+#         dictionary_path_exists = "detection/diccs/" + str(request.user.username) + str(request.user.id)
+#         if use_own_dicc and not os.path.exists(dictionary_path_exists):
+#             messages.error(request, 'No tienes un diccionario propio creado. Pulsa en el menú "Entrenar diccionario de datos" situado a la izquierda para añadirlo')
+#             return redirect(list_devices)
+
+#         device_to_detect = Device.objects.get(id=device_id)
+
+#         if device_to_detect.format == 'Dirección IP' or device_to_detect.format == 'Dirección URL':
+#             res = single_device_detection(device_to_detect, request.user, request.POST.get("own_dicc", None)=="own_dicc_true")
+        
+#         else:
+#             res = range_device_detection(device_to_detect, request.user, request.POST.get("own_dicc", None)=="own_dicc_true")
+
+#             for r in res:
+
+#                 loop_device = Device(name=r['Device'], user=User.objects.get(id=request.user.id))
+#                 loop_device.detected = True
+#                 loop_device.save()
+
+#                 if 'No open ports' in r:
+#                     detection = Detection(device=loop_device, device_type='Desconocido', open_ports='No se han detectado puertos abiertos')
+#                     detection.save()
+#                     http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
+#                     create_table_html([r['Device'], detection.open_ports, detection.device_type, http_info], detection)
+                    
+#                 else:
+#                     detection = Detection(device=loop_device, device_type=r['Device type'], open_ports=r['Open ports'])
+#                     detection.save()
+#                     http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
+
+#                     if '80' in detection.open_ports or '443' in detection.open_ports:
+#                         whatweb = r['Whatweb']
+#                         whatweb = whatweb.replace('%', '').split('\n')
+#                         whatweb = list(set(', '.join(whatweb).split(', ')[:-1]))
+#                         http_info = whatweb
+
+#                     if detection.open_ports != '':
+#                         create_table_html([r['Device'], detection.open_ports, detection.device_type, http_info], detection)
+            
+#             device_to_detect.delete()
+#             messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))    
+#             return redirect(list_devices)
+            
+        
+#         if 'No open ports' in res:
+#             detection = Detection(device=device_to_detect, device_type='Desconocido', open_ports='No se han detectado puertos abiertos')
+#             detection.save()
+#             messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))
+#             device_to_detect.detected = True
+#             device_to_detect.save()
+#             http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
+
+#             create_table_html([device_to_detect.name, detection.open_ports, detection.device_type, http_info], detection)
+#             return redirect(list_devices)
+
+        
+#         detection = Detection(device=device_to_detect, device_type=res['Device type'], open_ports=res['Open ports'])
+#         detection.save()
+#         messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))
+#         device_to_detect.detected = True
+#         device_to_detect.save()
+
+#         http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
+
+#         ports_open = []
+#         temp_ports_open = detection.open_ports.split(', ')
+#         for p in temp_ports_open:
+#             ports_open.append(int(p))
+
+#         if 80 in ports_open or 443 in ports_open:
+#             whatweb = res['Whatweb']
+#             whatweb = whatweb.replace('%', '').split('\n')
+#             whatweb = list(set(', '.join(whatweb).split(', ')[:-1]))
+#             http_info = whatweb
+
+#         create_table_html([device_to_detect.name, detection.open_ports, detection.device_type, http_info], detection)
+
+#         return redirect(list_devices)
+    
+#     else:
+#         return redirect(list_devices)
+
 def detect(request, device_id):
     if not request.user.is_authenticated: return redirect(sign_in)
-
     if request.method == 'POST':
+
+        http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
 
         use_own_dicc = request.POST.get("own_dicc", None)=="own_dicc_true"
         dictionary_path_exists = "detection/diccs/" + str(request.user.username) + str(request.user.id)
-        print(dictionary_path_exists)
         if use_own_dicc and not os.path.exists(dictionary_path_exists):
-            print('te he pillao')
             messages.error(request, 'No tienes un diccionario propio creado. Pulsa en el menú "Entrenar diccionario de datos" situado a la izquierda para añadirlo')
             return redirect(list_devices)
 
         device_to_detect = Device.objects.get(id=device_id)
 
+        # Detección de dispositivo simple empieza
         if device_to_detect.format == 'Dirección IP' or device_to_detect.format == 'Dirección URL':
             res = single_device_detection(device_to_detect, request.user, request.POST.get("own_dicc", None)=="own_dicc_true")
-        
-        else:
-            res = range_device_detection(device_to_detect, request.user, request.POST.get("own_dicc", None)=="own_dicc_true")
 
-            for r in res:
+            if 'No open ports' in res:
+                detection = Detection(device=device_to_detect, device_type=res['Device type'], open_ports=res['No open ports'])
+                
+            else:
+                detection = Detection(device=device_to_detect, device_type=res['Device type'], open_ports=res['Open ports'])
 
-                print('Guardando dispositivo ' + str(r['Device']))
-
-                loop_device = Device(name=r['Device'], user=User.objects.get(id=request.user.id))
-                loop_device.detected = True
-                loop_device.save()
-
-                if 'No open ports' in r:
-                    detection = Detection(device=loop_device, device_type='Desconocido', open_ports='No se han detectado puertos abiertos')
-                    detection.save()
-                    http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
-                    create_table_html([r['Device'], detection.open_ports, detection.device_type, http_info], detection)
-                    
-                else:
-                    detection = Detection(device=loop_device, device_type=r['Device type'], open_ports=r['Open ports'])
-                    detection.save()
-                    http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
-
-                    if '80' in detection.open_ports or '443' in detection.open_ports:
-                        whatweb = r['Whatweb']
-                        whatweb = whatweb.replace('%', '').split('\n')
-                        whatweb = list(set(', '.join(whatweb).split(', ')[:-1]))
-                        http_info = whatweb
-
-                    if detection.open_ports != '':
-                        create_table_html([r['Device'], detection.open_ports, detection.device_type, http_info], detection)
+            if 'Whatweb' in res:
+                whatweb = res['Whatweb']
+                whatweb = whatweb.replace('%', '').split('\n')
+                whatweb = list(set(', '.join(whatweb).split(', ')[:-1]))
+                http_info = whatweb
             
-            device_to_detect.delete()
-            messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))    
-            return redirect(list_devices)
-            
-        
-        if 'No open ports' in res:
-            detection = Detection(device=device_to_detect, device_type='Desconocido', open_ports='No se han detectado puertos abiertos')
             detection.save()
             messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))
             device_to_detect.detected = True
             device_to_detect.save()
-            http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
 
             create_table_html([device_to_detect.name, detection.open_ports, detection.device_type, http_info], detection)
             return redirect(list_devices)
+        # Detección de dispositivo simple acaba
 
-        
-        detection = Detection(device=device_to_detect, device_type=res['Device type'], open_ports=res['Open ports'])
-        detection.save()
-        messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))
-        device_to_detect.detected = True
-        device_to_detect.save()
 
-        http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
-        print(detection.open_ports)
+        # Detección de dispositivo rango empieza
+        else:
+            res = range_device_detection(device_to_detect, request.user, request.POST.get("own_dicc", None)=="own_dicc_true")
+            detection = Detection.objects.create(device=device_to_detect, device_type='Rango', open_ports='N/A')
+            detection.save()
+            messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))
+            device_to_detect.detected = True
+            device_to_detect.save()
 
-        ports_open = []
-        temp_ports_open = detection.open_ports.split(', ')
-        for p in temp_ports_open:
-            ports_open.append(int(p))
+            create_table_html_for_range(res, device_to_detect.name, detection)
+            return redirect(list_devices)
+        # Detección de dispositivo rango acaba
 
-        if 80 in ports_open or 443 in ports_open:
-            whatweb = res['Whatweb']
-            whatweb = whatweb.replace('%', '').split('\n')
-            whatweb = list(set(', '.join(whatweb).split(', ')[:-1]))
-            http_info = whatweb
-
-        create_table_html([device_to_detect.name, detection.open_ports, detection.device_type, http_info], detection)
-
-        return redirect(list_devices)
-    
-    else:
-        return redirect(list_devices)
+    return redirect(list_devices)
 
 
 def results(request, detection_id):
@@ -211,7 +268,10 @@ def training(request):
     
         else:
             form = TrainingForm()
-    return render(request, 'training.html')
+    
+    own_dicc_exists = False
+    if os.path.exists('detection/diccs/' + str(request.user.username)+ str(request.user.id)): own_dicc_exists = True
+    return render(request, 'training.html', {'own_dicc_exists': own_dicc_exists})
 
 
 def training_with_file(request):

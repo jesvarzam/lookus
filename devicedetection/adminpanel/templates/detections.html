@@ -1,14 +1,14 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="es">
-	<head>
-		<title>LookUS</title>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
-		<link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
+<html>
+    <head>
+        <title>LookUS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
         <script>
             function searchingDetectionByName() {
 				var input, filter, table, tr, td, i, txtValue;
@@ -30,26 +30,26 @@
 				}
 			}
         </script>
-	</head>
-	<body>
-		<div id="colorlib-page">
+    </head>
+    <body>
+        <div id="colorlib-page">
             <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
             <aside id="colorlib-aside" role="complementary" class="js-fullheight">
             <nav id="colorlib-main-menu" role="navigation">
             <ul>
-            <li><a href="/">Inicio</a></li>
-            {% if user.is_staff %}
-            <li><a href="/admin">Panel de administración</a></li>
-            {% endif %}
-            <li><a href="/devices/list">Dispositivos</a></li>
-            <li class="colorlib-active"><a href="/detection/list">Detecciones</a></li>
-			<li><a href="/detection/training">Entrenar diccionario de datos</a></li>
-            <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
+                <li><a href="/">← Volver a inicio</a></li>
+                {% if user.is_staff %}
+                <li><a href="/admin">Panel de administración</a></li>
+                {% endif %}
+                <li><a href="/admin/devices">Control de dispositivos</a></li>
+                <li class="colorlib-active"><a href="/admin/detections">Control de detecciones</a></li>
+                <li><a href="/admin/users">Control de usuarios</a></li>
+                <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
             </ul>
             </nav>
             </aside>
-			<div id="colorlib-main">
-				<h1>Lista de detecciones</h1>
+            <div id="colorlib-main">
+                <h1>Detecciones realizadas en LookUS</h1>
 				{% if messages %}
 					{% for message in messages %}
 						{% if message.tags == 'success' %}
@@ -66,9 +66,8 @@
 				{% endif %}
 				{% if not detections %}
 				<strong>
-                    Aún no has realizado ninguna detección.
+                    Aún no se ha realizado ninguna detección.
                 </strong>
-                Si tienes dispositivos añadidos, pulsa <a href="/devices/list">aquí</a> para elegir un dispositivo a escanear.
                 {% else %}
                     <strong>Buscar detección por nombre de dispositivo: </strong>
                     <input type="text" style="display:inline" id="search_detection_name" onkeyup="searchingDetectionByName()" placeholder="Buscar dispositivo por nombre">
@@ -89,6 +88,7 @@
                                 <th>Dispositivo</th>
                                 <th>Formato</th>
                                 <th>Fecha de detección</th>
+                                <th>Usuario asociado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -98,6 +98,7 @@
                                 <td>{{detection.device.name}}</td>
                                 <td>{{detection.device.format}}</td>
                                 <td>{{detection.detection_date}}</td>
+                                <td>{{detection.device.user.username}}</td>
                                 <td>
                                     <a href="/detection/results/{{ detection.id }}" class="btn btn-primary">
                                         Ver resultados
@@ -111,7 +112,7 @@
                         </tbody>
                     </table>
 				{% endif %}
-			</div>
-		</div>
-	</body>
+            </div>
+        </div>
+    </body>
 </html>
