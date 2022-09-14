@@ -252,7 +252,7 @@ def create_table_html(data, detection):
     template+="<body>" + "<strong>" + "Fecha de detección: " + detection.detection_date.strftime("%d-%b-%Y-%H-%M-%S") + "</strong>"
     template+="<table style='width:50%'>"
     template+='<tr>'
-    template+="<th style='background-color:#3DBBDB;width:85;color:white'>" + headers[0] + "</th>"
+    template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[0] + "</th>"
     template+="</tr>"
     template+="<tr style='text-align:center'>"
     template+="<td>" + str(data[0]) + " (" + str(data[2]) + ") " + "</td>"
@@ -260,7 +260,7 @@ def create_table_html(data, detection):
     template+="</table>"
     template+="<table style='width:50%'>"
     template+='<tr>'
-    template+="<th style='background-color:#3DBBDB;width:85;color:white'>" + headers[1] + "</th>"
+    template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[1] + "</th>"
     template+="</tr>"
     template+="<tr style='text-align:center'>"
     template+="<td>" + str(data[1]) + "</td>"
@@ -268,7 +268,7 @@ def create_table_html(data, detection):
     template+="</table>"
     template+="<table style='width:50%'>"
     template+='<tr>'
-    template+="<th style='background-color:#3DBBDB;width:85;color:white'>" + headers[3] + "</th>"
+    template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[3] + "</th>"
     template+="</tr>"
 
     if data[3] == 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información':
@@ -303,17 +303,30 @@ def create_table_html_for_range(devices, device_detected, detection):
 
     template="<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='UTF-8'>" + "<style>"
     template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing: 15px;padding: 10px; margin-top: 20px}"
-    template+="</style>" + "</head>"
+    template+="</style>"
+    template+="<script>function myFunction(){ var input, filter, table, tr, td, i, alltables;"
+    template+="alltables = document.querySelectorAll('table[data-name=mytable]');"
+    template+="alert(alltables.length);"
+    template+="input = document.getElementById('myInput');" 
+    
+    template+="filter = input.value.toUpperCase();"
+    template+="alltables.forEach(function(table) {"
+    template+="tr = table.getElementsByTagName('tr');"
+    template+="for (i=0; i<tr.length; i++) {"
+    template+="td = tr[i].getElementsByTagName('td')[0];"
+    template+="if (td) { if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {tr[i].style.display='';} else {tr[i].style.display='none';}}}});}"
+    template+="</script>" + "</head>"
     template+="<body>" + "<h1>Detección del rango de red " + device_detected + "</h1>" 
     template+="<strong style='display:inline'>" + "Fecha de detección: <strong>" 
     template+="<p style='display:inline'>" + detection.detection_date.strftime("%d-%b-%Y-%H-%M-%S") + "</p>"
     template+="<hr>"
+    template+="<input type='text' id='myInput' onclick='myFunction()' placeholder='Search for names..' title='Type in a name'>"
 
     counter = 1
     for d in devices:
         http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
-        # template+="<p>Dispositivo " + str(counter) + "<p>"
-        template+="<table style='width:50%'>"
+        template+="<p>Dispositivo " + str(counter) + "<p>"
+        template+="<table id='myTable1' class='myTable' data-name='myTable' style='width:50%'>"
         template+="<tr>"
         template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[0] + "</th>"
         template+="</tr>"
@@ -321,7 +334,7 @@ def create_table_html_for_range(devices, device_detected, detection):
         template+="<td>" + str(d['Device']) + " (" + str(d['Device type']) + ") " + "</td>"
         template+="</tr>"
         template+="</table>"
-        template+="<table style='width:50%'>"
+        template+="<table id='myTable2' class='myTable' data-name='myTable' style='width:50%'>"
         template+="<tr>"
         template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[1] + "</th>"
         template+="</tr>"
@@ -330,7 +343,7 @@ def create_table_html_for_range(devices, device_detected, detection):
         if 'No open ports' in d: template+="<td>" + str(d['No open ports']) + "</td>"
         template+="</tr>"
         template+="</table>"
-        template+="<table style='width:50%'>"
+        template+="<table id='myTable3' class='myTable' data-name='myTable' style='width:50%'>"
         template+="<tr>"
         template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[3] + "</th>"
         template+="</tr>"
@@ -348,11 +361,12 @@ def create_table_html_for_range(devices, device_detected, detection):
             template+="<td>" + http_info + "</td>"
             template+="</tr>"
         
-        # template+="<br>"
+        template+="</table>"
+        template+="<br>"
         template+="<hr>"
-        # counter+=1
-
-    template+="</table>"
+        counter+=1
+        
+    
     template_pdf="<form style='margin-top: 20px' action='/detection/pdf/{}'>".format(str(detection.id)) + "<input type='submit' value='Exportar a PDF' />" + "</form>"
     template+="</body>" + "</html>"
 

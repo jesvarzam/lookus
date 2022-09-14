@@ -10,8 +10,14 @@
 		<link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
 		<link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
 		<script>
-			function confirmDetection() {
-				if (confirm('¿Está seguro de que quiere borrar todos los dispositivos?')) {
+			function confirmDetectionRange() {
+				if (confirm('¿Está seguro de que quiere detectar este rango de red? Este proceso se puede demorar')) {
+					document.getElementById('detection_form').submit();
+				}
+			}
+
+			function confirmDetectionSingle() {
+				if (confirm('¿Está seguro de que quiere detectar este dispositivo?')) {
 					document.getElementById('detection_form').submit();
 				}
 			}
@@ -123,9 +129,15 @@
 							<td>
 								<form id="detection_form" method="post" action="/detection/detect/{{device.id}}/">
 									{% csrf_token %}
-									<a href="javascript: confirmDetection()">
+									{% if device.format == 'Rango' %}
+									<a href="javascript: confirmDetectionRange()">
 										Detectar dispositivo
 									</a>
+									{% else %}
+									<a href="javascript: confirmDetectionSingle()">
+										Detectar dispositivo
+									</a>
+									{% endif %}
 									{% if own_dicc_exists %}
 									<input name="own_dicc" value="own_dicc_true" type="checkbox"> Usar diccionario propio
 									{% endif %}

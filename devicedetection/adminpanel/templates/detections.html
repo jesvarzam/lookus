@@ -29,6 +29,26 @@
 					}
 				}
 			}
+
+            function searchingDetectionByUser() {
+				var input, filter, table, tr, td, i, txtValue;
+				input = document.getElementById("search_detection_username");
+				filter = input.value.toUpperCase();
+				table = document.getElementById("detections_table");
+				tr = table.getElementsByTagName("tr");
+
+				for (i = 0; i < tr.length; i++) {
+					td = tr[i].getElementsByTagName("td")[3];
+					if (td) {
+						txtValue = td.textContent || td.innerText;
+						if (txtValue.toUpperCase().indexOf(filter) > -1) {
+							tr[i].style.display = "";
+						} else {
+							tr[i].style.display = "none";
+						}
+					}
+				}
+			}
         </script>
     </head>
     <body>
@@ -69,8 +89,12 @@
                     Aún no se ha realizado ninguna detección.
                 </strong>
                 {% else %}
+                    <br>
                     <strong>Buscar detección por nombre de dispositivo: </strong>
-                    <input type="text" style="display:inline" id="search_detection_name" onkeyup="searchingDetectionByName()" placeholder="Buscar dispositivo por nombre">
+                    <input type="text" style="display:inline" id="search_detection_username" onkeyup="searchingDetectionByUser()" placeholder="Introduce aquí el usuario">
+                    <br><br>
+                    <strong>Buscar detección por nombre de dispositivo: </strong>
+                    <input type="text" style="display:inline" id="search_detection_name" onkeyup="searchingDetectionByName()" placeholder="Introduce aquí el nombre">
                        |   <strong>Filtrar detecciones: </strong>
                     <form id="make_checkbox_select" style="display:inline">
                         <select name="filter">

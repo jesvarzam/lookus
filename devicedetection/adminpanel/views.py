@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden
 from django.contrib.auth.models import User
+from django.contrib import messages
 from devices.models import Device
 from authentication.views import sign_in
 from detection.models import Detection
@@ -27,10 +28,23 @@ def user_details(request, user_id):
     return render(request, 'user_details.html', {'user_details': user_details, 'devices': devices, 'detections': detections})
 
 
+def remove_user(request, user_id):
+    if not request.user.is_authenticated: return redirect(sign_in)
+    elif not request.user.is_staff: return HttpResponseForbidden()
+    User.objects.get(id=user_id).delete()
+    messages.success(request, 'Usuario eliminado con éxito')
+    return redirect(users)
+
+
 def devices(request):
     if not request.user.is_authenticated: return redirect(sign_in)
     elif not request.user.is_staff: return HttpResponseForbidden()
-    return render(request, 'devices.html', {'devices': Device.objects.all()})
+    if len(request.GET) == 0: devices = Device.objects.all()
+    elif request.GET['filter'] == 'ip_devices': devices = Device.objects.filter(format='Dirección IP')
+    elif request.GET['filter'] == 'url_devices': devices = Device.objects.filter(format='Dirección URL')
+    elif request.GET['filter'] == 'detected_devices': devices = Device.objects.filter(detected=True)
+    elif request.GET['filter'] == 'undetected_devices': devices = Device.objects.filter(detected=False)
+    return render(request, 'devices.html', {'devices': devices})
 
 
 def detections(request):

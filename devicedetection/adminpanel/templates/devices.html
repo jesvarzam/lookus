@@ -10,23 +10,45 @@
         <link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
         <link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
         <script>
-            var slideIndex = 1;
-            showDivs(slideIndex);
+            function searchingDeviceName() {
+				var input, filter, table, tr, td, i, txtValue;
+				input = document.getElementById("device_name_search");
+				filter = input.value.toUpperCase();
+				table = document.getElementById("devices_table");
+				tr = table.getElementsByTagName("tr");
 
-            function plusDivs(n) {
-                showDivs(slideIndex += n);
-            }
+				for (i = 0; i < tr.length; i++) {
+					td = tr[i].getElementsByTagName("td")[0];
+					if (td) {
+						txtValue = td.textContent || td.innerText;
+						if (txtValue.toUpperCase().indexOf(filter) > -1) {
+							tr[i].style.display = "";
+						} else {
+							tr[i].style.display = "none";
+						}
+					}
+				}
+			}
 
-            function showDivs(n) {
-                var i;
-                var x = document.getElementsByClassName("mySlides");
-                if (n > x.length) {slideIndex = 1}
-                if (n < 1) {slideIndex = x.length} ;
-                for (i = 0; i < x.length; i++) {
-                    x[i].style.display = "none";
-                }
-                x[slideIndex-1].style.display = "block";
-            }
+			function searchingDeviceByUser() {
+				var input, filter, table, tr, td, i, txtValue;
+				input = document.getElementById("username_search");
+				filter = input.value.toUpperCase();
+				table = document.getElementById("devices_table");
+				tr = table.getElementsByTagName("tr");
+
+				for (i = 0; i < tr.length; i++) {
+					td = tr[i].getElementsByTagName("td")[2];
+					if (td) {
+						txtValue = td.textContent || td.innerText;
+						if (txtValue.toUpperCase().indexOf(filter) > -1) {
+							tr[i].style.display = "";
+						} else {
+							tr[i].style.display = "none";
+						}
+					}
+				}
+			}
         </script>
     </head>
     <body>
@@ -71,7 +93,22 @@
 				</a>
 				<br>
 				<br>
-				<table class="table table-striped table-bordered">
+				<strong>Buscar dispositivo por usuario: </strong>
+				<input type="text" style="display:inline" id="username_search" onkeyup="searchingDeviceByUser()" placeholder="Introduce aquí el usuario"><br><br>
+				<strong>Buscar dispositivo por nombre: </strong>
+				<input type="text" style="display:inline" id="device_name_search" onkeyup="searchingDeviceName()" placeholder="Introduce aquí el nombre">
+				    |  <strong>Filtrar dispositivos: </strong>
+				<form style="display:inline;" id="filter_checkbox_select">
+					<select name="filter">
+						<option value="ip_devices">Mostrar dispositivos con direcciones IP</option>
+						<option value="url_devices">Mostrar dispositivos con direcciones URL</option>
+						<option value="detected_devices">Mostrar dispositivos detectados</option>
+						<option value="undetected_devices">Mostrar dispositivos sin detectar</option>
+					</select>
+					<input style="display: inline;" type="submit" value="Aplicar"/>  
+				</form>
+				<br>
+				<table id="devices_table" class="table table-striped table-bordered">
 					<thead>
 						<tr>
 							<th>Nombre</th>

@@ -47,8 +47,8 @@
                 </p>
                 <strong>Introduce los dispositivos que quieras utilizar para entrenar aquí separados por comas y en el formato correcto (IP o URL)</strong>
                 <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
+                    {% csrf_token %}
+                    {{ form.as_p }}
                     <button type="submit">Enviar y entrenar</button>
                 </form>
                 <hr>
@@ -70,7 +70,9 @@
                 <form method="post" enctype="multipart/form-data" action="/detection/training_with_file/">
                     {% csrf_token %}
                     <input type="file" name="training_file">
-                    <button type="submit">Subir archivo y entrenar</button>
+                    <button type="submit" onclick="return confirm('¿Está seguro de que quiere entrenar el diccionario con este archivo? Este proceso puede demorarse')">
+                        Subir archivo y entrenar
+                    </button>
                 </form>
             </div>
         </div>

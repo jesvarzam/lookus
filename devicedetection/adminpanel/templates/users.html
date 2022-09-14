@@ -9,6 +9,27 @@
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
         <link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
+		<script>
+			function searchingUser() {
+				var input, filter, table, tr, td, i, txtValue;
+				input = document.getElementById("username_search");
+				filter = input.value.toUpperCase();
+				table = document.getElementById("usernames_table");
+				tr = table.getElementsByTagName("tr");
+
+				for (i = 0; i < tr.length; i++) {
+					td = tr[i].getElementsByTagName("td")[0];
+					if (td) {
+						txtValue = td.textContent || td.innerText;
+						if (txtValue.toUpperCase().indexOf(filter) > -1) {
+							tr[i].style.display = "";
+						} else {
+							tr[i].style.display = "none";
+						}
+					}
+				}
+			}
+		</script>
     </head>
     <body>
         <div id="colorlib-page">
@@ -46,7 +67,10 @@
 				{% if not users or users.count == 1 %}
 				<strong>Aún no hay ningún usuario registrado.</strong>
 				{% else %}
-				<table class="table table-striped table-bordered">
+				<br><br>
+				<strong>Buscar usuario: </strong>
+				<input type="text" style="display:inline" id="username_search" onkeyup="searchingUser()" placeholder="Introduce aquí el usuario"><br><br>
+				<table id="usernames_table" class="table table-striped table-bordered">
 					<thead>
 						<tr>
 							<th>Usuario</th>
@@ -62,7 +86,7 @@
 							<td>
                                 <a href="/admin/users/{{user.id}}">Ver detalles</a>
                                 |
-								<a href="/admin/users/{{device.id}}" onclick="return confirm('¿Está seguro de que quiere eliminar este usuario?')">
+								<a href="/admin/users/remove/{{user.id}}" onclick="return confirm('¿Está seguro de que quiere eliminar este usuario?')">
 									Borrar
 								</a>
 							</td>
