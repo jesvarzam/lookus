@@ -70,6 +70,10 @@
                 </strong>
                 Si tienes dispositivos añadidos, pulsa <a href="/devices/list">aquí</a> para elegir un dispositivo a escanear.
                 {% else %}
+                    <a href="/detection/remove_all" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar todas las detecciones?')">
+                        Borrar todas las detecciones
+                    </a>
+                    <hr style="border: none">
                     <strong>Buscar detección por nombre de dispositivo: </strong>
                     <input type="text" style="display:inline" id="search_detection_name" onkeyup="searchingDetectionByName()" placeholder="Buscar dispositivo por nombre">
                        |   <strong>Filtrar detecciones: </strong>

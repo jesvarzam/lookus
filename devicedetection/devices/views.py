@@ -43,8 +43,10 @@ def add(request):
 def add_with_file(request):
     if not request.user.is_authenticated: return redirect(sign_in)
     if request.method == 'POST' and request.FILES['devices_file']:
+        if os.path.splitext(str(request.FILES['devices_file']))[1] != '.txt':
+            messages.error(request, """Extensión de archivo no permitida, recuerda que solo se pueden subir archivos con extensión .txt""")
+            return redirect(add)
         devices = request.FILES['devices_file'].read().decode().split(',')
-        print(devices)
         if not checkFormats(devices):
             messages.error(request, """El archivo contiene algún dispositivo en formato incorrecto. 
             Por favor, comprueba que el formato de todos los dispositivos es correcto y vuelve a intentarlo.""")
@@ -112,9 +114,7 @@ def remove(request, device_id):
 def remove_all(request):
     if not request.user.is_authenticated: return redirect(sign_in)
 
-    devices = Device.objects.all()
-
-    different_user = False
+    devices = Device.objects.filter(user__id=request.user.id)
 
     for device in devices:
         if device.detected:
@@ -134,6 +134,4 @@ def remove_all(request):
         device.delete()
     
     messages.success(request, 'Dispositivos borrados correctamente')
-    if request.user.is_staff:
-        return redirect(devices_admin)
     return redirect(list_devices)

@@ -15,25 +15,31 @@ CAMERA_KEYWORDS = ['cámara', 'camera']
 TOTAL = 81
 
 def return_response(device):
+    full_response = ''
+    
     http_device = device
 
     if not validators.url(device):
         http_device = 'http://' + device
-    
-    try:
-        response = requests.get(http_device, verify=False, timeout=10).text.lower()
-    except:
-        response = ''
+
     whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-    whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
+    whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
     if check_redirects(whatweb):
-        http_device = follow_redirect(whatweb)
-        response = requests.get(http_device, verify=False).text.lower()
+        http_device = follow_redirect(whatweb, http_device)
+        try:
+            response = requests.get(http_device, verify=False, timeout=10).text.lower()
+        except:
+            response = ''
         whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
         whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
-        response+=whatweb
-    
-    return response
+    else:
+        try:
+            response = requests.get(http_device, verify=False, timeout=10).text.lower()
+        except:
+            response = ''
+
+    full_response = response + whatweb
+    return full_response
 
 
 def train_devices(devices, user):
@@ -98,23 +104,34 @@ def get_single_format(device):
 
 
 def check_redirects(whatweb):
-
     headers = whatweb.split('\n')
     for h in headers:
-
-        if '302 found' in h:
+        if 'RedirectLocation' in h:
             return True
-
     return False
 
 
-def follow_redirect(whatweb):
-
-    headers = whatweb.split('\n')
-    for h in headers:
-
-        if '302 found' in h:
-            return str(h.split(' ')[0])
+def follow_redirect(whatweb, url):
+    split_headers = whatweb.split('\n')
+    for split_h in split_headers:
+        headers = split_h.split(',')
+        if '302' in split_h:
+            print('302 found')
+            for h in headers:
+                if 'RedirectLocation' in h:
+                    adding_url = re.search(r"((?<=\[)(.*?)(?=\]))", h)[0]
+                    url = url + adding_url
+                    print('New URL -> ' + url)
+                    break
+        elif '301' in split_h:
+            print('301 found')
+            for h in headers:
+                if 'RedirectLocation' in h:
+                    url = re.search(r"((?<=\[)(.*?)(?=\]))", h)[0]
+                    print('New URL -> ' + url)
+                    break
+    print('final url -> ' + url)
+    return url
 
 
 def getIP(device):
@@ -406,62 +423,59 @@ def single_device_detection(device, user, use_own_dicc):
         whatweb = ''
 
         if (80 in total_open_ports or 443 in total_open_ports) and device_format == 'URL':
-            response = requests.get(device_name, verify=False).text.lower()
             whatweb = subprocess.run(['whatweb', device_name], stdout=subprocess.PIPE).stdout.decode('utf-8')
-            whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
+            whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
             if check_redirects(whatweb):
-                device_name = follow_redirect(whatweb)
-                response = requests.get(device_name, verify=False).text.lower()
+                device_name = follow_redirect(whatweb, device_name)
+                try:
+                    response = requests.get(http_device, verify=False, timeout=10).text.lower()
+                except:
+                    response = ''
                 whatweb = subprocess.run(['whatweb', device_name], stdout=subprocess.PIPE).stdout.decode('utf-8')
                 whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
             full_response = response + whatweb
         
         elif 80 in total_open_ports and device_format == 'IP':
             http_device = 'http://' + device_name
-            response = requests.get(http_device, verify=False).text.lower()
             whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-            whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
+            whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
             if check_redirects(whatweb):
-                http_device = follow_redirect(whatweb)
-                response = requests.get(http_device, verify=False).text.lower()
-                whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-                whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
-            full_response = response + whatweb
-
-        elif 443 in total_open_ports and device_format == 'IP':
-            http_device = 'https://' + device_name
-            response = requests.get(http_device, verify=False).text.lower()
-            whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-            whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
-            if check_redirects(whatweb):
-                http_device = follow_redirect(whatweb)
-                response = requests.get(http_device, verify=False).text.lower()
+                http_device = follow_redirect(whatweb, http_device)
+                try:
+                    response = requests.get(http_device, verify=False, timeout=10).text.lower()
+                except:
+                    response = ''
                 whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
                 whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
             full_response = response + whatweb
 
         if full_response!='':
             probabilities = detectDevice(total_open_ports, full_response, user, use_own_dicc)
-            max_probability = max(probabilities)
-            factor = 1.0/sum(probabilities.values())
+            if sum(probabilities.values()) == 0:
+                factor = 0.0
+            else:
+                factor = 1.0/sum(probabilities.values())
             for p in probabilities:
-                probabilities[p] = probabilities[p]*factor*100.00
-            max_probability = max(probabilities)
+                probabilities[p] = round(probabilities[p]*factor*100.00, 2)
             res['Open ports'] = ', '.join([str(p) for p in total_open_ports])
-            res['Device type'] = max_probability
+            res['Device type'] = ', '.join(p + ': ' + str(probabilities[p]) + '%' for p in probabilities)
             res['Response'] = response
             res['Whatweb'] = whatweb
 
         else:
             probabilities = detectPorts(total_open_ports)
-            max_probability = max(probabilities, key=probabilities.get)
+            if sum(probabilities.values()) == 0:
+                factor = 0.0
+            else:
+                factor = 1.0/sum(probabilities.values())
+            for p in probabilities:
+                probabilities[p] = round(probabilities[p]*factor*100.00, 2)
             res['Open ports'] = ', '.join([str(p) for p in total_open_ports])
-            res['Device type'] = max_probability
+            res['Device type'] = ', '.join(p + ': ' + str(probabilities[p]) + '%' for p in probabilities)
     
     else:
         res['No open ports'] = 'No se han detectado puertos abiertos'
         res['Device type'] = 'Desconocido'
-
 
     return res
 
@@ -497,34 +511,42 @@ def range_device_detection(range_device, user, use_own_dicc):
             whatweb = ''
 
             if (80 in total_open_ports or 443 in total_open_ports) and device_format == 'URL':
-                response = requests.get(device, verify=False).text.lower()
-                whatweb = subprocess.run(['whatweb', device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-                whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
+                whatweb = subprocess.run(['whatweb', device_name], stdout=subprocess.PIPE).stdout.decode('utf-8')
+                whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
+                if check_redirects(whatweb):
+                    device_name = follow_redirect(whatweb, device_name)
+                    try:
+                        response = requests.get(http_device, verify=False, timeout=10).text.lower()
+                    except:
+                        response = ''
+                    whatweb = subprocess.run(['whatweb', device_name], stdout=subprocess.PIPE).stdout.decode('utf-8')
+                    whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
                 full_response = response + whatweb
             
-            elif 80 in total_open_ports and device_format == 'IP':
-                http_device = 'http://' + device
-                response = requests.get(http_device, verify=False).text.lower()
+            elif (80 in total_open_ports or 433 in total_open_ports) and device_format == 'IP':
+                http_device = 'http://' + device_name
                 whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-                whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
-                full_response = response + whatweb
-
-            elif 443 in total_open_ports and device_format == 'IP':
-                http_device = 'https://' + device
-                response = requests.get(http_device, verify=False).text.lower()
-                whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-                whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
+                whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
+                if check_redirects(whatweb):
+                    http_device = follow_redirect(whatweb, http_device)
+                    try:
+                        response = requests.get(http_device, verify=False, timeout=10).text.lower()
+                    except:
+                        response = ''
+                    whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+                    whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
                 full_response = response + whatweb
 
             if full_response!='':
                 probabilities = detectDevice(total_open_ports, full_response, user, use_own_dicc)
-                max_probability = max(probabilities)
-                factor=1.0/sum(probabilities.values())
-                normalised_d = probabilities
-                for k in normalised_d:
-                    normalised_d[k] = normalised_d[k] * factor
+                if sum(probabilities.values()) == 0:
+                    factor = 0.0
+                else:
+                    factor = 1.0/sum(probabilities.values())
+                for p in probabilities:
+                    probabilities[p] = round(probabilities[p]*factor*100.00, 2)
                 detection['Open ports'] = ', '.join([str(p) for p in total_open_ports])
-                detection['Device type'] = max_probability
+                detection['Device type'] = ', '.join(p + ': ' + str(probabilities[p]) + '%' for p in probabilities)
                 detection['Response'] = response
                 detection['Whatweb'] = whatweb
         

@@ -5,7 +5,7 @@ from django.contrib import messages
 from devices.models import Device
 from authentication.views import sign_in
 from detection.models import Detection
-
+import os
 
 def admin(request):
     if not request.user.is_authenticated: return redirect(sign_in)
@@ -47,6 +47,32 @@ def devices(request):
     return render(request, 'devices.html', {'devices': devices})
 
 
+def remove_all_devices(request):
+    if not request.user.is_authenticated: return redirect(sign_in)
+    if not request.user.is_staff: return HttpResponseForbidden()
+    all_devices = Device.objects.all()
+
+    for device in all_devices:
+        if device.detected:
+            html_path = 'detection/templates/reports/{}.html'.format(device.detection.id)
+            pdf_path = 'detection/templates/reports/{}.pdf'.format(device.detection.id)
+            temp_html_path = 'detection/templates/reports/{}pdf.html'.format(device.detection.id)
+    
+            if os.path.exists(html_path):
+                os.remove(html_path)
+            
+            if os.path.exists(pdf_path):
+                os.remove(pdf_path)
+            
+            if os.path.exists(temp_html_path):
+                os.remove(temp_html_path)
+
+        device.delete()
+    
+    messages.success(request, 'Dispositivos borrados correctamente')
+    return redirect(devices)
+    
+
 def detections(request):
     if not request.user.is_authenticated: return redirect(sign_in)
     elif not request.user.is_staff: return HttpResponseForbidden()
@@ -56,3 +82,31 @@ def detections(request):
     elif request.GET['filter'] == 'open_ports_detections': detections = Detection.objects.filter(device__user__id=request.user.id).exclude(open_ports='No se han detectado puertos abiertos')
     elif request.GET['filter'] == 'no_open_ports_detections': detections = Detection.objects.filter(device__user__id=request.user.id, open_ports='No se han detectado puertos abiertos')
     return render(request, 'detections.html', {'detections': detections})
+
+
+def remove_all_detections(request):
+    if not request.user.is_authenticated: return redirect(sign_in)
+    if not request.user.is_staff: return HttpResponseForbidden()
+    all_detections = Detection.objects.all()
+
+    for d in all_detections:
+        html_path = 'detection/templates/reports/{}.html'.format(d.id)
+        pdf_path = 'detection/templates/reports/{}.pdf'.format(d.id)
+        temp_html_path = 'detection/templates/reports/{}pdf.html'.format(d.id)
+    
+        if os.path.exists(html_path):
+            os.remove(html_path)
+        
+        if os.path.exists(pdf_path):
+            os.remove(pdf_path)
+        
+        if os.path.exists(temp_html_path):
+            os.remove(temp_html_path)
+        
+        device = Device.objects.get(detection=d.id)
+        device.detected = False
+        device.save()
+        d.delete()
+    
+    messages.success(request, 'Detecciones borradas correctamente')
+    return redirect(detections)

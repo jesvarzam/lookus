@@ -30,12 +30,19 @@
             <div id="colorlib-main">
                 <h1>Entrenar diccionario de datos</h1>
                 {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-success">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
+					{% for message in messages %}
+						{% if message.tags == 'success' %}
+							<div class="alert alert-success">
+								{{ message }}
+							</div>
+						{% endif %}
+						{% if message.tags == 'error' %}
+							<div class="alert alert-danger">
+								{{ message }}
+							</div>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
                 {% if own_dicc_exists %}
                 <a href="/detection/training/remove_dicc" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quieres borrar tu diccionario de datos?')">
 					Borrar tu diccionario de datos

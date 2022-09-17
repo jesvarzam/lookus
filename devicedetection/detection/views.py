@@ -47,6 +47,33 @@ def remove(request, detection_id):
     return redirect(list_detections)
 
 
+def remove_all(request):
+    if not request.user.is_authenticated: return redirect(sign_in)
+    detections = Detection.objects.filter(device__user__id=request.user.id)
+
+    for d in detections:
+        html_path = 'detection/templates/reports/{}.html'.format(d.id)
+        pdf_path = 'detection/templates/reports/{}.pdf'.format(d.id)
+        temp_html_path = 'detection/templates/reports/{}pdf.html'.format(d.id)
+    
+        if os.path.exists(html_path):
+            os.remove(html_path)
+        
+        if os.path.exists(pdf_path):
+            os.remove(pdf_path)
+        
+        if os.path.exists(temp_html_path):
+            os.remove(temp_html_path)
+        
+        device = Device.objects.get(detection=d.id)
+        device.detected = False
+        device.save()
+        d.delete()
+    
+    messages.success(request, 'Detecciones borradas correctamente')
+    return redirect(list_detections)
+
+
 def save_http_info(device):
 
     http_device = device
@@ -188,6 +215,10 @@ def training_with_file(request):
     if not request.user.is_authenticated: return redirect(sign_in)
     
     if request.method == 'POST' and request.FILES['training_file']:
+        if os.path.splitext(str(request.FILES['training_file']))[1] != '.json':
+            messages.error(request, """Extensión de archivo no permitida, recuerda que solo se pueden subir archivos con extensión .json""")
+            return redirect(training)
+            
         devices_json = json.loads(request.FILES['training_file'].read().decode())
 
         for k in devices_json:

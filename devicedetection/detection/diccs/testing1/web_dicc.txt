@@ -1,0 +1,2176 @@
+login
+register
+username
+email
+password
+pass
+crear cuenta
+registrarse
+iniciar sesión
+usuario
+contraseña
+correo electrónico
+bienvenido
+welcome
+<!doctype html><html itemscope="" itemtype="http://schema.org/webpage" lang="es"><head><meta content="google.es permite acceder a la información mundial en castellano, catalán, gallego, euskara e inglés." name="description"><meta content="noodp" name="robots"><meta content="text/html; charset=utf-8" http-equiv="content-type"><meta content="/images/branding/googleg/1x/googleg_standard_color_128dp.png" itemprop="image"><title>google</title><script nonce="1dd0qnnwpbdemh10xb0y0a">(function(){window.google={kei:'pk4ly6z-nv_g0pep_-s4gag',kexpi:'0,1302536,56873,6059,206,4804,2316,383,246,5,5367,1123753,1197661,77,656,380096,16115,17444,11240,22430,1362,12316,2819,1929,12835,4998,13228,3847,10622,22741,5081,1593,1279,2742,149,1103,840,1983,213,4101,3514,606,2023,1777,522,14668,3227,2845,7,4774,28444,552,1851,2614,3784,9358,3,346,230,6460,148,13975,4,1528,2304,7039,13271,11802,2658,7357,13658,21223,5818,2539,4094,4052,3,3541,1,11943,30211,2,14022,14116,11623,5679,1020,2381,28741,4568,6259,23418,1252,5835,14967,4333,7484,17762,9320,8049,106,6582,100,639,60,14680,1289,873,19634,7,1922,9779,6542,14098,1139,2644,6899,4832,5764,1608,5653,2939,68,984,122,700,4,1,2,2,2,2,2,1,5334,3065,1322,1788,2404,533,3,671,3928,1416,8418,1531,2359,78,679,439,1623,1063,2986,2802,642,167,1210,662,223,436,102,922,81,23,562,196,2,4,306,10,296,456,524,39,239,16,989,1532,185,234,904,1327,126,3,3,2,2,161,1100,212,971,482,1405,547,16,394,1090,160,676,222,31,383,1948,421,465,45,859,1249,467,37,557,365,5346722,507,163,32,8799320,3311,141,795,19735,1,1,346,1525,45,79,5,3,3,1,1,1,23948822,2738464,1303678,1964,3094,13579,3405,5546,1379799',kbl:'qwkh'};google.sn='webhp';google.khl='es';})();(function(){
+var f=this||self;var h,k=[];function l(a){for(var b;a&&(!a.getattribute||!(b=a.getattribute("eid")));)a=a.parentnode;return b||h}function m(a){for(var b=null;a&&(!a.getattribute||!(b=a.getattribute("leid")));)a=a.parentnode;return b}
+function n(a,b,c,d,g){var e="";c||-1!==b.search("&ei=")||(e="&ei="+l(d),-1===b.search("&lei=")&&(d=m(d))&&(e+="&lei="+d));d="";!c&&f._cshid&&-1===b.search("&cshid=")&&"slh"!==a&&(d="&cshid="+f._cshid);c=c||"/"+(g||"gen_204")+"?atyp=i&ct="+a+"&cad="+b+e+"&zx="+date.now()+d;/^http:/i.test(c)&&"https:"===window.location.protocol&&(google.ml&&google.ml(error("a"),!1,{src:c,glmm:1}),c="");return c};h=google.kei;google.getei=l;google.getlei=m;google.ml=function(){return null};google.log=function(a,b,c,d,g){if(c=n(a,b,c,d,g)){a=new image;var e=k.length;k[e]=a;a.onerror=a.onload=a.onabort=function(){delete k[e]};a.src=c}};google.logurl=n;}).call(this);(function(){
+google.y={};google.sy=[];google.x=function(a,b){if(a)var c=a.id;else{do c=math.random();while(google.y[c])}google.y[c]=[a,b];return!1};google.sx=function(a){google.sy.push(a)};google.lm=[];google.plm=function(a){google.lm.push.apply(google.lm,a)};google.lq=[];google.load=function(a,b,c){google.lq.push([[a],b,c])};google.loadall=function(a,b){google.lq.push([a,b])};google.bx=!1;google.lx=function(){};}).call(this);google.f={};(function(){
+document.documentelement.addeventlistener("submit",function(b){var a;if(a=b.target){var c=a.getattribute("data-submitfalse");a="1"===c||"q"===c&&!a.elements.q.value?!0:!1}else a=!1;a&&(b.preventdefault(),b.stoppropagation())},!0);document.documentelement.addeventlistener("click",function(b){var a;a:{for(a=b.target;a&&a!==document.documentelement;a=a.parentelement)if("a"===a.tagname){a="1"===a.getattribute("data-nohref");break a}a=!1}a&&b.preventdefault()},!0);}).call(this);</script><style>#gbar,#guser{font-size:13px;padding-top:1px !important;}#gbar{height:22px}#guser{padding-bottom:7px !important;text-align:right}.gbh,.gbd{border-top:1px solid #c9d7f1;font-size:1px}.gbh{height:0;position:absolute;top:24px;width:100%}@media all{.gb1{height:22px;margin-right:.5em;vertical-align:top}#gbar{float:left}}a.gb1,a.gb4{text-decoration:underline !important}a.gb1,a.gb4{color:#00c !important}.gbi .gb4{color:#dd8e27 !important}.gbf .gb4{color:#900 !important}
+</style><style>body,td,a,p,.h{font-family:arial,sans-serif}body{margin:0;overflow-y:scroll}#gog{padding:3px 8px 0}td{line-height:.8em}.gac_m td{line-height:17px}form{margin-bottom:20px}.h{color:#1558d6}em{font-weight:bold;font-style:normal}.lst{height:25px;width:496px}.gsfi,.lst{font:18px arial,sans-serif}.gsfs{font:17px arial,sans-serif}.ds{display:inline-box;display:inline-block;margin:3px 0 4px;margin-left:4px}input{font-family:inherit}body{background:#fff;color:#000}a{color:#4b11a8;text-decoration:none}a:hover,a:active{text-decoration:underline}.fl a{color:#1558d6}a:visited{color:#4b11a8}.sblc{padding-top:5px}.sblc a{display:block;margin:2px 0;margin-left:13px;font-size:11px}.lsbb{background:#f8f9fa;border:solid 1px;border-color:#dadce0 #70757a #70757a #dadce0;height:30px}.lsbb{display:block}#wqqanb a{display:inline-block;margin:0 12px}.lsb{background:url(/images/nav_logo229.png) 0 -261px repeat-x;border:none;color:#000;cursor:pointer;height:30px;margin:0;outline:0;font:15px arial,sans-serif;vertical-align:top}.lsb:active{background:#dadce0}.lst:focus{outline:none}</style><script nonce="1dd0qnnwpbdemh10xb0y0a">(function(){window.google.erd={jsr:1,bv:1656,de:true};
+var h=this||self;var k,l=null!=(k=h.mei)?k:1,n,p=null!=(n=h.sdo)?n:!0,q=0,r,t=google.erd,v=t.jsr;google.ml=function(a,b,d,m,e){e=void 0===e?2:e;b&&(r=a&&a.message);if(google.dl)return google.dl(a,e,d),null;if(0>v){window.console&&console.error(a,d);if(-2===v)throw a;b=!1}else b=!a||!a.message||"error loading script"===a.message||q>=l&&!m?!1:!0;if(!b)return null;q++;d=d||{};b=encodeuricomponent;var c="/gen_204?atyp=i&ei="+b(google.kei);google.kexpi&&(c+="&jexpid="+b(google.kexpi));c+="&srcpg="+b(google.sn)+"&jsr="+b(t.jsr)+"&bver="+b(t.bv);var f=a.linenumber;void 0!==f&&(c+="&line="+f);var g=
+a.filename;g&&(0<g.indexof("-extension:/")&&(e=3),c+="&script="+b(g),f&&g===window.location.href&&(f=document.documentelement.outerhtml.split("\n")[f],c+="&cad="+b(f?f.substring(0,300):"no script found.")));c+="&jsel="+e;for(var u in d)c+="&",c+=b(u),c+="=",c+=b(d[u]);c=c+"&emsg="+b(a.name+": "+a.message);c=c+"&jsst="+b(a.stack||"n/a");12288<=c.length&&(c=c.substr(0,12288));a=c;m||google.log(0,"",a);return a};window.onerror=function(a,b,d,m,e){r!==a&&(a=e instanceof error?e:error(a),void 0===d||"linenumber"in a||(a.linenumber=d),void 0===b||"filename"in a||(a.filename=b),google.ml(a,!1,void 0,!1,"syntaxerror"===a.name||"syntaxerror"===a.message.substring(0,11)||0<a.message.indexof("script error")?2:0));r=null;p&&q>=l&&(window.onerror=null)};})();</script></head><body bgcolor="#fff"><script nonce="1dd0qnnwpbdemh10xb0y0a">(function(){var src='/images/nav_logo229.png';var iesg=false;document.body.onload = function(){window.n && window.n();if (document.images){new image().src=src;}
+if (!iesg){document.f&&document.f.q.focus();document.gbqf&&document.gbqf.q.focus();}
+}
+})();</script><div id="mngb"><div id=gbar><nobr><b class=gb1>búsqueda</b> <a class=gb1 href="https://www.google.es/imghp?hl=es&tab=wi">imágenes</a> <a class=gb1 href="https://maps.google.es/maps?hl=es&tab=wl">maps</a> <a class=gb1 href="https://play.google.com/?hl=es&tab=w8">play</a> <a class=gb1 href="https://www.youtube.com/?tab=w1">youtube</a> <a class=gb1 href="https://news.google.com/?tab=wn">noticias</a> <a class=gb1 href="https://mail.google.com/mail/?tab=wm">gmail</a> <a class=gb1 href="https://drive.google.com/?tab=wo">drive</a> <a class=gb1 style="text-decoration:none" href="https://www.google.es/intl/es/about/products?tab=wh"><u>más</u> &raquo;</a></nobr></div><div id=guser width=100%><nobr><span id=gbn class=gbi></span><span id=gbf class=gbf></span><span id=gbe></span><a href="http://www.google.es/history/optout?hl=es" class=gb4>historial web</a> | <a  href="/preferences?hl=es" class=gb4>ajustes</a> | <a target=_top id=gb_70 href="https://accounts.google.com/servicelogin?hl=es&passive=true&continue=https://www.google.es/&ec=gazaaq" class=gb4>iniciar sesión</a></nobr></div><div class=gbh style=left:0></div><div class=gbh style=right:0></div></div><center><br clear="all" id="lgpd"><div id="lga"><img alt="google" height="92" src="/images/branding/googlelogo/1x/googlelogo_white_background_color_272x92dp.png" style="padding:28px 0 14px" width="272" id="hplogo"><br><br></div><form action="/search" name="f"><table cellpadding="0" cellspacing="0"><tr valign="top"><td width="25%">&nbsp;</td><td align="center" nowrap=""><input name="ie" value="iso-8859-1" type="hidden"><input value="es" name="hl" type="hidden"><input name="source" type="hidden" value="hp"><input name="biw" type="hidden"><input name="bih" type="hidden"><div class="ds" style="height:32px;margin:4px 0"><input class="lst" style="margin:0;padding:5px 8px 0 6px;vertical-align:top;color:#000" autocomplete="off" value="" title="buscar con google" maxlength="2048" name="q" size="57"></div><br style="line-height:0"><span class="ds"><span class="lsbb"><input class="lsb" value="buscar con google" name="btng" type="submit"></span></span><span class="ds"><span class="lsbb"><input class="lsb" id="tsuid_1" value="voy a tener suerte" name="btni" type="submit"><script nonce="1dd0qnnwpbdemh10xb0y0a">(function(){var id='tsuid_1';document.getelementbyid(id).onclick = function(){if (this.form.q.value){this.checked = 1;if (this.form.iflsig)this.form.iflsig.disabled = false;}
+else top.location='/doodles/';};})();</script><input value="ajik0e8aaaaayyw8tbov7g_jqo5ckf9h0ylz1vxohotj" name="iflsig" type="hidden"></span></span></td><td class="fl sblc" align="left" nowrap="" width="25%"><a href="/advanced_search?hl=es&amp;authuser=0">búsqueda avanzada</a></td></tr></table><input id="gbv" name="gbv" type="hidden" value="1"><script nonce="1dd0qnnwpbdemh10xb0y0a">(function(){
+var a,b="1";if(document&&document.getelementbyid)if("undefined"!=typeof xmlhttprequest)b="2";else if("undefined"!=typeof activexobject){var c,d,e=["msxml2.xmlhttp.6.0","msxml2.xmlhttp.3.0","msxml2.xmlhttp","microsoft.xmlhttp"];for(c=0;d=e[c++];)try{new activexobject(d),b="2"}catch(h){}}a=b;if("2"==a&&-1==location.search.indexof("&gbv=2")){var f=google.gbvu,g=document.getelementbyid("gbv");g&&(g.value=a);f&&window.settimeout(function(){location.href=f},0)};}).call(this);</script></form><div id="gac_scont"></div><div style="font-size:83%;min-height:3.5em"><br><div id="gws-output-pages-elements-homepage_additional_languages__als"><style>#gws-output-pages-elements-homepage_additional_languages__als{font-size:small;margin-bottom:24px}#sivcob{color:#3c4043;display:inline-block;line-height:28px;}#sivcob a{padding:0 3px;}.h6sw5{display:inline-block;margin:0 2px;white-space:nowrap}.z4hgwe{display:inline-block;margin:0 2px}</style><div id="sivcob">ofrecido por google en:  <a href="https://www.google.es/setprefs?sig=0_fbnde6t2jv8ylvjldjidpoev_gk%3d&amp;hl=ca&amp;source=homepage&amp;sa=x&amp;ved=0ahukewisjkov25v6ahv_mdqihx8ydoaq2zgbcau">català</a>    <a href="https://www.google.es/setprefs?sig=0_fbnde6t2jv8ylvjldjidpoev_gk%3d&amp;hl=gl&amp;source=homepage&amp;sa=x&amp;ved=0ahukewisjkov25v6ahv_mdqihx8ydoaq2zgbcay">galego</a>    <a href="https://www.google.es/setprefs?sig=0_fbnde6t2jv8ylvjldjidpoev_gk%3d&amp;hl=eu&amp;source=homepage&amp;sa=x&amp;ved=0ahukewisjkov25v6ahv_mdqihx8ydoaq2zgbcac">euskara</a>  </div></div></div><span id="footer"><div style="font-size:10pt"><div style="margin:19px auto;text-align:center" id="wqqanb"><a href="http://www.google.es/intl/es/services/">soluciones empresariales</a><a href="/intl/es/about.html">todo acerca de google</a><a href="https://www.google.es/setprefdomain?prefdom=us&amp;sig=k__v7jri9tpm7bhxdtzn6q8xza3o8%3d" id="fehl">google.com</a></div></div><p style="font-size:8pt;color:#70757a">&copy; 2022 - <a href="/intl/es/policies/privacy/">privacidad</a> - <a href="/intl/es/policies/terms/">términos</a></p></span></center><script nonce="1dd0qnnwpbdemh10xb0y0a">(function(){window.google.cdo={height:757,width:1440};(function(){
+var a=window.innerwidth,b=window.innerheight;if(!a||!b){var c=window.document,d="css1compat"==c.compatmode?c.documentelement:c.body;a=d.clientwidth;b=d.clientheight}a&&b&&(a!=google.cdo.width||b!=google.cdo.height)&&google.log("","","/client_204?&atyp=i&biw="+a+"&bih="+b+"&ei="+google.kei);}).call(this);})();</script> <script nonce="1dd0qnnwpbdemh10xb0y0a">(function(){google.xjs={ck:'xjs.hp.nat8mkhlvvw.l.x.o',cs:'act90ofbsni2diyqwhkze0nbpwvwm9cuvw',excm:[]};})();</script>  <script nonce="1dd0qnnwpbdemh10xb0y0a">(function(){var u='/xjs/_/js/k\x3dxjs.hp.en.pa2fzrqfywu.o/am\x3daaceaaakaeab/d\x3d1/ed\x3d1/rs\x3dact90oggohag99qraa9hymsxdyq3tx3bvq/m\x3dsb_he,d';
+var d=this||self,e=function(a){return a};
+var g;var l=function(a,b){this.g=b===h?a:""};l.prototype.tostring=function(){return this.g+""};var h={};function n(){var a=u;google.lx=function(){p(a);google.lx=function(){}};google.bx||google.lx()}
+function p(a){google.timers&&google.timers.load&&google.tick&&google.tick("load","xjsls");var b=document;var c="script";"application/xhtml+xml"===b.contenttype&&(c=c.tolowercase());c=b.createelement(c);if(void 0===g){b=null;var k=d.trustedtypes;if(k&&k.createpolicy){try{b=k.createpolicy("goog#html",{createhtml:e,createscript:e,createscripturl:e})}catch(q){d.console&&d.console.error(q.message)}g=b}else g=b}a=(b=g)?b.createscripturl(a):a;a=new l(a,h);c.src=a instanceof l&&a.constructor===l?a.g:"type_error:trustedresourceurl";var f,m;(f=(a=null==(m=(f=(c.ownerdocument&&c.ownerdocument.defaultview||window).document).queryselector)?void 0:m.call(f,"script[nonce]"))?a.nonce||a.getattribute("nonce")||"":"")&&c.setattribute("nonce",f);document.body.appendchild(c);google.psa=!0};google.xjsu=u;settimeout(function(){n()},0);})();function _dumpexception(e){throw e;}
+function _f_installcss(c){}
+(function(){google.jl={blt:'none',chnk:0,dw:false,dwu:true,emtn:0,end:0,ine:false,injs:'none',injt:0,injth:0,injv2:false,lls:'default',pdt:0,rep:0,snet:true,strt:0,ubm:false,uwp:true};})();(function(){var pmc='{\x22d\x22:{},\x22sb_he\x22:{\x22agen\x22:false,\x22cgen\x22:false,\x22client\x22:\x22heirloom-hp\x22,\x22dh\x22:true,\x22dhqt\x22:true,\x22ds\x22:\x22\x22,\x22ffql\x22:\x22es\x22,\x22fl\x22:true,\x22host\x22:\x22google.es\x22,\x22isbh\x22:28,\x22jsonp\x22:true,\x22lm\x22:true,\x22msgs\x22:{\x22cibl\x22:\x22borrar búsqueda\x22,\x22dym\x22:\x22quizás quisiste decir:\x22,\x22lcky\x22:\x22voy a tener suerte\x22,\x22lml\x22:\x22más información\x22,\x22oskt\x22:\x22herramientas de introducción de texto\x22,\x22psrc\x22:\x22esta búsqueda se ha eliminado de tu \\u003ca href\x3d\\\x22/history\\\x22\\u003ehistorial web\\u003c/a\\u003e.\x22,\x22psrl\x22:\x22eliminar\x22,\x22sbit\x22:\x22buscar por imagen\x22,\x22srch\x22:\x22buscar con google\x22},\x22ovr\x22:{},\x22pq\x22:\x22\x22,\x22refpd\x22:true,\x22rfs\x22:[],\x22sbas\x22:\x220 3px 8px 0 rgba(0,0,0,0.2),0 0 0 1px rgba(0,0,0,0.08)\x22,\x22sbpl\x22:16,\x22sbpr\x22:16,\x22scd\x22:10,\x22stok\x22:\x22b2t5frl8wxmj63taynrr5bzjqrw\x22,\x22uhde\x22:false}}';google.pmc=json.parse(pmc);})();</script>        </body></html>https://www.google.es/ [200 ok] cookies[aec,consent,__secure-enid], country[united states][us], html5, httpserver[gws], httponly[aec,__secure-enid], ip[142.250.200.99], script, title[google], uncommonheaders[alt-svc], x-frame-options[sameorigin], x-xss-protection[0]
+
+<!doctype html>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    <html lang="en">
+      <head>
+        <meta name="pagekey" content="d_homepage-guest-home">
+<!---->        <meta name="locale" content="en_us">
+        <meta id="config" data-app-version="2.1.198" data-call-tree-id="aaxo3bjm3ry12qba538sjw==" data-jet-tags="guest-homepage" data-multiproduct-name="homepage-guest-frontend" data-service-name="homepage-guest-frontend" data-browser-id="1ab41799-f30e-4d2f-88b0-08fe3ab8fcd8" data-enable-page-view-heartbeat-tracking data-disable-comscore-tracking data-page-instance="urn:li:page:d_homepage-guest-home;4wfgya/ns9sniphccfityw==" data-disable-jsbeacon-pagekey-suffix="false" data-member-id="0">
+        <link rel="canonical" href="https://www.linkedin.com/">
+          <link rel="alternate" hreflang="de" href="https://de.linkedin.com/">
+          <link rel="alternate" hreflang="en-ie" href="https://ie.linkedin.com/">
+          <link rel="alternate" hreflang="en-us" href="https://www.linkedin.com/">
+          <link rel="alternate" hreflang="pt" href="https://pt.linkedin.com/">
+          <link rel="alternate" hreflang="en-il" href="https://il.linkedin.com/">
+          <link rel="alternate" hreflang="ms-my" href="https://my.linkedin.com/">
+          <link rel="alternate" hreflang="en-in" href="https://in.linkedin.com/">
+          <link rel="alternate" hreflang="es-bo" href="https://bo.linkedin.com/">
+          <link rel="alternate" hreflang="en-za" href="https://za.linkedin.com/">
+          <link rel="alternate" hreflang="zh-cn" href="https://cn.linkedin.com/">
+          <link rel="alternate" hreflang="en-au" href="https://au.linkedin.com/">
+          <link rel="alternate" hreflang="id" href="https://id.linkedin.com/">
+          <link rel="alternate" hreflang="en-ng" href="https://ng.linkedin.com/">
+          <link rel="alternate" hreflang="de-ch" href="https://ch.linkedin.com/">
+          <link rel="alternate" hreflang="ja-jp" href="https://jp.linkedin.com/">
+          <link rel="alternate" hreflang="en-zw" href="https://zw.linkedin.com/">
+          <link rel="alternate" hreflang="en-jm" href="https://jm.linkedin.com/">
+          <link rel="alternate" hreflang="es-sv" href="https://sv.linkedin.com/">
+          <link rel="alternate" hreflang="ms" href="https://my.linkedin.com/">
+          <link rel="alternate" hreflang="es-gt" href="https://gt.linkedin.com/">
+          <link rel="alternate" hreflang="en" href="https://www.linkedin.com/">
+          <link rel="alternate" hreflang="es-cr" href="https://cr.linkedin.com/">
+          <link rel="alternate" hreflang="it" href="https://it.linkedin.com/">
+          <link rel="alternate" hreflang="es-cl" href="https://cl.linkedin.com/">
+          <link rel="alternate" hreflang="es" href="https://es.linkedin.com/">
+          <link rel="alternate" hreflang="zh" href="https://cn.linkedin.com/">
+          <link rel="alternate" hreflang="es-co" href="https://co.linkedin.com/">
+          <link rel="alternate" hreflang="es-pe" href="https://pe.linkedin.com/">
+          <link rel="alternate" hreflang="ar" href="https://ae.linkedin.com/">
+          <link rel="alternate" hreflang="en-nz" href="https://nz.linkedin.com/">
+          <link rel="alternate" hreflang="pt-pt" href="https://pt.linkedin.com/">
+          <link rel="alternate" hreflang="es-pa" href="https://pa.linkedin.com/">
+          <link rel="alternate" hreflang="ja" href="https://jp.linkedin.com/">
+          <link rel="alternate" hreflang="en-sg" href="https://sg.linkedin.com/">
+          <link rel="alternate" hreflang="fr-fr" href="https://fr.linkedin.com/">
+          <link rel="alternate" hreflang="ro" href="https://ro.linkedin.com/">
+          <link rel="alternate" hreflang="en-gb" href="https://uk.linkedin.com/">
+          <link rel="alternate" hreflang="nl" href="https://nl.linkedin.com/">
+          <link rel="alternate" hreflang="en-ke" href="https://ke.linkedin.com/">
+          <link rel="alternate" hreflang="no" href="https://no.linkedin.com/">
+          <link rel="alternate" hreflang="en-ca" href="https://ca.linkedin.com/">
+          <link rel="alternate" hreflang="ru" href="https://ru.linkedin.com/">
+          <link rel="alternate" hreflang="en-gh" href="https://gh.linkedin.com/">
+          <link rel="alternate" hreflang="es-pr" href="https://pr.linkedin.com/">
+          <link rel="alternate" hreflang="fr" href="https://fr.linkedin.com/">
+          <link rel="alternate" hreflang="es-do" href="https://do.linkedin.com/">
+          <link rel="alternate" hreflang="de-at" href="https://at.linkedin.com/">
+          <link rel="alternate" hreflang="es-ec" href="https://ec.linkedin.com/">
+          <link rel="alternate" hreflang="cs-cz" href="https://cz.linkedin.com/">
+          <link rel="alternate" hreflang="en-ph" href="https://ph.linkedin.com/">
+          <link rel="alternate" hreflang="en-pk" href="https://pk.linkedin.com/">
+          <link rel="alternate" hreflang="de-de" href="https://de.linkedin.com/">
+          <link rel="alternate" hreflang="sv" href="https://se.linkedin.com/">
+          <link rel="alternate" hreflang="ko" href="https://kr.linkedin.com/">
+          <link rel="alternate" hreflang="en-tt" href="https://tt.linkedin.com/">
+          <link rel="alternate" hreflang="zh-tw" href="https://tw.linkedin.com/">
+          <link rel="alternate" hreflang="en-hk" href="https://hk.linkedin.com/">
+          <link rel="alternate" hreflang="pt-br" href="https://br.linkedin.com/">
+          <link rel="alternate" hreflang="es-uy" href="https://uy.linkedin.com/">
+          <link rel="alternate" hreflang="es-es" href="https://es.linkedin.com/">
+          <link rel="alternate" hreflang="es-ve" href="https://ve.linkedin.com/">
+          <link rel="alternate" hreflang="es-mx" href="https://mx.linkedin.com/">
+          <link rel="alternate" hreflang="cs" href="https://cz.linkedin.com/">
+          <link rel="alternate" hreflang="es-ar" href="https://ar.linkedin.com/">
+          <link rel="alternate" hreflang="th" href="https://th.linkedin.com/">
+          <link rel="alternate" hreflang="sv-se" href="https://se.linkedin.com/">
+          <link rel="alternate" hreflang="tl" href="https://ph.linkedin.com/">
+          <link rel="alternate" hreflang="da-dk" href="https://dk.linkedin.com/">
+          <link rel="alternate" hreflang="fr-lu" href="https://lu.linkedin.com/">
+          <link rel="alternate" hreflang="pl" href="https://pl.linkedin.com/">
+          <link rel="alternate" hreflang="da" href="https://dk.linkedin.com/">
+          <link rel="alternate" hreflang="tr" href="https://tr.linkedin.com/">
+            <link rel="alternate" hreflang="x-default" href="https://www.linkedin.com/">
+
+<!---->
+<!---->
+<!---->
+          <link rel="icon" href="https://static-exp1.licdn.com/aero-v1/sc/h/al2o9zrvru7aqj8e1x2rzsrca">
+
+        <script>
+          function getdfd() {let yfn,nfn;const p=new promise(function(y, n){yfn=y;nfn=n;});p.resolve=yfn;p.reject=nfn;return p;}
+          window.lazyloader = getdfd();
+          window.tracking = getdfd();
+          window.impressiontracking = getdfd();
+          window.ingraphtracking = getdfd();
+          window.appdetection = getdfd();
+          window.pemtracking = getdfd();
+        </script>
+
+<!---->
+        
+        <title>linkedin: log in or sign up</title>
+        <meta property="og:site_name" content="linkedin">
+        <meta name="description" content="750 million+ members | manage your professional identity. build and engage with your professional network. access knowledge, insights and opportunities.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta property="og:title" content="linkedin: log in or sign up">
+        <meta property="og:description" content="750 million+ members | manage your professional identity. build and engage with your professional network. access knowledge, insights and opportunities.">
+        <meta property="og:type" content="website">
+        <meta name="litmsprofilename" content="homepage-guest-frontend">
+        <meta property="og:url" content="https://www.linkedin.com/">
+        <meta name="naver-site-verification" content="6c180087cc8c9aef0b448521383709b955b7dc5b">
+        <meta property="og:image" content="https://static.licdn.com/scds/common/u/images/logos/favicons/v1/favicon.ico">
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@linkedin">
+        <meta name="twitter:title" content="linkedin: log in or sign up">
+        <meta name="twitter:description" content="750 million+ members | manage your professional identity. build and engage with your professional network. access knowledge, insights and opportunities.">
+
+        <meta name="linkedin:pagetag" content="basic">
+          <meta name="clientsideingraphs" content="1" data-gauge-metric-endpoint="/homepage-guest/api/ingraphs/gauge" data-counter-metric-endpoint="/homepage-guest/api/ingraphs/counter">
+        <meta name="robots" content="noarchive">
+
+        <link rel="stylesheet" href="https://static-exp1.licdn.com/aero-v1/sc/h/d363nkdnr0we0cg38vohtge4e">
+      
+<!---->      </head>
+      <body dir="ltr">
+          
+          
+    
+
+    <a href="#main-content" class="skip-link btn-md btn-primary absolute z-11 -top-[100vh] focus:top-0">
+      skip to main content
+    </a>
+  
+          
+      
+    <div id="artdeco-global-alert-container" aria-live="assertive" role="alert" class="global-alert-banner">
+<!---->    </div>
+      <div id="artdeco-global-alerts-cls-offset">
+          
+    <div class="artdeco-global-alert artdeco-global-alert--notice artdeco-global-alert--cookie_consent" alert-id="urn:li:alert:10" aria-hidden="true" severity="notice" type="cookie_consent">
+      <section class="artdeco-global-alert__body">
+        <li-icon class="artdeco-global-alert__icon">
+          <!---->
+          <!---->
+          
+    <span>
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="24" width="24">
+            <path d="m12,2c6.5,2,2,6.5,2,12c0,5.5,4.5,10,10,10c5.5,0,10-4.5,10-10c22,6.5,17.5,2,12,2zm12,20.2c-4.5,0-8.2-3.7-8.2-8.2s7.5,3.8,12,3.8s8.2,3.7,8.2,8.2s16.5,20.2,12,20.2zm11,10h2v8h-2v10zm11,6h2v2h-2v6z" fill="#fff"></path>
+        </svg>
+    </span>  
+        </li-icon>
+        <div class="artdeco-global-alert__responsive-container">
+            <h2>linkedin respects your privacy</h2>
+          <div class="artdeco-global-alert__responsive-content-container">
+            <div class="artdeco-global-alert__content">
+              <p>linkedin and 3rd parties use essential and non-essential cookies to provide, secure, analyze and improve our services, and to show you relevant ads (including <b>professional and job ads</b>) on and off linkedin. learn more in our <a href="https://www.linkedin.com/legal/cookie-policy">cookie policy</a>.</p><p>select accept to consent or reject to decline non-essential cookies for this use. you can update your choices at any time in your <a href="https://www.linkedin.com/mypreferences/g/guest-cookies">settings</a>.</p>
+            </div>
+          </div>
+          <div class="artdeco-global-alert-action__wrapper">
+                <button class="artdeco-global-alert-action artdeco-button artdeco-button--inverse artdeco-button--2 artdeco-button--primary" action-url action-type="accept" data-tracking-control-name="urn:li:control:ga-cookie.consent.accept.v4" data-control-name="urn:li:control:ga-cookie.consent.accept.v4">
+                accept
+                </button>
+                <button class="artdeco-global-alert-action artdeco-button artdeco-button--inverse artdeco-button--2 artdeco-button--primary" action-url action-type="deny" data-tracking-control-name="urn:li:control:ga-cookie.consent.deny.v4" data-control-name="urn:li:control:ga-cookie.consent.deny.v4">
+                reject
+                </button>
+          </div>
+        </div>
+<!---->      </section>
+    </div>  
+      </div>
+  
+  
+
+        
+        
+
+    
+    
+    
+
+    <nav class="nav pt-1.5 pb-2 flex items-center justify-between relative flex-nowrap babybear:flex-wrap babybear:py-1.5
+        " aria-label="primary">
+
+<!---->
+      <a href="/?trk=guest_homepage-basic_nav-header-logo" class="nav__logo-link link-no-visited-state z-1 mr-auto babybear:z-0 babybear:mr-0 babybear:flex-1 hover:no-underline focus:no-underline active:no-underline
+          " data-tracking-control-name="guest_homepage-basic_nav-header-logo" data-tracking-will-navigate>
+          
+    
+    <span class="sr-only">linkedin</span>
+<!---->    <icon class="block text-color-brand w-[84px] h-[21px] papabear:w-[135px] papabear:h-[34px]
+         order-1" data-test-id="nav-logo" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/8fkga714vy9b2wk5auqo5reeb"></icon>
+  
+      </a>
+
+<!---->
+        
+            
+    
+    
+    
+    
+    <ul class="top-nav-menu flex items-center nav__menu order-3 after:up-down-divider after:!h-[37px] mr-0.5 babybear:hidden">
+        <li class>
+          
+    <a href="https://www.linkedin.com/pulse/topics/home/?trk=homepage-basic_guest_nav_menu_discover" data-tracking-control-name="homepage-basic_guest_nav_menu_discover" data-tracking-will-navigate class="top-nav-link flex items-center h-[52px] text-color-text-low-emphasis hover:text-color-text visited:text-color-text-low-emphasis visited:hover:text-color-text hover:no-underline
+        w-[80px] flex-col">
+      <icon class="top-nav-link__icon flex h-3 w-3 flex-shrink-0 " data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/5x5h6fkfoq2njo0ocxqr98mrk">
+      </icon>
+      <span class="top-nav-link__label-text font-sans text-sm leading-regular
+          font-regular break-all">
+        discover
+      </span>
+    </a>
+  
+        </li>
+        <li class>
+          
+    <a href="https://www.linkedin.com/pub/dir/+/+?trk=homepage-basic_guest_nav_menu_people" data-tracking-control-name="homepage-basic_guest_nav_menu_people" data-tracking-will-navigate class="top-nav-link flex items-center h-[52px] text-color-text-low-emphasis hover:text-color-text visited:text-color-text-low-emphasis visited:hover:text-color-text hover:no-underline
+        w-[80px] flex-col">
+      <icon class="top-nav-link__icon flex h-3 w-3 flex-shrink-0 " data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/7kb6sn3tm4cx918cx9a5jlb0">
+      </icon>
+      <span class="top-nav-link__label-text font-sans text-sm leading-regular
+          font-regular break-all">
+        people
+      </span>
+    </a>
+  
+        </li>
+        <li class>
+          
+    <a href="https://www.linkedin.com/learning/search?trk=homepage-basic_guest_nav_menu_learning" data-tracking-control-name="homepage-basic_guest_nav_menu_learning" data-tracking-will-navigate class="top-nav-link flex items-center h-[52px] text-color-text-low-emphasis hover:text-color-text visited:text-color-text-low-emphasis visited:hover:text-color-text hover:no-underline
+        w-[80px] flex-col">
+      <icon class="top-nav-link__icon flex h-3 w-3 flex-shrink-0 " data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/8wykgzgbqy0t3fnkgborvz54u">
+      </icon>
+      <span class="top-nav-link__label-text font-sans text-sm leading-regular
+          font-regular break-all">
+        learning
+      </span>
+    </a>
+  
+        </li>
+        <li class>
+          
+    <a href="https://www.linkedin.com/jobs/jobs-in-madrid?trk=homepage-basic_guest_nav_menu_jobs" data-tracking-control-name="homepage-basic_guest_nav_menu_jobs" data-tracking-will-navigate class="top-nav-link flex items-center h-[52px] text-color-text-low-emphasis hover:text-color-text visited:text-color-text-low-emphasis visited:hover:text-color-text hover:no-underline
+        w-[80px] flex-col">
+      <icon class="top-nav-link__icon flex h-3 w-3 flex-shrink-0 " data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/92eb1xekc34eklevj0io6x4ki">
+      </icon>
+      <span class="top-nav-link__label-text font-sans text-sm leading-regular
+          font-regular break-all">
+        jobs
+      </span>
+    </a>
+  
+        </li>
+    </ul>
+  
+          
+
+      <div class="nav__cta-container order-3 flex gap-x-1 justify-end min-w-[100px] flex-nowrap flex-shrink-0 babybear:flex-wrap flex-2
+          ">
+          
+    
+              
+                <a class="nav__button-tertiary btn-md btn-tertiary" href="https://www.linkedin.com/signup/cold-join?trk=guest_homepage-basic_nav-header-join" data-tracking-control-name="guest_homepage-basic_nav-header-join" data-tracking-will-navigate>
+                   join now
+                </a>
+          
+            
+
+
+            
+      
+      <a class="nav__button-secondary btn-md btn-secondary-emphasis" href="https://www.linkedin.com/login?fromsignin=true&amp;trk=guest_homepage-basic_nav-header-signin" data-tracking-control-name="guest_homepage-basic_nav-header-signin" data-tracking-will-navigate>
+        sign in
+      </a>
+
+
+<!---->      </div>
+
+<!---->
+<!---->    </nav>
+  
+        <main class="flex flex-col items-center overflow-hidden" role="main" id="main-content">
+          
+    
+    
+    
+    
+
+    
+    
+
+    <section class="section min-h-[560px] flex-nowrap pt-[40px]
+                    babybear:flex-col babybear:min-h-[0] babybear:px-mobile-container-padding babybear:pt-[24px]" data-test-id="hero">
+      <div class="self-start relative flex-shrink-0 w-[55%] pr-[42px]
+                  babybear:w-full babybear:pr-[0px]" data-test-id="hero__content">
+        <h1 class="main-heading text-color-text-accent-2
+                   babybear:pb-[24px]" data-test-id="hero__headline">
+          welcome to your professional community
+        </h1>
+
+<!---->
+        
+          
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+
+    <code id="i18n_sign_in_form_show_text" style="display: none"><!--"show"--></code>
+    <code id="i18n_sign_in_form_show_label" style="display: none"><!--"show your linkedin password"--></code>
+    <code id="i18n_sign_in_form_hide_text" style="display: none"><!--"hide"--></code>
+    <code id="i18n_sign_in_form_hide_label" style="display: none"><!--"hide your linkedin password"--></code>
+
+    
+
+
+    
+    
+    
+
+    <code id="i18n_required_email-or-phone" style="display: none"><!--"please enter your email address or mobile number."--></code>
+    <code id="i18n_toolong_email-or-phone" style="display: none"><!--"email or mobile number must be between 3 to 128 characters."--></code>
+    <code id="i18n_invalidformat_email-or-phone" style="display: none"><!--"please enter a valid email address or mobile number."--></code>
+
+
+    
+    
+    
+
+    <code id="i18n_required_password" style="display: none"><!--"please enter your password."--></code>
+    <code id="i18n_tooshort_password" style="display: none"><!--"password must be 8 characters or more."--></code>
+    <code id="i18n_toolong_password" style="display: none"><!--"your password cannot exceed a maximum of 200 characters."--></code>
+
+    
+    <code id="i18n_server_generic_error" style="display: none"><!--"sorry, something went wrong. please try again."--></code>
+  
+
+    <div class="sign-in-form-container">
+      <form class="sign-in-form hero-cta-form" action="https://www.linkedin.com/uas/login-submit" method="post" novalidate data-js-module-id="d2l-sign-in-form">
+        
+    <div class="alert hidden" role="alert" tabindex="-1">
+      <div class="wrapper">
+        <p class="alert-content">
+          
+        </p>
+      </div>
+    </div>
+  
+
+        <input name="logincsrfparam" value="1ab41799-f30e-4d2f-88b0-08fe3ab8fcd8" type="hidden">
+
+        <div class="sign-in-form__form-input-container">
+          
+      <div class="input ">
+        
+    <!---->
+    <input class="input__input" autocomplete="username" required="true" id="session_key" name="session_key" placeholder=" " type="text">
+    <!---->
+    <label class="input__label" for="session_key">email or phone number</label>
+  
+        
+          
+      </div>
+  
+
+          
+      <div class="input ">
+        
+    <!---->
+    <input class="input__input" autocomplete="current-password" required="true" id="session_password" name="session_password" placeholder=" " type="password">
+    <!---->
+    <label class="input__label" for="session_password">password</label>
+  
+        
+
+                 <button class="sign-in-form__password-visibility-toggle-button" aria-label="show your linkedin password" data-tracking-control-name="homepage-basic_signin-form_password-visibility-toggle-button" type="button">
+                          show
+                 </button>
+          
+      </div>
+  
+        </div>
+
+<!---->
+<!---->
+        <input name="trk" value="homepage-basic_signin-form_submit" type="hidden">
+
+        <a class="sign-in-form__forgot-password-link" href="/uas/request-password-reset?trk=homepage-basic_signin-form_forgot-password-link" data-tracking-control-name="homepage-basic_signin-form_forgot-password-link" data-tracking-will-navigate>forgot password?</a>
+
+        <button class="sign-in-form__submit-button" data-tracking-control-name="homepage-basic_signin-form_submit-button" data-tracking-litms type="submit">
+          sign in
+        </button>
+      </form>
+
+        <div class="sign-in-form__third-party-container" aria-hidden="true">
+          <div class="sign-in-form__or-divider">
+            <span class="sign-in-form__or-span">
+              or
+            </span>
+          </div>
+
+          
+
+    
+
+    <form class="google-sign-in-cta" action="https://www.linkedin.com/uas/login-submit" method="post">
+      <input name="logincsrfparam" value="1ab41799-f30e-4d2f-88b0-08fe3ab8fcd8" type="hidden">
+      <input name="trk" value="homepage-basic_google-sign-in-submit" type="hidden">
+<!---->
+      <button class="google-sign-in-cta__button" data-tracking-control-name="homepage-basic_google-sign-in-button" data-tracking-litms type="button">
+        <icon class="google-sign-in-cta__icon onload" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/b4jgwnrrzl0qfc47qjfws95pj"></icon>
+        <span class="google-sign-in-cta__text">sign in with google</span>
+      </button>
+
+<!---->    </form>
+  
+        </div>
+
+<!---->
+        
+    <div class="loader loader--full-screen">
+      <div class="loader__container mb-2 overflow-hidden">
+        <icon class="loader__icon inline-block loader__icon--default text-color-progress-loading" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/ddi43qwelxeqjxdd45pe3fvs1" data-svg-class-name="loader__icon-svg--large fill-currentcolor h-[60px] min-h-[60px] w-[60px] min-w-[60px]"></icon>
+      </div>
+    </div>
+  
+    </div>
+  
+      
+      </div>
+
+        <img class="flip-rtl block z-[-1] w-[700px] h-[560px] relative flex-shrink
+                    babybear:w-[374px] babybear:h-[214px] babybear:static" alt="welcome to your professional community" data-test-id="hero__illustration" src="https://static-exp1.licdn.com/aero-v1/sc/h/dxf91zhqd2z6b0bwg85ktm5s4">
+    </section>
+  
+
+<!----><!---->        
+    
+    
+    
+    
+    <section class="section py-section flex-wrap
+                    babybear:flex-col
+                    papabear:flex-nowrap" data-test-id="explore-content">
+      <div class="self-start mb-[24px] w-full flex-shrink-0
+                  papabear:w-column papabear:mr-[72px] papabear:mb-[0px]" data-test-id="pill-list-module__cta">
+        <h2 class="secondary-heading">
+          explore topics you are interested in
+        </h2>
+
+<!---->
+        
+      </div>
+
+        <div class="w-full papabear:max-w-[calc(theme('spacing.content-max-w')-theme('spacing.column')-72px)]">
+          
+
+    
+    
+    
+    
+
+      <h2 class="etta-caps-header mb-[20px]">
+        content topics
+      </h2>
+
+    
+    
+    
+
+      <ul class="show-more-less__list show-more-less__list--no-hidden-elems" data-impression-id="homepage-basic_explore-content_pill-list-module_etta-show-more-less_show-more-less">
+        
+        
+              
+        <li class="show-more-less__pill">
+          
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary-emphasis" data-tracking-control-name="homepage-basic_explore-content_topic-pill" data-tracking-will-navigate href="https://www.linkedin.com/pulse/topics/home/">
+          
+            see all topics
+          
+        </a>
+  
+        </li>
+          <li class="show-more-less__pill">
+            
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_explore-content_topic-pill" data-tracking-will-navigate href="https://www.linkedin.com/pulse/topics/workplace-c9/">
+          
+              workplace
+            
+        </a>
+  
+          </li>
+          <li class="show-more-less__pill">
+            
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_explore-content_topic-pill" data-tracking-will-navigate href="https://www.linkedin.com/pulse/topics/job-search-c27/">
+          
+              job search
+            
+        </a>
+  
+          </li>
+          <li class="show-more-less__pill">
+            
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_explore-content_topic-pill" data-tracking-will-navigate href="https://www.linkedin.com/pulse/topics/careers-c1/">
+          
+              careers
+            
+        </a>
+  
+          </li>
+          <li class="show-more-less__pill">
+            
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_explore-content_topic-pill" data-tracking-will-navigate href="https://www.linkedin.com/pulse/topics/job-search-c27/interviewing-c28/">
+          
+              interviewing
+            
+        </a>
+  
+          </li>
+          <li class="show-more-less__pill">
+            
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_explore-content_topic-pill" data-tracking-will-navigate href="https://www.linkedin.com/pulse/topics/careers-c1/salary-and-compensation-c7/">
+          
+              salary and compensation
+            
+        </a>
+  
+          </li>
+          <li class="show-more-less__pill">
+            
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_explore-content_topic-pill" data-tracking-will-navigate href="https://www.linkedin.com/pulse/topics/careers-c1/internships-c5/">
+          
+              internships
+            
+        </a>
+  
+          </li>
+          <li class="show-more-less__pill">
+            
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_explore-content_topic-pill" data-tracking-will-navigate href="https://www.linkedin.com/pulse/topics/workplace-c9/employee-benefits-c12/">
+          
+              employee benefits
+            
+        </a>
+  
+          </li>
+      
+            
+      
+      </ul>
+  
+  
+        </div>
+    </section>
+  
+  
+      
+    
+    
+    
+    
+
+    
+    <section class="section py-section flex-wrap
+                    babybear:flex-col
+                    papabear:flex-nowrap" data-test-id="search-cta">
+      <div class="self-start mb-[24px] w-full flex-shrink-0
+                  papabear:w-column papabear:mr-[72px] papabear:mb-[0px]" data-test-id="pill-list-module__cta">
+        <h2 class="secondary-heading">
+          find the right job or internship for you
+        </h2>
+
+<!---->
+        
+<!---->      
+      </div>
+
+        <div class="w-full papabear:max-w-[calc(theme('spacing.content-max-w')-theme('spacing.column')-72px)]">
+          
+
+    
+    
+    
+    
+
+      <h2 class="etta-caps-header mb-[20px]">
+        suggested searches
+      </h2>
+
+    
+    
+    
+
+      <div class="show-more-less etta-show-more-less">
+<!---->
+        <ul data-max-num-to-show="10" class="show-more-less__list show-more-less__list--hide-after-10" data-impression-id="homepage-basic_pill-list-module_etta-show-more-less_show-more-less">
+          
+        
+              
+          
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/engineering-jobs?trk=homepage-basic_suggested-search">
+          
+          engineering
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/business-development-jobs?trk=homepage-basic_suggested-search">
+          
+          business development
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/finance-jobs?trk=homepage-basic_suggested-search">
+          
+          finance
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/administrative-assistant-jobs?trk=homepage-basic_suggested-search">
+          
+          administrative assistant
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/retail-associate-jobs?trk=homepage-basic_suggested-search">
+          
+          retail associate
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/customer-service-jobs?trk=homepage-basic_suggested-search">
+          
+          customer service
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/operations-jobs?trk=homepage-basic_suggested-search">
+          
+          operations
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/information-technology-jobs?trk=homepage-basic_suggested-search">
+          
+          information technology
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/marketing-jobs?trk=homepage-basic_suggested-search">
+          
+          marketing
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/human-resources-jobs?trk=homepage-basic_suggested-search">
+          
+          human resources
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/healthcare-services-jobs?trk=homepage-basic_suggested-search">
+          
+          healthcare service
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/sales-jobs?trk=homepage-basic_suggested-search">
+          
+          sales
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/program-and-project-management-jobs?trk=homepage-basic_suggested-search">
+          
+          program and project management
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/accounting-jobs?trk=homepage-basic_suggested-search">
+          
+          accounting
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/arts-and-design-jobs?trk=homepage-basic_suggested-search">
+          
+          arts and design
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/community-and-social-services-jobs?trk=homepage-basic_suggested-search">
+          
+          community and social services
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/consulting-jobs?trk=homepage-basic_suggested-search">
+          
+          consulting
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/education-jobs?trk=homepage-basic_suggested-search">
+          
+          education
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/entrepreneurship-jobs?trk=homepage-basic_suggested-search">
+          
+          entrepreneurship
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/legal-jobs?trk=homepage-basic_suggested-search">
+          
+          legal
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/media-and-communications-jobs?trk=homepage-basic_suggested-search">
+          
+          media and communications
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/military-and-protective-services-jobs?trk=homepage-basic_suggested-search">
+          
+          military and protective services
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/product-management-jobs?trk=homepage-basic_suggested-search">
+          
+          product management
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/purchasing-jobs?trk=homepage-basic_suggested-search">
+          
+          purchasing
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/quality-assurance-jobs?trk=homepage-basic_suggested-search">
+          
+          quality assurance
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/real-estate-jobs?trk=homepage-basic_suggested-search">
+          
+          real estate
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/research-jobs?trk=homepage-basic_suggested-search">
+          
+          research
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/support-jobs?trk=homepage-basic_suggested-search">
+          
+          support
+        
+        </a>
+  
+      </li>
+      <li>
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_suggested-search" data-tracking-will-navigate href="https://www.linkedin.com/jobs/administrative-jobs?trk=homepage-basic_suggested-search">
+          
+          administrative
+        
+        </a>
+  
+      </li>
+  
+      
+            
+      
+        </ul>
+
+            <button class="show-more-less__button show-more-less__more-button show-more-less-button
+                " aria-expanded="false" aria-label="show more suggested searches" data-tracking-control-name="homepage-basic_pill-list-module_etta-show-more-less_show_more">
+                show more
+              <icon class="show-more-less__button--chevron show-more-less-button-icon" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/cyolgscd0imw2ldqppkrb84vo"></icon>
+            </button>
+
+            <button class="show-more-less__button show-more-less__less-button show-more-less-button
+                show-more-less__button--hide" aria-expanded="false" aria-label="show less suggested searches" data-tracking-control-name="homepage-basic_pill-list-module_etta-show-more-less_show_more">
+                show less
+              <icon class="show-more-less__button--chevron show-more-less-button-icon" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/4chtt12k98xwnba1nimld2oyg"></icon>
+            </button>
+      </div>
+  
+  
+        </div>
+    </section>
+  
+  
+
+          <section class="section">
+            
+    
+    
+
+    <div class="w-full flex flex-row items-center py-[70px]
+                after:full-color-bkg after:content-[''] after:bg-[#f1ece5]
+                babybear:flex-col babybear:items-start babybear:py-[56px] babybear:px-mobile-container-padding" data-impression-id="homepage-basic_talent-finder-cta" data-test-id="talent-finder-cta">
+      <h2 class="tertiary-heading w-talent-finder-header
+                 babybear:mb-[24px] babybear:w-unset">
+        post your job for millions of people to see
+      </h2>
+      
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary-emphasis flex-shrink
+                       babybear:my-auto babybear:mx-[0px]" data-tracking-control-name="homepage-basic_talent-finder-cta" data-tracking-will-navigate href="https://www.linkedin.com/talent/post-a-job?trk=homepage-basic_talent-finder-cta">
+          
+        post a job
+      
+        </a>
+  
+    </div>  
+          </section>
+
+      
+
+    
+    
+
+    
+    
+
+    
+    
+
+    <div data-nosnippet class="section min-h-section py-section
+                              after:full-color-bkg after:content-[''] after:bg-color-background-canvas
+                              babybear:mx-[-16px] babybear:pt-[0px]">
+      
+
+    
+    
+    
+    
+    
+
+    <section class="slide-list
+        overflow-hidden relative
+        ">
+      <header class="slide-list__header sticky left-0 flex items-center flex-wrap mb-2">
+<!---->          <div class="slide-list__header-nav mt-[1px] flex flex-grow flex-shrink-0 justify-end
+              ">
+            
+              <div class="slide-list__nav-wrap flex px-1 ml-0.5 first:ml-0 slide-list__nav-wrap--prev">
+                <button data-tracking-control-name="homepage-basic_testimonials_slide_list_prev_button" class="slide-list__nav-button btn-sm btn-tertiary flex items-center m-0 transform-none disabled:!bg-color-transparent rtl:-scale-x-100" aria-label="previous slide" data-direction="prev" disabled>
+                    <icon class="slide-list__nav-icon pointer-events-none h-3 rtl:-scale-x-100 rtl:translate-x-[7px]" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/biyhhk26d5ai5a5kecpbldvm0"></icon>
+                      <span class="slide-list__nav-text">previous</span>
+                </button>
+              </div>
+              <div class="slide-list__nav-wrap flex px-1 ml-0.5 first:ml-0 slide-list__nav-wrap--next">
+                <button data-tracking-control-name="homepage-basic_testimonials_slide_list_next_button" class="slide-list__nav-button btn-sm btn-tertiary flex items-center m-0 transform-none disabled:!bg-color-transparent rtl:-scale-x-100" aria-label="next slide" data-direction="next">
+                      <span class="slide-list__nav-text">next</span>
+                    <icon class="slide-list__nav-icon pointer-events-none h-3 rtl:-scale-x-100 rtl:translate-x-[7px]" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/73nr9uepxmoglbtk1070omywz"></icon>
+                </button>
+              </div>
+          </div>
+      </header>
+
+          <ul class="slide-list__list items-stretch flex list-none transition-all duration-slow ease-standard">
+            
+
+          
+  <li class="flex justify-between relative items-center mr-[96px] w-full
+              babybear:flex babybear:flex-wrap-reverse babybear:mr-[16px]">
+    <div class="w-[564px] mr-[64px]
+                mamabear:max-w-[50vw]
+                babybear:h-[300px] babybear:w-[300px] babybear:mt-[16px] babybear:mr-[0]">
+      <h2 class="font-sans text-[40px] leading-[1.25] text-color-text-accent-2
+                  babybear:text-[24px]">
+        let the right people know you’re open to work
+      </h2>
+      <p class="font-sans text-[32px] font-extralight text-black-a90 leading-[1.25] my-[8px]
+                babybear:text-[18px]">
+        <span>with the open to work feature, you can privately tell recruiters or publicly share with the linkedin community that you are looking for new job opportunities.</span>
+      </p>
+    </div>
+    <img class="w-[450px] rounded-[50%]
+                mamabear:max-w-[50vw]
+                babybear:h-[300px] babybear:w-[300px] babybear:mt-[16px] babybear:mx-auto" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/dbvmk0tsk0o0hd59fi64z3own" alt>
+  </li>
+
+          
+  <li class="flex justify-between relative items-center mr-[96px] w-full
+              babybear:flex babybear:flex-wrap-reverse babybear:mr-[16px]">
+    <div class="w-[564px] mr-[64px]
+                mamabear:max-w-[50vw]
+                babybear:h-[300px] babybear:w-[300px] babybear:mt-[16px] babybear:mr-[0]">
+      <h2 class="font-sans text-[40px] leading-[1.25] text-color-text-accent-2
+                  babybear:text-[24px]">
+        conversations today could lead to opportunity tomorrow
+      </h2>
+      <p class="font-sans text-[32px] font-extralight text-black-a90 leading-[1.25] my-[8px]
+                babybear:text-[18px]">
+        <span>sending messages to people you know is a great way to strengthen relationships as you take the next step in your career.</span>
+      </p>
+    </div>
+    <img class="w-[450px] rounded-[50%]
+                mamabear:max-w-[50vw]
+                babybear:h-[300px] babybear:w-[300px] babybear:mt-[16px] babybear:mx-auto" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/2r8kd5zqpi905lkzsshdlvvn5" alt>
+  </li>
+
+          
+  <li class="flex justify-between relative items-center mr-[96px] w-full
+              babybear:flex babybear:flex-wrap-reverse babybear:mr-[16px]">
+    <div class="w-[564px] mr-[64px]
+                mamabear:max-w-[50vw]
+                babybear:h-[300px] babybear:w-[300px] babybear:mt-[16px] babybear:mr-[0]">
+      <h2 class="font-sans text-[40px] leading-[1.25] text-color-text-accent-2
+                  babybear:text-[24px]">
+        stay up to date on your industry
+      </h2>
+      <p class="font-sans text-[32px] font-extralight text-black-a90 leading-[1.25] my-[8px]
+                babybear:text-[18px]">
+        <span>from live videos, to stories, to newsletters and more, linkedin is full of ways to stay up to date on the latest discussions in your industry.</span>
+      </p>
+    </div>
+    <img class="w-[450px] rounded-[50%]
+                mamabear:max-w-[50vw]
+                babybear:h-[300px] babybear:w-[300px] babybear:mt-[16px] babybear:mx-auto" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/ann24vsq7r0ux3vipqa1n90gg" alt>
+  </li>
+
+      
+          </ul>
+
+<!---->    </section>
+  
+    </div>  
+
+      <section class="section py-section">
+        
+    <div class="flex flex-row flex-wrap justify-between w-full
+                babybear:flex-column
+                mamabear:py-[60px] mamabear:px-[0px]
+                papabear:py-[60px] papabear:px-[0px]
+                ">
+      
+
+    
+    
+
+    
+    <div class="flex flex-grow flex-wrap h-full mr-[16px]
+                 mamabear:last:mr-[0]
+                 babybear:w-full babybear:mr-[0] babybear:mb-[56px] babybear:last:mb-[8px]" data-impression-id="homepage-basic_people-cta">
+          <img class="flex-grow flip-rtl h-auto max-w-[300px] mr-[72px] mb-[56px]
+                      babybear:h-[192px] babybear:max-w-[240px] babybear:mb-[32px]" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/b1fxwht7hdbeusleja7ciftsj" alt="connect with people who can help" aria-hidden="true">
+          <div class="w-[456px] my-auto
+                      babybear:w-full">
+            <h2 class="secondary-heading mb-[40px]
+                       babybear:mb-[24px]">
+              connect with people who can help
+            </h2>
+            
+        
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-secondary" data-tracking-control-name="homepage-basic_people-cta" data-tracking-will-navigate href="https://www.linkedin.com/pub/dir/+/+?trk=homepage-basic_people-cta">
+          
+          find people you know
+        
+        </a>
+  
+    
+          </div>
+    </div>
+  
+  
+        
+    
+    
+    
+    
+    
+
+    
+    <div class="flex flex-grow flex-wrap h-full mr-[16px]
+                 mamabear:last:mr-[0]
+                 babybear:w-full babybear:mr-[0] babybear:mb-[56px] babybear:last:mb-[8px]" data-impression-id="homepage-basic_learning-cta">
+          <img class="flex-grow flip-rtl h-auto max-w-[300px] mr-[72px] mb-[56px]
+                      babybear:h-[192px] babybear:max-w-[240px] babybear:mb-[32px]" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/dkfub4sc7jgzg3o31flfr91rv" alt aria-hidden="true">
+          <div class="w-[456px] my-auto
+                      babybear:w-full">
+            <h2 class="secondary-heading mb-[40px]
+                       babybear:mb-[24px]">
+              learn the skills you need to succeed
+            </h2>
+            
+          
+    <div class="dropdown-to-modal learning-cta__dropdown-modal">
+        
+
+    
+
+    <div class="collapsible-dropdown flex items-center relative hyphens-auto">
+          
+            
+              <button class="dropdown-to-modal__button collapsible-dropdown__button btn-md btn-tertiary cursor-pointer
+                             bg-white flex h-auto items-center justify-between w-[360px] py-[16px] pr-[12px] pl-[16px] border-[1px] border-solid border-black-a16 rounded-[5px]
+                             hover:text-black-a90
+                             babybear:w-full" aria-expanded="false" data-tracking-control-name="homepage-basic_learning-cta">
+                <span class="font-sans font-regular text-[20px] text-black-a90 leading-regular">choose a topic to learn about</span>
+                <icon aria-hidden="true" class="w-[24px] h-[24px] ml-[8px]" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/66itw880ou7ix4ag13vdsd3v5"></icon>
+              </button>
+            
+          
+
+        <div class="collapsible-dropdown__list hidden container-raised absolute w-auto overflow-y-auto flex-col items-stretch z-1 bottom-auto top-[100%]" tabindex="-1">
+          
+            
+              <ul class="w-[358px] overflow-scroll mt-[4px] pb-[16px] max-h-[380px]">
+                  <li aria-label="training and education 290+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/training-and-education?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">training and education</span>
+                        <span class="etta-dropdown-subtext">
+                          290+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="it help desk 300+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/it-help-desk-5?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">it help desk</span>
+                        <span class="etta-dropdown-subtext">
+                          300+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="business analysis and strategy 770+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/business-analysis-and-strategy?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">business analysis and strategy</span>
+                        <span class="etta-dropdown-subtext">
+                          770+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="career development 420+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/career-development-5?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">career development</span>
+                        <span class="etta-dropdown-subtext">
+                          420+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="finance and accounting 270+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/finance-and-accounting?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">finance and accounting</span>
+                        <span class="etta-dropdown-subtext">
+                          270+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="leadership and management 1,200+ course" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/leadership-and-management?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">leadership and management</span>
+                        <span class="etta-dropdown-subtext">
+                          1,200+ course
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="mobile development 460+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/mobile-development?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">mobile development</span>
+                        <span class="etta-dropdown-subtext">
+                          460+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="marketing 770+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/marketing-2?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">marketing</span>
+                        <span class="etta-dropdown-subtext">
+                          770+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="cloud computing 860+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/cloud-computing-5?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">cloud computing</span>
+                        <span class="etta-dropdown-subtext">
+                          860+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="project management 370+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/project-management?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">project management</span>
+                        <span class="etta-dropdown-subtext">
+                          370+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="visualization and real-time 1,200+ course" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/visualization-and-real-time?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">visualization and real-time</span>
+                        <span class="etta-dropdown-subtext">
+                          1,200+ course
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="animation and illustration 1,600+ course" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/animation-and-illustration?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">animation and illustration</span>
+                        <span class="etta-dropdown-subtext">
+                          1,600+ course
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="audio and music 410+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/audio-and-music?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">audio and music</span>
+                        <span class="etta-dropdown-subtext">
+                          410+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="aec 1,400+ course" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/aec?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">aec</span>
+                        <span class="etta-dropdown-subtext">
+                          1,400+ course
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="graphic design 900+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/graphic-design?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">graphic design</span>
+                        <span class="etta-dropdown-subtext">
+                          900+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="motion graphics and vfx 890+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/motion-graphics-and-vfx?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">motion graphics and vfx</span>
+                        <span class="etta-dropdown-subtext">
+                          890+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="photography 1,100+ course" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/photography-2?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">photography</span>
+                        <span class="etta-dropdown-subtext">
+                          1,100+ course
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="video 590+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/video-2?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">video</span>
+                        <span class="etta-dropdown-subtext">
+                          590+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="data science 820+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/data-science?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">data science</span>
+                        <span class="etta-dropdown-subtext">
+                          820+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="network and system administration 1,100+ course" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/network-and-system-administration?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">network and system administration</span>
+                        <span class="etta-dropdown-subtext">
+                          1,100+ course
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="software development 1,800+ course" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/software-development?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">software development</span>
+                        <span class="etta-dropdown-subtext">
+                          1,800+ course
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="user experience 470+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/user-experience?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">user experience</span>
+                        <span class="etta-dropdown-subtext">
+                          470+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="web design 520+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/web-design?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">web design</span>
+                        <span class="etta-dropdown-subtext">
+                          520+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="database management 290+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/database-management?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">database management</span>
+                        <span class="etta-dropdown-subtext">
+                          290+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="web development 1,300+ course" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/web-development?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">web development</span>
+                        <span class="etta-dropdown-subtext">
+                          1,300+ course
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="product and manufacturing 1,400+ course" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/product-and-manufacturing?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">product and manufacturing</span>
+                        <span class="etta-dropdown-subtext">
+                          1,400+ course
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="sales 220+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/sales-3?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">sales</span>
+                        <span class="etta-dropdown-subtext">
+                          220+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="human resources 410+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/human-resources-3?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">human resources</span>
+                        <span class="etta-dropdown-subtext">
+                          410+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="devops 220+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/devops?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">devops</span>
+                        <span class="etta-dropdown-subtext">
+                          220+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="small business and entrepreneurship 310+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/small-business-and-entrepreneurship?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">small business and entrepreneurship</span>
+                        <span class="etta-dropdown-subtext">
+                          310+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="customer service 170+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/customer-service-3?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">customer service</span>
+                        <span class="etta-dropdown-subtext">
+                          170+ courses
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="professional development 1,200+ course" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/professional-development?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">professional development</span>
+                        <span class="etta-dropdown-subtext">
+                          1,200+ course
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="business software and tools 1,800+ course" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/business-software-and-tools?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">business software and tools</span>
+                        <span class="etta-dropdown-subtext">
+                          1,800+ course
+                        </span>
+                    </a>
+                  </li>
+                  <li aria-label="security 590+ courses" class="mt-[16px] mr-[8px] mb-[0] ml-[16px]" role="menuitem">
+                    <a class="flex flex-col text-black-a90
+                               hover:text-blue-70 hover:visited:text-blue-70" data-tracking-control-name="homepage-basic_learning-cta" data-tracking-will-navigate href="https://www.linkedin.com/learning/topics/security-3?trk=homepage-basic_learning-cta">
+                      <span class="etta-dropdown-header">security</span>
+                        <span class="etta-dropdown-subtext">
+                          590+ courses
+                        </span>
+                    </a>
+                  </li>
+              </ul>
+            
+          
+        </div>
+
+<!---->    </div>
+  
+    </div>
+  
+      
+          </div>
+    </div>
+  
+  
+    </div>
+  
+      </section>
+
+<!---->
+<!----><!---->
+    <section class="section min-h-section py-section">
+      
+    
+    
+
+    <div class="w-full self-start lazy-load
+                after-lazy-bg-join after:content-[''] after:full-color-bkg after:bg-repeat-x after:bg-bottom after:bg-full-y
+                babybear:h-full babybear:p-[0] babybear:after:content-[none]" data-test-id="join-cta" data-impression-id="guest_homepage-basic_join-cta">
+      <h2 data-test-id="join-cta__header" class="main-heading text-black-a90 mt-[20px] mb-[40px] keep-all babybear:mt-[0px] babybear:mb-[24px]">
+          join your colleagues, classmates, and friends on linkedin.
+              </h2>
+      
+        <a class="btn-lg mb-1.5 mr-[6px] flex items-center w-max float-left btn-primary" data-tracking-control-name="guest_homepage-basic_join-cta" data-tracking-will-navigate href="https://www.linkedin.com/signup/cold-join?trk=guest_homepage-basic_join-cta" aria-describedby="join-cta__header">
+          
+        get started
+      
+        </a>
+  
+    </div>
+  
+    </section>
+
+    <section class="section">
+      
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <div class="w-full flex justify-between pt-[24px] pb-[22px]
+                after:full-color-bkg after:content-[''] after:bg-color-background-canvas
+                babybear:max-w-full babybear:flex-col babybear:py-[24px] babybear:px-mobile-container-padding" data-test-id="directory" data-impression-id="homepage-basic_directory">
+      <icon class="self-start h-[21px] w-[84px] text-blue-70" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/eotfc4hqfrdkdj1gypjcm5fnp"></icon>
+      <span class="sr-only">linkedin</span>
+      <div class="w-full flex justify-end pl-[16px]
+                  babybear:flex-col babybear:flex-wrap babybear:mt-[24px] babybear:pl-[0px]">
+          <div class="w-full max-w-[192px] mr-[24px]">
+            <h3 class="font-sans text-[16px] font-bold text-black-a90 leading-[1.25] mb-[8px]
+                       babybear:max-w-full babybear:my-[10px]">
+              general
+            </h3>
+            <ul>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/signup/cold-join?trk=guest_homepage-basic_directory" data-tracking-control-name="guest_homepage-basic_directory" data-tracking-will-navigate>
+                    sign up
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/help/linkedin?lang=en&amp;trk=homepage-basic_directory_helpcenterurl" data-tracking-control-name="homepage-basic_directory_helpcenterurl" data-tracking-will-navigate>
+                    help center
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://about.linkedin.com/?trk=homepage-basic_directory_abouturl" data-tracking-control-name="homepage-basic_directory_abouturl" data-tracking-will-navigate>
+                    about
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://press.linkedin.com/?trk=homepage-basic_directory_pressmicrositeurl" data-tracking-control-name="homepage-basic_directory_pressmicrositeurl" data-tracking-will-navigate>
+                    press
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://blog.linkedin.com/?trk=homepage-basic_directory_blogmicrositeurl" data-tracking-control-name="homepage-basic_directory_blogmicrositeurl" data-tracking-will-navigate>
+                    blog
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/company/linkedin/jobs?trk=homepage-basic_directory_careersurl" data-tracking-control-name="homepage-basic_directory_careersurl" data-tracking-will-navigate>
+                    careers
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://developer.linkedin.com/?trk=homepage-basic_directory_developermicrositeurl" data-tracking-control-name="homepage-basic_directory_developermicrositeurl" data-tracking-will-navigate>
+                    developers
+                  </a>
+                </li>
+            </ul>
+          </div>
+          <div class="w-full max-w-[192px] mr-[24px]">
+            <h3 class="font-sans text-[16px] font-bold text-black-a90 leading-[1.25] mb-[8px]
+                       babybear:max-w-full babybear:my-[10px]">
+              browse linkedin
+            </h3>
+            <ul>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/learning/?trk=homepage-basic_directory_learninghomeurl" data-tracking-control-name="homepage-basic_directory_learninghomeurl" data-tracking-will-navigate>
+                    learning
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/jobs?trk=homepage-basic_directory_jobshomeurl" data-tracking-control-name="homepage-basic_directory_jobshomeurl" data-tracking-will-navigate>
+                    jobs
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/salary/?trk=homepage-basic_directory_salaryhomeurl" data-tracking-control-name="homepage-basic_directory_salaryhomeurl" data-tracking-will-navigate>
+                    salary
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://mobile.linkedin.com/?trk=homepage-basic_directory_mobilemicrositeurl" data-tracking-control-name="homepage-basic_directory_mobilemicrositeurl" data-tracking-will-navigate>
+                    mobile
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/services?trk=homepage-basic_directory_serviceshomeurl" data-tracking-control-name="homepage-basic_directory_serviceshomeurl" data-tracking-will-navigate>
+                    services
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/products?trk=homepage-basic_directory_productshomeurl" data-tracking-control-name="homepage-basic_directory_productshomeurl" data-tracking-will-navigate>
+                    products
+                  </a>
+                </li>
+            </ul>
+          </div>
+          <div class="w-full max-w-[192px] mr-[24px]">
+            <h3 class="font-sans text-[16px] font-bold text-black-a90 leading-[1.25] mb-[8px]
+                       babybear:max-w-full babybear:my-[10px]">
+              business solutions
+            </h3>
+            <ul>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://business.linkedin.com/talent-solutions?src=li-footer&amp;utm_source=linkedin&amp;utm_medium=footer&amp;trk=homepage-basic_directory_talentsolutionsmicrositeurl" data-tracking-control-name="homepage-basic_directory_talentsolutionsmicrositeurl" data-tracking-will-navigate>
+                    talent
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://business.linkedin.com/marketing-solutions?src=li-footer&amp;utm_source=linkedin&amp;utm_medium=footer&amp;trk=homepage-basic_directory_marketingsolutionsmicrositeurl" data-tracking-control-name="homepage-basic_directory_marketingsolutionsmicrositeurl" data-tracking-will-navigate>
+                    marketing
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://business.linkedin.com/sales-solutions?src=li-footer&amp;utm_source=linkedin&amp;utm_medium=footer&amp;trk=homepage-basic_directory_salessolutionsmicrositeurl" data-tracking-control-name="homepage-basic_directory_salessolutionsmicrositeurl" data-tracking-will-navigate>
+                    sales
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://learning.linkedin.com/?src=li-footer&amp;trk=homepage-basic_directory_learningmicrositeurl" data-tracking-control-name="homepage-basic_directory_learningmicrositeurl" data-tracking-will-navigate>
+                    learning
+                  </a>
+                </li>
+            </ul>
+          </div>
+          <div class="w-full max-w-[192px] mr-[24px]">
+            <h3 class="font-sans text-[16px] font-bold text-black-a90 leading-[1.25] mb-[8px]
+                       babybear:max-w-full babybear:my-[10px]">
+              directories
+            </h3>
+            <ul>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/directory/people?trk=homepage-basic_directory_peopledirectoryurl" data-tracking-control-name="homepage-basic_directory_peopledirectoryurl" data-tracking-will-navigate>
+                    members
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/directory/jobs?trk=homepage-basic_directory_jobsearchdirectoryurl" data-tracking-control-name="homepage-basic_directory_jobsearchdirectoryurl" data-tracking-will-navigate>
+                    jobs
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/directory/companies?trk=homepage-basic_directory_companydirectoryurl" data-tracking-control-name="homepage-basic_directory_companydirectoryurl" data-tracking-will-navigate>
+                    companies
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/directory/featured?trk=homepage-basic_directory_featureddirectoryurl" data-tracking-control-name="homepage-basic_directory_featureddirectoryurl" data-tracking-will-navigate>
+                    featured
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/directory/learning?trk=homepage-basic_directory_learningdirectoryurl" data-tracking-control-name="homepage-basic_directory_learningdirectoryurl" data-tracking-will-navigate>
+                    learning
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/directory/posts?trk=homepage-basic_directory_postsdirectoryurl" data-tracking-control-name="homepage-basic_directory_postsdirectoryurl" data-tracking-will-navigate>
+                    posts
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/directory/articles?trk=homepage-basic_directory_articlesdirectoryurl" data-tracking-control-name="homepage-basic_directory_articlesdirectoryurl" data-tracking-will-navigate>
+                    articles
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/directory/schools?trk=homepage-basic_directory_schoolsdirectoryurl" data-tracking-control-name="homepage-basic_directory_schoolsdirectoryurl" data-tracking-will-navigate>
+                    schools
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/directory/news?trk=homepage-basic_directory_newsdirectoryurl" data-tracking-control-name="homepage-basic_directory_newsdirectoryurl" data-tracking-will-navigate>
+                    news
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/directory/newsletters?trk=homepage-basic_directory_newslettersdirectoryurl" data-tracking-control-name="homepage-basic_directory_newslettersdirectoryurl" data-tracking-will-navigate>
+                    news letters
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/directory/services?trk=homepage-basic_directory_servicesdirectoryurl" data-tracking-control-name="homepage-basic_directory_servicesdirectoryurl" data-tracking-will-navigate>
+                    services
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/directory/products?trk=homepage-basic_directory_productsdirectoryurl" data-tracking-control-name="homepage-basic_directory_productsdirectoryurl" data-tracking-will-navigate>
+                    products
+                  </a>
+                </li>
+                <li class="babybear:my-[10px] babybear:max-w-full">
+                  <a class="font-sans text-[14px] text-black-a60 font-bold leading-[1.25]
+                            visited:text-black-a60 visited:hover:text-blue-70" href="https://www.linkedin.com/directory/content-hub?trk=homepage-basic_directory_contenthubdirectoryurl" data-tracking-control-name="homepage-basic_directory_contenthubdirectoryurl" data-tracking-will-navigate>
+                    content topics
+                  </a>
+                </li>
+            </ul>
+          </div>
+      </div>
+    </div>
+  
+    </section>
+  
+        </main>
+<!---->        <code id="googleuseautoselect" style="display: none"><!--true--></code>
+<!---->          
+    <form class="google-one-tap" action="https://www.linkedin.com/uas/login-submit" method="post">
+      <input name="logincsrfparam" value="1ab41799-f30e-4d2f-88b0-08fe3ab8fcd8" type="hidden">
+
+<!---->
+      <input name="trk" value="homepage-basic_google-one-tap-submit" type="hidden">
+      <div id="google-one-tap__container" class="google-one-tap__container" data-tracking-control-name="homepage-basic_google-one-tap"></div>
+
+      
+    <div class="loader loader--full-screen">
+      <div class="loader__container mb-2 overflow-hidden">
+        <icon class="loader__icon inline-block loader__icon--default text-color-progress-loading" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/ddi43qwelxeqjxdd45pe3fvs1" data-svg-class-name="loader__icon-svg--large fill-currentcolor h-[60px] min-h-[60px] w-[60px] min-w-[60px]"></icon>
+      </div>
+    </div>
+  
+    </form>
+  
+<!----><!----><!---->        
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+
+    <footer class="li-footer bg-transparent w-full ">
+      <ul class="li-footer__list flex flex-wrap flex-row items-start justify-start w-full h-auto min-h-[50px] my-[0px] mx-auto py-3 px-2 papabear:w-[1128px] papabear:p-0">
+        
+  <li class="li-footer__item font-sans text-xs text-color-text-low-emphasis flex flex-shrink-0 justify-start p-1 relative w-50% papabear:justify-center papabear:w-auto">
+        
+          <span class="sr-only">linkedin</span>
+          <icon class="li-footer__copy-logo text-color-logo-brand-alt inline-block self-center h-[14px] w-[56px] mr-1" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/e12h2cd8ac580qen9qdd0qks8"></icon>
+          <span class="li-footer__copy-text flex items-center">&copy; 2022</span>
+        
+  </li>
+
+        
+  <li class="li-footer__item font-sans text-xs text-color-text-low-emphasis flex flex-shrink-0 justify-start p-1 relative w-50% papabear:justify-center papabear:w-auto">
+        <a class="li-footer__item-link flex items-center font-sans text-xs font-bold text-color-text-low-emphasis hover:text-color-link-hover focus:text-color-link-focus" href="https://about.linkedin.com?trk=homepage-basic_footer-about" data-tracking-control-name="homepage-basic_footer-about" data-tracking-will-navigate>
+          
+          about
+        
+        </a>
+  </li>
+
+        
+  <li class="li-footer__item font-sans text-xs text-color-text-low-emphasis flex flex-shrink-0 justify-start p-1 relative w-50% papabear:justify-center papabear:w-auto">
+        <a class="li-footer__item-link flex items-center font-sans text-xs font-bold text-color-text-low-emphasis hover:text-color-link-hover focus:text-color-link-focus" href="https://www.linkedin.com/accessibility?trk=homepage-basic_footer-accessibility" data-tracking-control-name="homepage-basic_footer-accessibility" data-tracking-will-navigate>
+          
+          accessibility
+        
+        </a>
+  </li>
+
+        
+  <li class="li-footer__item font-sans text-xs text-color-text-low-emphasis flex flex-shrink-0 justify-start p-1 relative w-50% papabear:justify-center papabear:w-auto">
+        <a class="li-footer__item-link flex items-center font-sans text-xs font-bold text-color-text-low-emphasis hover:text-color-link-hover focus:text-color-link-focus" href="https://www.linkedin.com/legal/user-agreement?trk=homepage-basic_footer-user-agreement" data-tracking-control-name="homepage-basic_footer-user-agreement" data-tracking-will-navigate>
+          
+          user agreement
+        
+        </a>
+  </li>
+
+        
+  <li class="li-footer__item font-sans text-xs text-color-text-low-emphasis flex flex-shrink-0 justify-start p-1 relative w-50% papabear:justify-center papabear:w-auto">
+        <a class="li-footer__item-link flex items-center font-sans text-xs font-bold text-color-text-low-emphasis hover:text-color-link-hover focus:text-color-link-focus" href="https://www.linkedin.com/legal/privacy-policy?trk=homepage-basic_footer-privacy-policy" data-tracking-control-name="homepage-basic_footer-privacy-policy" data-tracking-will-navigate>
+          
+          privacy policy
+        
+        </a>
+  </li>
+
+        
+  <li class="li-footer__item font-sans text-xs text-color-text-low-emphasis flex flex-shrink-0 justify-start p-1 relative w-50% papabear:justify-center papabear:w-auto">
+        <a class="li-footer__item-link flex items-center font-sans text-xs font-bold text-color-text-low-emphasis hover:text-color-link-hover focus:text-color-link-focus" href="https://www.linkedin.com/legal/cookie-policy?trk=homepage-basic_footer-cookie-policy" data-tracking-control-name="homepage-basic_footer-cookie-policy" data-tracking-will-navigate>
+          
+          cookie policy
+        
+        </a>
+  </li>
+
+        
+  <li class="li-footer__item font-sans text-xs text-color-text-low-emphasis flex flex-shrink-0 justify-start p-1 relative w-50% papabear:justify-center papabear:w-auto">
+        <a class="li-footer__item-link flex items-center font-sans text-xs font-bold text-color-text-low-emphasis hover:text-color-link-hover focus:text-color-link-focus" href="https://www.linkedin.com/legal/copyright-policy?trk=homepage-basic_footer-copyright-policy" data-tracking-control-name="homepage-basic_footer-copyright-policy" data-tracking-will-navigate>
+          
+          copyright policy
+        
+        </a>
+  </li>
+
+        
+  <li class="li-footer__item font-sans text-xs text-color-text-low-emphasis flex flex-shrink-0 justify-start p-1 relative w-50% papabear:justify-center papabear:w-auto">
+        <a class="li-footer__item-link flex items-center font-sans text-xs font-bold text-color-text-low-emphasis hover:text-color-link-hover focus:text-color-link-focus" href="https://brand.linkedin.com/policies?trk=homepage-basic_footer-brand-policy" data-tracking-control-name="homepage-basic_footer-brand-policy" data-tracking-will-navigate>
+          
+          brand policy
+        
+        </a>
+  </li>
+
+          
+  <li class="li-footer__item font-sans text-xs text-color-text-low-emphasis flex flex-shrink-0 justify-start p-1 relative w-50% papabear:justify-center papabear:w-auto">
+        <a class="li-footer__item-link flex items-center font-sans text-xs font-bold text-color-text-low-emphasis hover:text-color-link-hover focus:text-color-link-focus" href="https://www.linkedin.com/psettings/guest-controls?trk=homepage-basic_footer-guest-controls" data-tracking-control-name="homepage-basic_footer-guest-controls" data-tracking-will-navigate>
+          
+            guest controls
+          
+        </a>
+  </li>
+
+        
+  <li class="li-footer__item font-sans text-xs text-color-text-low-emphasis flex flex-shrink-0 justify-start p-1 relative w-50% papabear:justify-center papabear:w-auto">
+        <a class="li-footer__item-link flex items-center font-sans text-xs font-bold text-color-text-low-emphasis hover:text-color-link-hover focus:text-color-link-focus" href="https://www.linkedin.com/legal/professional-community-policies?trk=homepage-basic_footer-community-guide" data-tracking-control-name="homepage-basic_footer-community-guide" data-tracking-will-navigate>
+          
+          community guidelines
+        
+        </a>
+  </li>
+
+        
+<!---->
+          
+          
+  <li class="li-footer__item font-sans text-xs text-color-text-low-emphasis flex flex-shrink-0 justify-start p-1 relative w-50% papabear:justify-center papabear:w-auto">
+        
+              
+
+    
+    
+
+    
+
+    
+
+    <div class="collapsible-dropdown collapsible-dropdown--footer collapsible-dropdown--up flex items-center relative hyphens-auto language-selector z-2">
+<!---->
+        <ul class="collapsible-dropdown__list hidden container-raised absolute w-auto overflow-y-auto flex-col items-stretch z-1 bottom-[100%] top-auto" role="menu" tabindex="-1">
+          
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="العربية (arabic)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-ar_ae" data-locale="ar_ae" role="menuitem" lang="ar_ae">
+                العربية (arabic)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="čeština (czech)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-cs_cz" data-locale="cs_cz" role="menuitem" lang="cs_cz">
+                čeština (czech)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="dansk (danish)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-da_dk" data-locale="da_dk" role="menuitem" lang="da_dk">
+                dansk (danish)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="deutsch (german)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-de_de" data-locale="de_de" role="menuitem" lang="de_de">
+                deutsch (german)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="english (english) selected" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link--selected" data-tracking-control-name="language-selector-en_us" data-locale="en_us" role="menuitem" lang="en_us">
+                <strong>english (english)</strong>
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="español (spanish)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-es_es" data-locale="es_es" role="menuitem" lang="es_es">
+                español (spanish)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="français (french)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-fr_fr" data-locale="fr_fr" role="menuitem" lang="fr_fr">
+                français (french)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="हिंदी (hindi)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-hi_in" data-locale="hi_in" role="menuitem" lang="hi_in">
+                हिंदी (hindi)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="bahasa indonesia (bahasa indonesia)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-in_id" data-locale="in_id" role="menuitem" lang="in_id">
+                bahasa indonesia (bahasa indonesia)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="italiano (italian)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-it_it" data-locale="it_it" role="menuitem" lang="it_it">
+                italiano (italian)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="日本語 (japanese)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-ja_jp" data-locale="ja_jp" role="menuitem" lang="ja_jp">
+                日本語 (japanese)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="한국어 (korean)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-ko_kr" data-locale="ko_kr" role="menuitem" lang="ko_kr">
+                한국어 (korean)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="bahasa malaysia (malay)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-ms_my" data-locale="ms_my" role="menuitem" lang="ms_my">
+                bahasa malaysia (malay)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="nederlands (dutch)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-nl_nl" data-locale="nl_nl" role="menuitem" lang="nl_nl">
+                nederlands (dutch)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="norsk (norwegian)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-no_no" data-locale="no_no" role="menuitem" lang="no_no">
+                norsk (norwegian)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="polski (polish)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-pl_pl" data-locale="pl_pl" role="menuitem" lang="pl_pl">
+                polski (polish)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="português (portuguese)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-pt_br" data-locale="pt_br" role="menuitem" lang="pt_br">
+                português (portuguese)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="română (romanian)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-ro_ro" data-locale="ro_ro" role="menuitem" lang="ro_ro">
+                română (romanian)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="русский (russian)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-ru_ru" data-locale="ru_ru" role="menuitem" lang="ru_ru">
+                русский (russian)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="svenska (swedish)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-sv_se" data-locale="sv_se" role="menuitem" lang="sv_se">
+                svenska (swedish)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="ภาษาไทย (thai)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-th_th" data-locale="th_th" role="menuitem" lang="th_th">
+                ภาษาไทย (thai)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="tagalog (tagalog)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-tl_ph" data-locale="tl_ph" role="menuitem" lang="tl_ph">
+                tagalog (tagalog)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="türkçe (turkish)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-tr_tr" data-locale="tr_tr" role="menuitem" lang="tr_tr">
+                türkçe (turkish)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="українська (ukrainian)" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-uk_ua" data-locale="uk_ua" role="menuitem" lang="uk_ua">
+                українська (ukrainian)
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="简体中文 (chinese (simplified))" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-zh_cn" data-locale="zh_cn" role="menuitem" lang="zh_cn">
+                简体中文 (chinese (simplified))
+            </button>
+          </li>
+          <li class="language-selector__item" role="presentation">
+            <!-- adding aria-label to both the li and the button because screen reader focus goes to button on desktop and li on mobile-->
+            <button aria-label="正體中文 (chinese (traditional))" class="font-sans text-xs link block py-[5px] px-2 w-full hover:cursor-pointer hover:bg-color-action hover:text-color-text-on-dark focus:bg-color-action focus:text-color-text-on-dark
+                language-selector__link !font-regular" data-tracking-control-name="language-selector-zh_tw" data-locale="zh_tw" role="menuitem" lang="zh_tw">
+                正體中文 (chinese (traditional))
+            </button>
+          </li>
+      
+        </ul>
+
+          
+        <button class="language-selector__button select-none relative pr-2 font-sans text-xs font-bold text-color-text-low-emphasis hover:text-color-link-hover hover:cursor-pointer focus:text-color-link-focus focus:outline-dotted focus:outline-1" aria-expanded="false" data-tracking-control-name="footer-lang-dropdown_trigger">
+          <span class="language-selector__label-text mr-0.5 break-words">
+            language
+          </span>
+          <icon class="language-selector__label-chevron w-2 h-2 absolute top-0 right-0" data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/cyolgscd0imw2ldqppkrb84vo"></icon>
+        </button>
+      
+    </div>
+  
+  
+          
+  </li>
+
+      </ul>
+
+<!---->    </footer>
+  
+
+        <script src="https://static-exp1.licdn.com/aero-v1/sc/h/2orv4tvih2dwvuh0fxohiynn4" async defer></script>
+
+<!---->          <script data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/etkd25e7kzp2lrg1w9y0kixlu" data-module-id="google-sign-in-lib"></script>
+          <script data-delayed-url="https://static-exp1.licdn.com/aero-v1/sc/h/98lptr8kagfxge22q7k1fps8" data-module-id="google-one-tap-lib"></script>
+      
+
+            <script src="https://static-exp1.licdn.com/aero-v1/sc/h/1f0o8asarfspok2zpu5dl86by" async></script>
+          
+      </body>
+    </html>
+  
+  https://www.linkedin.com/ [200 ok] cookies[jsessionid,bcookie,bscookie,lang,li_gc,lidc], country[united states][us], html5, httponly[bscookie], ip[13.107.42.14], open-graph-protocol[website], passwordfield[session_password], script, strict-transport-security[max-age=31536000], title[linkedin: log in or sign up], uncommonheaders[content-security-policy,x-content-type-options,expect-ct,x-li-fabric,x-li-pop,x-li-proto,x-li-uuid,x-msedge-ref], x-frame-options[sameorigin]
