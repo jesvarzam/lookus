@@ -14,9 +14,9 @@ CAMERA_KEYWORDS = ['cámara', 'camera']
 
 TOTAL = 81
 
+
 def return_response(device):
     full_response = ''
-    
     http_device = device
 
     if not validators.url(device):
@@ -24,22 +24,16 @@ def return_response(device):
 
     whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
     whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
-    if check_redirects(whatweb):
-        http_device = follow_redirect(whatweb, http_device)
-        try:
-            response = requests.get(http_device, verify=False, timeout=10).text.lower()
-        except:
-            response = ''
-        whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-        whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
-    else:
-        try:
-            response = requests.get(http_device, verify=False, timeout=10).text.lower()
-        except:
-            response = ''
+    http_device = follow_redirect(whatweb, http_device)
+    try:
+        response = requests.get(http_device, verify=False, timeout=10).text.lower()
+    except:
+        response = ''
+    whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+    whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
 
     full_response = response + whatweb
-    return full_response
+    return ['\n'.join(set(full_response.split('\n'))), response, whatweb]
 
 
 def train_devices(devices, user):
@@ -50,18 +44,15 @@ def train_devices(devices, user):
         os.system('cp detection/diccs/*_dicc.txt detection/diccs/' + folder)
     
     for d in devices:
-        
         f = open('detection/diccs/' + folder + '/' + d, 'a')
 
         for device in devices[d]:
-
             device = device.strip()
             if device == '':
                 continue
 
             if check_port_http(device):
-
-                response = return_response(device)
+                response = return_response(device)[0]
                 f.write('\n' + response)
         
         f.close()
@@ -103,34 +94,21 @@ def get_single_format(device):
     return 'Dirección URL'
 
 
-def check_redirects(whatweb):
-    headers = whatweb.split('\n')
-    for h in headers:
-        if 'RedirectLocation' in h:
-            return True
-    return False
-
-
 def follow_redirect(whatweb, url):
     split_headers = whatweb.split('\n')
     for split_h in split_headers:
         headers = split_h.split(',')
         if '302' in split_h:
-            print('302 found')
             for h in headers:
                 if 'RedirectLocation' in h:
                     adding_url = re.search(r"((?<=\[)(.*?)(?=\]))", h)[0]
                     url = url + adding_url
-                    print('New URL -> ' + url)
                     break
         elif '301' in split_h:
-            print('301 found')
             for h in headers:
                 if 'RedirectLocation' in h:
                     url = re.search(r"((?<=\[)(.*?)(?=\]))", h)[0]
-                    print('New URL -> ' + url)
                     break
-    print('final url -> ' + url)
     return url
 
 
@@ -404,10 +382,8 @@ def single_device_detection(device, user, use_own_dicc):
 
     device_name = device.name
     device_name_port_scan = device.name
-    device_format = 'IP'
 
     if validators.url(device_name):
-        device_format = 'URL'
         device_name_port_scan = getIP(device_name)
 
     total_open_ports = []
@@ -418,36 +394,10 @@ def single_device_detection(device, user, use_own_dicc):
         total_open_ports = [*port_scan[device_name_port_scan]['tcp'].keys()]
 
     if len(total_open_ports) > 0:
-
-        full_response = ''
-        whatweb = ''
-
-        if (80 in total_open_ports or 443 in total_open_ports) and device_format == 'URL':
-            whatweb = subprocess.run(['whatweb', device_name], stdout=subprocess.PIPE).stdout.decode('utf-8')
-            whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
-            if check_redirects(whatweb):
-                device_name = follow_redirect(whatweb, device_name)
-                try:
-                    response = requests.get(http_device, verify=False, timeout=10).text.lower()
-                except:
-                    response = ''
-                whatweb = subprocess.run(['whatweb', device_name], stdout=subprocess.PIPE).stdout.decode('utf-8')
-                whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
-            full_response = response + whatweb
-        
-        elif 80 in total_open_ports and device_format == 'IP':
-            http_device = 'http://' + device_name
-            whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-            whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
-            if check_redirects(whatweb):
-                http_device = follow_redirect(whatweb, http_device)
-                try:
-                    response = requests.get(http_device, verify=False, timeout=10).text.lower()
-                except:
-                    response = ''
-                whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-                whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
-            full_response = response + whatweb
+        full_response_list = return_response(device_name)
+        full_response = full_response_list[0]
+        response = full_response_list[1]
+        whatweb = full_response_list[2]
 
         if full_response!='':
             probabilities = detectDevice(total_open_ports, full_response, user, use_own_dicc)
@@ -492,10 +442,8 @@ def range_device_detection(range_device, user, use_own_dicc):
         detection['Device'] = device
 
         device_name_port_scan = device
-        device_format = 'IP'
 
         if validators.url(device):
-            device_format = 'URL'
             device_name_port_scan = getIP(device)
 
         total_open_ports = []
@@ -506,36 +454,10 @@ def range_device_detection(range_device, user, use_own_dicc):
             total_open_ports = [*port_scan[device_name_port_scan]['tcp'].keys()]
 
         if len(total_open_ports) > 0:
-
-            full_response = ''
-            whatweb = ''
-
-            if (80 in total_open_ports or 443 in total_open_ports) and device_format == 'URL':
-                whatweb = subprocess.run(['whatweb', device_name], stdout=subprocess.PIPE).stdout.decode('utf-8')
-                whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
-                if check_redirects(whatweb):
-                    device_name = follow_redirect(whatweb, device_name)
-                    try:
-                        response = requests.get(http_device, verify=False, timeout=10).text.lower()
-                    except:
-                        response = ''
-                    whatweb = subprocess.run(['whatweb', device_name], stdout=subprocess.PIPE).stdout.decode('utf-8')
-                    whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
-                full_response = response + whatweb
-            
-            elif (80 in total_open_ports or 433 in total_open_ports) and device_format == 'IP':
-                http_device = 'http://' + device_name
-                whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-                whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
-                if check_redirects(whatweb):
-                    http_device = follow_redirect(whatweb, http_device)
-                    try:
-                        response = requests.get(http_device, verify=False, timeout=10).text.lower()
-                    except:
-                        response = ''
-                    whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-                    whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
-                full_response = response + whatweb
+            full_response_list = return_response(device)
+            full_response = full_response_list[0]
+            response = full_response_list[1]
+            whatweb = full_response_list[2]
 
             if full_response!='':
                 probabilities = detectDevice(total_open_ports, full_response, user, use_own_dicc)
@@ -549,6 +471,17 @@ def range_device_detection(range_device, user, use_own_dicc):
                 detection['Device type'] = ', '.join(p + ': ' + str(probabilities[p]) + '%' for p in probabilities)
                 detection['Response'] = response
                 detection['Whatweb'] = whatweb
+            
+            else:
+                probabilities = detectPorts(total_open_ports)
+                if sum(probabilities.values()) == 0:
+                    factor = 0.0
+                else:
+                    factor = 1.0/sum(probabilities.values())
+                for p in probabilities:
+                    probabilities[p] = round(probabilities[p]*factor*100.00, 2)
+                res['Open ports'] = ', '.join([str(p) for p in total_open_ports])
+                res['Device type'] = ', '.join(p + ': ' + str(probabilities[p]) + '%' for p in probabilities)
         
         else: 
             detection['No open ports'] = 'No se han detectado puertos abiertos'
