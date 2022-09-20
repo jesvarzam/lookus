@@ -10,12 +10,6 @@ def index(request):
     return redirect(sign_in)
 
 
-def services(request):
-    if request.user.is_authenticated:
-        return render(request, 'services.html')
-    return redirect(sign_in)
-
-
 def validate(username, password, confirmed_password):
 
     if len(username) > 20:
@@ -53,9 +47,7 @@ def sign_up(request):
         if validation == '':
             user = User.objects.create_user(username=username, password=password)
             user.save()
-
             user = authenticate(username=username, password=password)
-            print(user)
             login(request, user)
             return redirect(index)
         else:

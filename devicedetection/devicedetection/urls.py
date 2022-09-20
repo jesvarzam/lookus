@@ -18,7 +18,6 @@ from authentication import views as authViews
 
 urlpatterns = [
     path('', authViews.index, name='index'),
-    path('services/', authViews.services, name='services'),
     path('admin/', include('adminpanel.urls')),
     path('authentication/', include('authentication.urls')),
     path('detection/', include('detection.urls')),
