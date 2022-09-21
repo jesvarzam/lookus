@@ -18,11 +18,10 @@
             <ul>
             <li><a href="/">Inicio</a></li>
             {% if user.is_staff %}
-            <li><a href="/djangoadmin">Panel de administración</a></li>
+            <li><a href="/admin">Panel de administración</a></li>
             {% endif %}
             <li><a href="/devices/list">Dispositivos</a></li>
             <li><a href="/detection/list">Detecciones</a></li>
-            <li><a href="#">Reportes</a></li>
             <li class="colorlib-active"><a href="/detection/training">Entrenar diccionario de datos</a></li>
             <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
             </ul>
@@ -31,19 +30,32 @@
             <div id="colorlib-main">
                 <h1>Entrenar diccionario de datos</h1>
                 {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-success">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
+					{% for message in messages %}
+						{% if message.tags == 'success' %}
+							<div class="alert alert-success">
+								{{ message }}
+							</div>
+						{% endif %}
+						{% if message.tags == 'error' %}
+							<div class="alert alert-danger">
+								{{ message }}
+							</div>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+                {% if own_dicc_exists %}
+                <a href="/detection/training/remove_dicc" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quieres borrar tu diccionario de datos?')">
+					Borrar tu diccionario de datos
+				</a>
+                <hr>
                 {% endif %}
                 <p>LookUS posee diccionarios predeterminados para la detección de dispositivos.<br> Sin embargo, el usuario puede entrenar estos diccionarios añadiendo
                     los dispositivos que considere, de manera que la detección puede ser más precisa.
                 </p>
                 <strong>Introduce los dispositivos que quieras utilizar para entrenar aquí separados por comas y en el formato correcto (IP o URL)</strong>
                 <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
+                    {% csrf_token %}
+                    {{ form.as_p }}
                     <button type="submit">Enviar y entrenar</button>
                 </form>
                 <hr>
@@ -51,13 +63,23 @@
                     También ofrecemos la posibilidad de subir un archivo con todos los dispositivos que se quieran añadir para entrenar.
                 </p>
                 <strong>
-                    Los dispositivos que quieras utilizar para entrenar deben estar separados por comas y en el formato correcto (IP o URL).<br>
-                    Solo se admiten archivos con extensión .txt
+                    Solo se admiten archivos con extensión .json.<br>
+                    El formato correcto es:
+                        "Tipo de dispositivo": ["Dispositivo"]<br>
+                    En el caso de querer añadir varios, habría que separarlos por comas:
+                        "Tipo de dispositivo": ["Dispositivo 1", "Dispositivo 2"]<br>
+                    Por último, si no quieres añadir algún dispositivo debería ser indicado así:
+                        "Tipo de dispositivo": []<br>
+                    Los tipos de dispositivo a añadir son "Paǵina web personal", "Router", "Impresora" y "Cámara"<br>
+
+                    Pulsa <a href="/detection/training/json_example">aquí</a> para descargar un ejemplo de cómo sería el formato adecuado para subir el archivo .json.
                 </strong>
                 <form method="post" enctype="multipart/form-data" action="/detection/training_with_file/">
                     {% csrf_token %}
                     <input type="file" name="training_file">
-                    <button type="submit">Subir archivo y entrenar</button>
+                    <button type="submit" onclick="return confirm('¿Está seguro de que quiere entrenar el diccionario con este archivo? Este proceso puede demorarse')">
+                        Subir archivo y entrenar
+                    </button>
                 </form>
             </div>
         </div>

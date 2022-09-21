@@ -9,15 +9,26 @@
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
 		<link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
-
         <script>
-            function searchDeviceName() {
-                input = document.getElementById("search_device_name");
-                names = document.getElementsByClassName("pruebita");
-                Array.prototype.forEach.call(names, function(name) {
-                    alert(name);
-                });
-            }
+            function searchingDetectionByName() {
+				var input, filter, table, tr, td, i, txtValue;
+				input = document.getElementById("search_detection_name");
+				filter = input.value.toUpperCase();
+				table = document.getElementById("detections_table");
+				tr = table.getElementsByTagName("tr");
+
+				for (i = 0; i < tr.length; i++) {
+					td = tr[i].getElementsByTagName("td")[0];
+					if (td) {
+						txtValue = td.textContent || td.innerText;
+						if (txtValue.toUpperCase().indexOf(filter) > -1) {
+							tr[i].style.display = "";
+						} else {
+							tr[i].style.display = "none";
+						}
+					}
+				}
+			}
         </script>
 	</head>
 	<body>
@@ -28,11 +39,10 @@
             <ul>
             <li><a href="/">Inicio</a></li>
             {% if user.is_staff %}
-            <li><a href="/djangoadmin">Panel de administración</a></li>
+            <li><a href="/admin">Panel de administración</a></li>
             {% endif %}
             <li><a href="/devices/list">Dispositivos</a></li>
             <li class="colorlib-active"><a href="/detection/list">Detecciones</a></li>
-            <li><a href="#">Reportes</a></li>
 			<li><a href="/detection/training">Entrenar diccionario de datos</a></li>
             <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
             </ul>
@@ -60,42 +70,50 @@
                 </strong>
                 Si tienes dispositivos añadidos, pulsa <a href="/devices/list">aquí</a> para elegir un dispositivo a escanear.
                 {% else %}
-                <input type="button" id="search_device_name" onclick="searchDeviceName()" placeholder="Buscar dispositivo por nombre">
-				{% for detection in detections %}
-                {% if detection.open_ports == 'No se han detectado puertos abiertos' %}
-                {% else %}
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>
-                                    Dispositivo
-                                </strong>
-								<p class="pruebita">{{ detection.device.name }}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <strong>
-                                    Fecha de detección
-								</strong>
-								<p>{{ detection.detection_date }}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <a href="/detection/results/{{ detection.id }}" class="btn btn-primary">
-                                    Ver resultados
-                                </a>
-                                <a href="/detection/remove/{{ detection.id }}" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar esta detección?')">
-                                    Eliminar
-                                </a>
-                            </div>
-                        </div>
-						<hr style="border: 0; border-top: 2px solid red;">
-                    {% endif %}
-					{% endfor %}
-                    </div>
+                    <a href="/detection/remove_all" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar todas las detecciones?')">
+                        Borrar todas las detecciones
+                    </a>
+                    <hr style="border: none">
+                    <strong>Buscar detección por nombre de dispositivo: </strong>
+                    <input type="text" style="display:inline" id="search_detection_name" onkeyup="searchingDetectionByName()" placeholder="Buscar dispositivo por nombre">
+                       |   <strong>Filtrar detecciones: </strong>
+                    <form id="make_checkbox_select" style="display:inline">
+                        <select name="filter">
+                            <option value="ip_detections">Mostrar detecciones de direcciones IP</option>
+                            <option value="url_detections">Mostrar detecciones de direcciones URL</option>
+                            <option value="open_ports_detections">Mostrar detecciones que contengan puertos abiertos</option>
+                            <option value="no_open_ports_detections">Mostrar detecciones que no contengan ningún puerto abierto</option>
+                        </select>
+                        <input type="submit"/>  
+                    </form>
+                    <hr style="border:none">
+                    <table id="detections_table" class="table table-striped table-bordered display">
+                        <thead>
+                            <tr>
+                                <th>Dispositivo</th>
+                                <th>Formato</th>
+                                <th>Fecha de detección</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for detection in detections %}
+                            <tr>
+                                <td>{{detection.device.name}}</td>
+                                <td>{{detection.device.format}}</td>
+                                <td>{{detection.detection_date}}</td>
+                                <td>
+                                    <a href="/detection/results/{{ detection.id }}" class="btn btn-primary">
+                                        Ver resultados
+                                    </a>
+                                    <a href="/detection/remove/{{ detection.id }}" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar esta detección?')">
+                                        Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
 				{% endif %}
 			</div>
 		</div>

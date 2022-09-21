@@ -5,3 +5,5 @@ cola
 impresora
 bandeja
 imprimir
+status
+estado

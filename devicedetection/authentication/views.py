@@ -2,7 +2,6 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 import re
 
 def index(request):
@@ -11,14 +10,7 @@ def index(request):
     return redirect(sign_in)
 
 
-def services(request):
-    if request.user.is_authenticated:
-        return render(request, 'services.html')
-    return redirect(sign_in)
-
-
 def validate(username, password, confirmed_password):
-
     if len(username) > 20:
         return 'El usuario debe ser menor a 20 caracteres'
     elif User.objects.filter(username=username).exists():
@@ -31,6 +23,7 @@ def validate(username, password, confirmed_password):
 
 
 def sign_in(request):
+    if request.user.is_authenticated: return redirect(index)
     if request.method == "POST":
         username=request.POST['username']
         password=request.POST['password']
@@ -44,6 +37,7 @@ def sign_in(request):
 
 
 def sign_up(request):
+    if request.user.is_authenticated: return redirect(index)
     if request.method == "POST":
         username=request.POST['username']
         password=request.POST['password1']
@@ -52,16 +46,9 @@ def sign_up(request):
         if validation == '':
             user = User.objects.create_user(username=username, password=password)
             user.save()
-            # form=UserCreationForm(request.POST)
-            # if form.is_valid():
-            #     form.save()
             user = authenticate(username=username, password=password)
-            print(user)
             login(request, user)
             return redirect(index)
-            # else:
-            #     messages.error(request, validation)
-            #     return render(request, 'signup.html')
         else:
             messages.error(request, validation)
             return render(request, 'signup.html')
@@ -69,5 +56,6 @@ def sign_up(request):
 
 
 def log_out(request):
+    if not request.user.is_authenticated: return redirect(index)
     logout(request)
     return redirect(index)

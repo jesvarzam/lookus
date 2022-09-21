@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LookUS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
+    </head>
+    <body>
+        <div id="colorlib-page">
+            <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+            <aside id="colorlib-aside" role="complementary" class="js-fullheight">
+            <nav id="colorlib-main-menu" role="navigation">
+            <ul>
+            <li><a href="/">← Volver a inicio</a></li>
+            <li class="colorlib-active"><a href="/admin">Panel de administración</a></li>
+            <li><a href="/admin/devices">Control de dispositivos</a></li>
+            <li><a href="/admin/detections">Control de detecciones</a></li>
+            <li><a href="/admin/users">Control de usuarios</a></li>
+            <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
+            </ul>
+            </nav>
+            </aside>
+            <div id="colorlib-main">
+                <h1>Panel de administración de LookUS</h1>
+                <p>Aquí podrás ver todos los dispositivos añadidos por cada usuario, así como sus detecciones asociadas.</p>
+                <p>Por otro lado, tienes a tu disposición el listado de usuarios creados, con posibilidad de eliminarlos en el caso de que alguno 
+                    incumpla las normas de comportamiento.
+                </p>
+            </div>
+        </div>
+    </body>
+</html>
