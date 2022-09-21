@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import FileResponse, Http404
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, HttpResponseForbidden, HttpResponseNotFound
 from .utils import single_device_detection, create_table_html, create_table_html_for_range, range_device_detection, train_devices
 from .forms import TrainingForm
 from .models import Device, Detection
@@ -114,7 +114,14 @@ def detect(request, device_id):
             messages.error(request, 'No tienes un diccionario propio creado. Pulsa en el menú "Entrenar diccionario de datos" situado a la izquierda para añadirlo')
             return redirect(list_devices)
 
-        device_to_detect = Device.objects.get(id=device_id)
+        try:
+            device_to_detect = Device.objects.get(id=device_id)
+        except:
+            return HttpResponseNotFound(HttpResponse('ERROR 404: No tienes ningún dispositivo añadido con ese id'))
+        
+        if device_to_detect.user.id != request.user.id:
+            return HttpResponseForbidden(HttpResponse('ERROR 403: No puedes detectar dispositivos de otros usuarios'))
+
 
         # Detección de dispositivo simple empieza
         if device_to_detect.format == 'Dirección IP' or device_to_detect.format == 'Dirección URL':

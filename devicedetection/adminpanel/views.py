@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseNotFound
 from django.contrib.auth.models import User
 from django.contrib import messages
 from devices.models import Device
@@ -22,7 +22,10 @@ def users(request):
 def user_details(request, user_id):
     if not request.user.is_authenticated: return redirect(sign_in)
     elif not request.user.is_staff: return HttpResponseForbidden()
-    user_details = User.objects.get(id=user_id)
+    try:
+        user_details = User.objects.get(id=user_id)
+    except:
+        return HttpResponseNotFound(HttpResponse('ERROR 404: No existe ningún usuario con ese id'))
     devices = Device.objects.filter(user__id=user_id)
     detections = Detection.objects.filter(device__user__id=user_id)
     return render(request, 'user_details.html', {'user_details': user_details, 'devices': devices, 'detections': detections})
@@ -31,7 +34,10 @@ def user_details(request, user_id):
 def remove_user(request, user_id):
     if not request.user.is_authenticated: return redirect(sign_in)
     elif not request.user.is_staff: return HttpResponseForbidden()
-    User.objects.get(id=user_id).delete()
+    try:
+        User.objects.get(id=user_id).delete()
+    except:
+        return HttpResponseNotFound(HttpResponse('ERROR 404: No existe ningún usuario con ese id'))
     messages.success(request, 'Usuario eliminado con éxito')
     return redirect(users)
 

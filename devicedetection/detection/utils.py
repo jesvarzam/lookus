@@ -22,14 +22,14 @@ def return_response(device):
     if not validators.url(device):
         http_device = 'http://' + device
 
-    whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+    whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL).stdout.decode('utf-8')
     whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
     http_device = follow_redirect(whatweb, http_device)
     try:
         response = requests.get(http_device, verify=False, timeout=10).text.lower()
     except:
         response = ''
-    whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
+    whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL).stdout.decode('utf-8')
     whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
 
     full_response = response + whatweb

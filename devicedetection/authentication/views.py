@@ -11,7 +11,6 @@ def index(request):
 
 
 def validate(username, password, confirmed_password):
-
     if len(username) > 20:
         return 'El usuario debe ser menor a 20 caracteres'
     elif User.objects.filter(username=username).exists():
