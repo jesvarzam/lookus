@@ -84,13 +84,16 @@
 						{% endif %}
 					{% endfor %}
 				{% endif %}
-				{% if not detections %}
+				{% if not detections and not filter%}
 				<strong>
                     Aún no se ha realizado ninguna detección.
                 </strong>
+                {% elif not detections and filter %}
+                <strong>No se han encontrado detecciones con ese filtro.</strong>
+                <p>Pulsa <a href="/admin/detections">aquí</a> para volver al listado de detecciones.</p>
                 {% else %}
                     <br>
-                    <strong>Buscar detección por nombre de dispositivo: </strong>
+                    <strong>Buscar detección por usuario: </strong>
                     <input type="text" style="display:inline" id="search_detection_username" onkeyup="searchingDetectionByUser()" placeholder="Introduce aquí el usuario">
                     <br><br>
                     <strong>Buscar detección por nombre de dispositivo: </strong>
@@ -98,8 +101,10 @@
                        |   <strong>Filtrar detecciones: </strong>
                     <form id="make_checkbox_select" style="display:inline">
                         <select name="filter">
+                            <option value="all_detections">Mostrar todas las detecciones</option>
                             <option value="ip_detections">Mostrar detecciones de direcciones IP</option>
                             <option value="url_detections">Mostrar detecciones de direcciones URL</option>
+                            <option value="range_detections">Mostrar detecciones de rangos de red</option>
                             <option value="open_ports_detections">Mostrar detecciones que contengan puertos abiertos</option>
                             <option value="no_open_ports_detections">Mostrar detecciones que no contengan ningún puerto abierto</option>
                         </select>
