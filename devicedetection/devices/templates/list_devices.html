@@ -84,7 +84,7 @@
 				<strong>No se han encontrado dispositivos con ese filtro. </strong><p>Pulsa <a href="/devices/list">aquí</a> para volver al listado de dispositivos.</p>
 				{% else %}
 				<a href="/devices/add" class="btn btn-primary">Añadir otro dispositivo</a>
-				<a href="/devices/remove_all" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar todos los dispositivos?')">
+				<a href="/devices/remove_all" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar todos los dispositivos?\n\nSe borrarán también sus detecciones si se ha realizado alguna.')">
 					Borrar todos los dispositivos
 				</a>
 				<br>
@@ -126,7 +126,7 @@
 									Ver detección
 								</a>
 								|
-								<a href="/devices/remove/{{device.id}}" onclick="return confirm('¿Está seguro de que quiere borrar este dispositivo?')">
+								<a href="/devices/remove/{{device.id}}" onclick="return confirm('¿Está seguro de que quiere borrar este dispositivo?\n\nSe borrará también su detección.')">
 									Borrar dispositivo
 								</a>
 							</td>
@@ -136,11 +136,11 @@
 								<form id="detection_form" method="post" action="/detection/detect/{{device.id}}/">
 									{% csrf_token %}
 									{% if device.format == 'Rango' %}
-									<a href="#" onclick="if (confirm('¿Está seguro de que quiere detectar este rango de red? Este proceso puede demorarse un poco')) {this.parentNode.submit();}">
+									<a href="#" onclick="if (confirm('¿Está seguro de que quiere detectar este rango de red?\n\nNOTA: en ocasiones este proceso puede demorarse un poco')) {this.parentNode.submit();}">
 										Detectar dispositivo
 									</a>
 									{% else %}
-									<a href="#" onclick="if (confirm('¿Está seguro de que quiere detectar este dispositivo?')) {this.parentNode.submit();}">
+									<a href="#" onclick="if (confirm('¿Está seguro de que quiere detectar este dispositivo?\n\nNOTA: en ocasiones este proceso puede demorarse un poco')) {this.parentNode.submit();}">
 										Detectar dispositivo
 									</a>
 									{% endif %}

@@ -12,6 +12,8 @@ PRINTER_KEYWORDS = ['printer', 'impresora']
 ROUTER_KEYWORDS = ['router', 'gateway']
 CAMERA_KEYWORDS = ['cámara', 'camera']
 
+WHITELIST = [l.strip() for l in open('detection/diccs/whitelist.txt').readlines()]
+
 TOTAL = 81
 
 
@@ -186,14 +188,17 @@ def check_keywords(possible_devices, response):
 
     for keyword in PRINTER_KEYWORDS:
         if keyword in response:
+            print('Keyword de impresora encontrada: ' + keyword)
             possible_devices['Impresora'] += 3
     
     for keyword in ROUTER_KEYWORDS:
         if keyword in response:
+            print('Keyword de router encontrada: ' + keyword)
             possible_devices['Router'] += 3
     
     for keyword in CAMERA_KEYWORDS:
         if keyword in response:
+            print('Keyword de cámara encontrada: ' + keyword)
             possible_devices['Cámara'] += 3
 
     return possible_devices
@@ -204,25 +209,29 @@ def analyze_response(possible_devices, response, user, use_own_dicc):
     if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/web_dicc.txt')
     else: f = open('detection/diccs/web_dicc.txt')
     for line in f:
-        if line.strip() in response:
+        if line.strip() in response and line.strip() not in WHITELIST:
+            print('Palabra de web encontrada: ' + line.strip())
             possible_devices['Página web personal'] += 1
     
     if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/router_dicc.txt')
     else: f = open('detection/diccs/router_dicc.txt')
     for line in f:
-        if line.strip() in response:
+        if line.strip() in response and line.strip() not in WHITELIST:
+            print('Palabra de router encontrada: ' + line.strip())
             possible_devices['Router'] += 1
     
     if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/printer_dicc.txt')
     else: f = open('detection/diccs/printer_dicc.txt')
     for line in f:
-        if line.strip() in response:
+        if line.strip() in response and line.strip() not in WHITELIST:
+            print('Palabra de impresora encontrada: ' + line.strip())
             possible_devices['Impresora'] += 1
 
     if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/camera_dicc.txt')
     else: f = open('detection/diccs/camera_dicc.txt')
     for line in f:
-        if line.strip() in response:
+        if line.strip() in response and line.strip() not in WHITELIST:
+            print('Palabra de cámara encontrada: ' + line.strip())
             possible_devices['Cámara'] += 1
 
     return possible_devices

@@ -183,7 +183,7 @@ def training(request):
 
             train_devices(devices, request.user)
 
-            messages.success('Diccionario de datos entrenado correctamente')
+            messages.success(request, 'Diccionario de datos entrenado correctamente')
             return redirect(training)
     
         else:
