@@ -12,6 +12,8 @@ PRINTER_KEYWORDS = ['printer', 'impresora']
 ROUTER_KEYWORDS = ['router', 'gateway']
 CAMERA_KEYWORDS = ['cámara', 'camera']
 
+WHITELIST = [l.strip() for l in open('detection/diccs/whitelist.txt').readlines()]
+
 TOTAL = 81
 
 
@@ -186,14 +188,17 @@ def check_keywords(possible_devices, response):
 
     for keyword in PRINTER_KEYWORDS:
         if keyword in response:
+            print('Keyword de impresora encontrada: ' + keyword)
             possible_devices['Impresora'] += 3
     
     for keyword in ROUTER_KEYWORDS:
         if keyword in response:
+            print('Keyword de router encontrada: ' + keyword)
             possible_devices['Router'] += 3
     
     for keyword in CAMERA_KEYWORDS:
         if keyword in response:
+            print('Keyword de cámara encontrada: ' + keyword)
             possible_devices['Cámara'] += 3
 
     return possible_devices
@@ -204,25 +209,29 @@ def analyze_response(possible_devices, response, user, use_own_dicc):
     if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/web_dicc.txt')
     else: f = open('detection/diccs/web_dicc.txt')
     for line in f:
-        if line.strip() in response:
+        if line.strip() in response and line.strip() not in WHITELIST:
+            print('Palabra de web encontrada: ' + line.strip())
             possible_devices['Página web personal'] += 1
     
     if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/router_dicc.txt')
     else: f = open('detection/diccs/router_dicc.txt')
     for line in f:
-        if line.strip() in response:
+        if line.strip() in response and line.strip() not in WHITELIST:
+            print('Palabra de router encontrada: ' + line.strip())
             possible_devices['Router'] += 1
     
     if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/printer_dicc.txt')
     else: f = open('detection/diccs/printer_dicc.txt')
     for line in f:
-        if line.strip() in response:
+        if line.strip() in response and line.strip() not in WHITELIST:
+            print('Palabra de impresora encontrada: ' + line.strip())
             possible_devices['Impresora'] += 1
 
     if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/camera_dicc.txt')
     else: f = open('detection/diccs/camera_dicc.txt')
     for line in f:
-        if line.strip() in response:
+        if line.strip() in response and line.strip() not in WHITELIST:
+            print('Palabra de cámara encontrada: ' + line.strip())
             possible_devices['Cámara'] += 1
 
     return possible_devices
@@ -241,45 +250,48 @@ def create_table_html(data, detection):
 
     headers = ['Dispositivo', 'Puertos abiertos', 'Dispositivo detectado', 'Cabeceras HTTP']
 
-    template="<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='UTF-8'>" + "<style>"
-    template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing: 15px;padding: 10px; margin-top: 20px}"
-    template+="</style>" + "</head>"
-    template+="<body>" + "<strong>" + "Fecha de detección: " + detection.detection_date.strftime("%d-%b-%Y-%H-%M-%S") + "</strong>"
-    template+="<table style='width:50%'>"
-    template+='<tr>'
-    template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[0] + "</th>"
-    template+="</tr>"
-    template+="<tr style='text-align:center'>"
-    template+="<td>" + str(data[0]) + " (" + str(data[2]) + ") " + "</td>"
-    template+="</tr>"
-    template+="</table>"
-    template+="<table style='width:50%'>"
-    template+='<tr>'
-    template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[1] + "</th>"
-    template+="</tr>"
-    template+="<tr style='text-align:center'>"
-    template+="<td>" + str(data[1]) + "</td>"
-    template+="</tr>"
-    template+="</table>"
-    template+="<table style='width:50%'>"
-    template+='<tr>'
-    template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[3] + "</th>"
-    template+="</tr>"
+    template="<!DOCTYPE html>\n" + "<html>\n" + "<head>\n" + "<meta charset='UTF-8'>\n" + "<style>\n"
+    template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing: 15px;padding: 10px; margin-top: 20px}\n"
+    template+="</style>\n" + "</head>\n"
+    template+="<body>\n"
+    template+="<h1>Detección del dispositivo " + str(data[0]) + "\n</h1>\n"
+    template+="<strong>" + "Fecha de detección: " + detection.detection_date.strftime("%d-%b-%Y-%H-%M-%S") + "</strong>\n"
+    template+="<table style='width:50%'>\n"
+    template+='<tr>\n'
+    template+="<th style='background-color:#f66151;width:85;color:white'>\n" + headers[0] + "\n</th>\n"
+    template+="</tr>\n"
+    template+="<tr style='text-align:center'>\n"
+    template+="<td>\n" + str(data[0]) + " (" + str(data[2]) + ") " + "\n</td>\n"
+    template+="</tr>\n"
+    template+="</table>\n"
+    template+="<table style='width:50%'>\n"
+    template+='<tr>\n'
+    template+="<th style='background-color:#f66151;width:85;color:white'>\n" + headers[1] + "\n</th>\n"
+    template+="</tr>\n"
+    template+="<tr style='text-align:center'>\n"
+    template+="<td>\n" + str(data[1]) + "\n</td>\n"
+    template+="</tr>\n"
+    template+="</table>\n"
+    template+="<table style='width:50%'>\n"
+    template+='<tr>\n'
+    template+="<th style='background-color:#f66151;width:85;color:white'>\n" + headers[3] + "\n</th>\n"
+    template+="</tr>\n"
 
     if data[3] == 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información':
-        template+="<tr style='text-align:center'>"
-        template+="<td>" + str(data[3]) + "</td>"
-        template+="</tr>"
+        template+="<tr style='text-align:center'>\n"
+        template+="<td>\n" + str(data[3]) + "\n</td>\n"
+        template+="</tr>\n"
     
     else:
         for http_info in data[3]:
-            template+="<tr style='text-align:center'>"
-            template+="<td>" + str(http_info) + "</td>"
-            template+="</tr>"
+            template+="<tr style='text-align:center'>\n"
+            template+="<td>\n" + str(http_info) + "\n</td>\n"
+            template+="</tr>\n"
 
-    template+="</table>"
-    template_pdf="<form style='margin-top: 20px' action='/detection/pdf/{}'>".format(str(detection.id)) + "<input type='submit' value='Exportar a PDF' />" + "</form>"
-    template+="</body>" + "</html>"
+    template+="</table>\n"
+    template_pdf="<form style='margin-top: 20px' action='/detection/pdf/{}'>\n".format(str(detection.id)) 
+    template_pdf+="<input type='submit' value='Exportar a PDF' />\n" + "</form>\n"
+    template+="</body>\n" + "</html>\n"
 
     name1=str(detection.id) + ".html"
     file1 = open('detection/templates/reports/' + name1, "w")
@@ -293,77 +305,58 @@ def create_table_html(data, detection):
 
 
 def create_table_html_for_range(devices, device_detected, detection):
-
     headers = ['Dispositivo', 'Puertos abiertos', 'Dispositivo detectado', 'Cabeceras HTTP']
 
-    template="<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='UTF-8'>" + "<style>"
-    template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing: 15px;padding: 10px; margin-top: 20px}"
-    template+="</style>"
-    template+="<script>function myFunction(){ var input, filter, table, tr, td, i, alltables;"
-    template+="alltables = document.querySelectorAll('table[data-name=mytable]');"
-    template+="alert(alltables.length);"
-    template+="input = document.getElementById('myInput');" 
-    
-    template+="filter = input.value.toUpperCase();"
-    template+="alltables.forEach(function(table) {"
-    template+="tr = table.getElementsByTagName('tr');"
-    template+="for (i=0; i<tr.length; i++) {"
-    template+="td = tr[i].getElementsByTagName('td')[0];"
-    template+="if (td) { if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {tr[i].style.display='';} else {tr[i].style.display='none';}}}});}"
-    template+="</script>" + "</head>"
-    template+="<body>" + "<h1>Detección del rango de red " + device_detected + "</h1>" 
-    template+="<strong style='display:inline'>" + "Fecha de detección: <strong>" 
-    template+="<p style='display:inline'>" + detection.detection_date.strftime("%d-%b-%Y-%H-%M-%S") + "</p>"
-    template+="<hr>"
-    template+="<input type='text' id='myInput' onclick='myFunction()' placeholder='Search for names..' title='Type in a name'>"
-
+    template="<!DOCTYPE html>\n" + "<html>\n" + "<head>\n" + "<meta charset='UTF-8'>\n" + "<style>\n"
+    template+="table, th, td {border: 1px solid black;border-collapse: collapse;border-spacing: 15px;padding: 10px; margin-top: 20px}\n"
+    template+="</style>\n" + "</head>\n"
+    template+="<body>\n"
+    template+="<h1>Detección del rango de red " + device_detected + "</h1>\n"
+    template+="<strong style='display:inline'>" + "Fecha de detección: <strong>\n" 
+    template+="<p style='display:inline'>" + detection.detection_date.strftime("%d-%b-%Y-%H-%M-%S") + "</p>\n"
+    template+="<hr>\n"
     counter = 1
     for d in devices:
         http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
-        template+="<p>Dispositivo " + str(counter) + "<p>"
-        template+="<table id='myTable1' class='myTable' data-name='myTable' style='width:50%'>"
-        template+="<tr>"
-        template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[0] + "</th>"
-        template+="</tr>"
-        template+="<tr style='text-align:center'>"
-        template+="<td>" + str(d['Device']) + " (" + str(d['Device type']) + ") " + "</td>"
-        template+="</tr>"
-        template+="</table>"
-        template+="<table id='myTable2' class='myTable' data-name='myTable' style='width:50%'>"
-        template+="<tr>"
-        template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[1] + "</th>"
-        template+="</tr>"
-        template+="<tr style='text-align:center'>"
-        if 'Open ports' in d: template+="<td>" + str(d['Open ports']) + "</td>"
-        if 'No open ports' in d: template+="<td>" + str(d['No open ports']) + "</td>"
-        template+="</tr>"
-        template+="</table>"
-        template+="<table id='myTable3' class='myTable' data-name='myTable' style='width:50%'>"
-        template+="<tr>"
-        template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[3] + "</th>"
-        template+="</tr>"
+        template+="<table id='myTable' class='mytable' data-name='mytable' style='width:50%'>\n"
+        template+="<p>Dispositivo " + str(counter) + "<p>\n"
+        template+="<tr>\n"
+        template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[0] + "</th>\n"
+        template+="</tr>\n"
+        template+="<tr style='text-align:center'>\n"
+        template+="<td>" + str(d['Device']) + " (" + str(d['Device type']) + ") " + "</td>\n"
+        template+="</tr>\n"
+        template+="<tr>\n"
+        template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[1] + "</th>\n"
+        template+="</tr>\n"
+        template+="<tr style='text-align:center'>\n"
+        if 'Open ports' in d: template+="<td>" + str(d['Open ports']) + "</td>\n"
+        if 'No open ports' in d: template+="<td>" + str(d['No open ports']) + "</td>\n"
+        template+="</tr>\n"
+        template+="<tr>\n"
+        template+="<th style='background-color:#f66151;width:85;color:white'>" + headers[3] + "</th>\n"
+        template+="</tr>\n"
         if 'Whatweb' in d: 
             whatweb = d['Whatweb']
             whatweb = whatweb.replace('%', '').split('\n')
             whatweb = list(set(', '.join(whatweb).split(', ')[:-1]))
             http_info = whatweb
             for h in http_info:
-                template+="<tr style='text-align:center'>"
-                template+="<td>" + str(h) + "</td>"
-                template+="</tr>"
+                template+="<tr style='text-align:center'>\n"
+                template+="<td>" + str(h) + "</td>\n"
+                template+="</tr>\n"
         if 'Whatweb' not in d:
-            template+="<tr style='text-align:center'>"
-            template+="<td>" + http_info + "</td>"
-            template+="</tr>"
+            template+="<tr style='text-align:center'>\n"
+            template+="<td>" + http_info + "</td>\n"
+            template+="</tr>\n"
         
-        template+="</table>"
-        template+="<br>"
-        template+="<hr>"
+        template+="</table>\n"
+        template+="<br>\n"
+        template+="<hr>\n"
         counter+=1
         
-    
-    template_pdf="<form style='margin-top: 20px' action='/detection/pdf/{}'>".format(str(detection.id)) + "<input type='submit' value='Exportar a PDF' />" + "</form>"
-    template+="</body>" + "</html>"
+    template_pdf="<form style='margin-top: 20px' action='/detection/pdf/{}'>".format(str(detection.id)) + "<input type='submit' value='Exportar a PDF' />" + "</form>\n"
+    template+="</body>\n" + "</html>\n"
 
     name1=str(detection.id) + ".html"
     file1 = open('detection/templates/reports/' + name1, "w")

@@ -49,7 +49,9 @@ INSTALLED_APPS = [
 
 MODULES = [
     'authentication',
-    'detection'
+    'detection',
+    'devices',
+    'adminpanel'
 ]
 
 MIDDLEWARE = [

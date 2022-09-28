@@ -85,8 +85,11 @@
 						{% endif %}
 					{% endfor %}
 				{% endif %}
-				{% if not devices %}
+				{% if not devices and not filter %}
 				<strong>Aún no se ha añadido ningún dispositivo.</strong>
+				{% elif not devices and filter %}
+				<strong>No se han encontrado dispositivos con ese filtro.</strong>
+				<p>Pulsa <a href="/admin/devices">aquí</a> para volver al listado de dispositivos.</p>
 				{% else %}
 				<a href="/devices/remove_all" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar todos los dispositivos?')">
 					Borrar todos los dispositivos
@@ -100,8 +103,10 @@
 				    |  <strong>Filtrar dispositivos: </strong>
 				<form style="display:inline;" id="filter_checkbox_select">
 					<select name="filter">
+						<option value="all_devices">Mostrar todos los dispositivos</option>
 						<option value="ip_devices">Mostrar dispositivos con direcciones IP</option>
 						<option value="url_devices">Mostrar dispositivos con direcciones URL</option>
+						<option value="range_devices">Mostrar dispositivos con rangos de red</option>
 						<option value="detected_devices">Mostrar dispositivos detectados</option>
 						<option value="undetected_devices">Mostrar dispositivos sin detectar</option>
 					</select>

@@ -9,7 +9,7 @@ class Device(models.Model):
     class Format(models.TextChoices):
         IP = 'Dirección IP'
         URL = 'Dirección URL'
-        RANGO = 'Rango'
+        RANGO = 'Rango de red'
     
     format = models.CharField(
         max_length=20,

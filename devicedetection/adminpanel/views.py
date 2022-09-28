@@ -45,12 +45,16 @@ def remove_user(request, user_id):
 def devices(request):
     if not request.user.is_authenticated: return redirect(sign_in)
     elif not request.user.is_staff: return HttpResponseForbidden()
-    if len(request.GET) == 0: devices = Device.objects.all()
+    if len(request.GET) == 0 or request.GET['filter'] == 'all_devices': devices = Device.objects.all()
     elif request.GET['filter'] == 'ip_devices': devices = Device.objects.filter(format='Dirección IP')
     elif request.GET['filter'] == 'url_devices': devices = Device.objects.filter(format='Dirección URL')
+    elif request.GET['filter'] == 'range_devices': devices = Device.objects.filter(format='Rango de red')
     elif request.GET['filter'] == 'detected_devices': devices = Device.objects.filter(detected=True)
     elif request.GET['filter'] == 'undetected_devices': devices = Device.objects.filter(detected=False)
-    return render(request, 'devices.html', {'devices': devices})
+
+    filter = False
+    if len(request.GET) > 0 and len(devices) == 0: filter = True
+    return render(request, 'devices.html', {'devices': devices, 'filter': filter})
 
 
 def remove_all_devices(request):
@@ -82,12 +86,16 @@ def remove_all_devices(request):
 def detections(request):
     if not request.user.is_authenticated: return redirect(sign_in)
     elif not request.user.is_staff: return HttpResponseForbidden()
-    if len(request.GET) == 0: detections = Detection.objects.all()
-    elif request.GET['filter'] == 'ip_detections': detections = Detection.objects.filter(device__user__id=request.user.id, device__format='Dirección IP')
-    elif request.GET['filter'] == 'url_detections': detections = Detection.objects.filter(device__user__id=request.user.id, device__format='Dirección URL')
-    elif request.GET['filter'] == 'open_ports_detections': detections = Detection.objects.filter(device__user__id=request.user.id).exclude(open_ports='No se han detectado puertos abiertos')
-    elif request.GET['filter'] == 'no_open_ports_detections': detections = Detection.objects.filter(device__user__id=request.user.id, open_ports='No se han detectado puertos abiertos')
-    return render(request, 'detections.html', {'detections': detections})
+    if len(request.GET) == 0 or request.GET['filter'] == 'all_detections': detections = Detection.objects.all()
+    elif request.GET['filter'] == 'ip_detections': detections = Detection.objects.filter(device__format='Dirección IP')
+    elif request.GET['filter'] == 'url_detections': detections = Detection.objects.filter(device__format='Dirección URL')
+    elif request.GET['filter'] == 'range_detections': detections = Detection.objects.filter(device__format='Dirección URL')
+    elif request.GET['filter'] == 'open_ports_detections': detections = Detection.objects.all().exclude(open_ports='No se han detectado puertos abiertos')
+    elif request.GET['filter'] == 'no_open_ports_detections': detections = Detection.objects.filter(open_ports='No se han detectado puertos abiertos')
+
+    filter = False
+    if len(request.GET) > 0 and len(detections) == 0: filter = True
+    return render(request, 'detections.html', {'detections': detections, 'filter': filter})
 
 
 def remove_all_detections(request):

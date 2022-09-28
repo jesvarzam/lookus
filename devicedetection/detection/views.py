@@ -7,17 +7,21 @@ from .models import Device, Detection
 from authentication.views import *
 from devices.views import checkFormats, list_devices
 from django.contrib import messages
-import os, pdfkit, subprocess, validators, re, json, shutil
+import os, pdfkit, json, shutil
 
 
 def list_detections(request):
     if not request.user.is_authenticated: return redirect(sign_in)
-    if len(request.GET) == 0: detections = Detection.objects.filter(device__user__id=request.user.id)
+    if len(request.GET) == 0 or request.GET['filter'] == 'all_detections': detections = Detection.objects.filter(device__user__id=request.user.id)
     elif request.GET['filter'] == 'ip_detections': detections = Detection.objects.filter(device__user__id=request.user.id, device__format='Dirección IP')
     elif request.GET['filter'] == 'url_detections': detections = Detection.objects.filter(device__user__id=request.user.id, device__format='Dirección URL')
+    elif request.GET['filter'] == 'range_detections': detections = Detection.objects.filter(device__user__id=request.user.id, device__format='Rango de red')
     elif request.GET['filter'] == 'open_ports_detections': detections = Detection.objects.filter(device__user__id=request.user.id).exclude(open_ports='No se han detectado puertos abiertos')
     elif request.GET['filter'] == 'no_open_ports_detections': detections = Detection.objects.filter(device__user__id=request.user.id, open_ports='No se han detectado puertos abiertos')
-    return render(request, 'list_detections.html', {'detections': detections})
+    
+    filter = False
+    if len(request.GET) > 0 and len(detections) == 0: filter = True
+    return render(request, 'list_detections.html', {'detections': detections, 'filter': filter})
 
 
 def remove(request, detection_id):
@@ -74,34 +78,6 @@ def remove_all(request):
     return redirect(list_detections)
 
 
-def save_http_info(device):
-
-    http_device = device
-
-    if not validators.url(device):
-        http_device = 'http://' + device
-    
-    output = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-    output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output)
-    output = output.replace('%', '').split('\n')
-    output = ', '.join(output).split(', ')[:-1]
-    return list(set(output))
-
-
-def save_https_info(device):
-
-    https_device = device
-
-    if not validators.url(device):
-        https_device = 'https://' + device
-    
-    output = subprocess.run(['whatweb', https_device], stdout=subprocess.PIPE).stdout.decode('utf-8')
-    output = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', output)
-    output = output.replace('%', '').split('\n')
-    output = ', '.join(output).split(', ')[:-1]
-    return list(set(output))
-
-
 def detect(request, device_id):
     if not request.user.is_authenticated: return redirect(sign_in)
     if request.method == 'POST':
@@ -152,7 +128,7 @@ def detect(request, device_id):
         # Detección de dispositivo rango empieza
         else:
             res = range_device_detection(device_to_detect, request.user, request.POST.get("own_dicc", None)=="own_dicc_true")
-            detection = Detection.objects.create(device=device_to_detect, device_type='Rango', open_ports='N/A')
+            detection = Detection.objects.create(device=device_to_detect, device_type='Rango de red', open_ports='N/A')
             detection.save()
             messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))
             device_to_detect.detected = True
@@ -207,7 +183,7 @@ def training(request):
 
             train_devices(devices, request.user)
 
-            messages.success('Diccionario de datos entrenado correctamente')
+            messages.success(request, 'Diccionario de datos entrenado correctamente')
             return redirect(training)
     
         else:

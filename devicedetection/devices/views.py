@@ -24,17 +24,19 @@ def add(request):
             messages.error(request, 'El formato del dispositivo o de alguno de los dispositivos no es correcto, debe ser una dirección IP o una URL')
             return render(request, 'add.html')
         
-        
         for d in devices:
             device_name = d.strip()
 
+            if len(Device.objects.filter(name=device_name, user=User.objects.get(id=request.user.id))) > 0:
+                continue
+
             if checkRangeFormat(device_name):
-                d = Device(name=device_name, format='Rango', user=User.objects.get(id=request.user.id))
+                d = Device(name=device_name, format='Rango de red', user=User.objects.get(id=request.user.id))
 
             elif checkSingleFormat(device_name):
                 d = Device(name=device_name, format=get_single_format(device_name), user=User.objects.get(id=request.user.id))
-            
             d.save()
+
         messages.success(request, 'Dispositivo(s) añadido(s) correctamente')
         return redirect(list_devices)
     return render(request, 'add.html')
@@ -56,10 +58,13 @@ def add_with_file(request):
 
             dev = dev.strip()
 
+            if len(Device.objects.filter(name=dev, user=User.objects.get(id=request.user.id))) > 0:
+                continue
+
             format = get_single_format(dev)
 
             if checkRangeFormat(dev):
-                format = 'Rango'
+                format = 'Rango de red'
 
             user = User.objects.get(id=request.user.id)
             
@@ -74,14 +79,18 @@ def add_with_file(request):
 
 def list_devices(request):
     if not request.user.is_authenticated: return redirect(sign_in)
-    if len(request.GET) == 0: devices = Device.objects.filter(user=User.objects.get(id=request.user.id))
+    if len(request.GET) == 0 or request.GET['filter'] == 'all_devices': devices = Device.objects.filter(user=User.objects.get(id=request.user.id))
     elif request.GET['filter'] == 'ip_devices': devices = Device.objects.filter(format='Dirección IP', user=User.objects.get(id=request.user.id))
     elif request.GET['filter'] == 'url_devices': devices = Device.objects.filter(format='Dirección URL', user=User.objects.get(id=request.user.id))
+    elif request.GET['filter'] == 'range_devices': devices = Device.objects.filter(format='Rango de red', user=User.objects.get(id=request.user.id))
     elif request.GET['filter'] == 'detected_devices': devices = Device.objects.filter(detected=True, user=User.objects.get(id=request.user.id))
     elif request.GET['filter'] == 'undetected_devices': devices = Device.objects.filter(detected=False, user=User.objects.get(id=request.user.id))
+
+    filter = False
+    if len(request.GET) > 0 and len(devices) == 0: filter = True
     own_dicc_exists = False
     if os.path.exists('detection/diccs/' + str(request.user.username) + str(request.user.id)): own_dicc_exists = True
-    return render(request, 'list_devices.html', {'devices': devices, 'own_dicc_exists': own_dicc_exists})
+    return render(request, 'list_devices.html', {'devices': devices, 'own_dicc_exists': own_dicc_exists, 'filter': filter})
 
 
 def remove(request, device_id):
