@@ -1,8 +1,0 @@
-COSAS A MEJORAR
-
-- Integrar Inteligencia Artificial (PENDIENTE)
-- Ampliar el espectro de posibles dispositivos (CÁMARAS)
-- Obtener información de servicios y versiones en los puertos (USAR INFO DE CABECERAS)
-- Generar reportes con la información del escaneo (HECHO)
-- Detectar posibles vulnerabilidades
-- Guardar dispositivos escaneados (HECHO)
