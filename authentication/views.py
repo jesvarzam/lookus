@@ -10,7 +10,11 @@ def index(request):
     return redirect(sign_in)
 
 
-def validate(username, password, confirmed_password):
+def validate(username, password, confirmed_password, first_name, last_name):
+    if len(first_name) > 20:
+        return 'El nombre debe ser menor a 20 caracteres'
+    if len(last_name) > 20:
+        return 'Los apellidos deben ser menores a 20 caracteres'
     if len(username) > 20:
         return 'El usuario debe ser menor a 20 caracteres'
     elif User.objects.filter(username=username).exists():
@@ -42,9 +46,13 @@ def sign_up(request):
         username=request.POST['username']
         password=request.POST['password1']
         confirmed_password=request.POST['password2']
-        validation = validate(username, password, confirmed_password)
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        validation = validate(username, password, confirmed_password, first_name, last_name)
         if validation == '':
             user = User.objects.create_user(username=username, password=password)
+            user.first_name = first_name
+            user.last_name = last_name
             user.save()
             user = authenticate(username=username, password=password)
             login(request, user)
