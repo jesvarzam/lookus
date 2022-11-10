@@ -15,6 +15,8 @@ def validate(username, password, confirmed_password, first_name, last_name):
         return 'El nombre debe ser menor a 20 caracteres'
     if len(last_name) > 20:
         return 'Los apellidos deben ser menores a 20 caracteres'
+    if username == '':
+        return 'Introduce un usuario'
     if len(username) > 20:
         return 'El usuario debe ser menor a 20 caracteres'
     elif User.objects.filter(username=username).exists():
@@ -23,6 +25,21 @@ def validate(username, password, confirmed_password, first_name, last_name):
         return 'La contraseña debe tener un mínimo 8 caracteres, y al menos una letra y un número'
     elif confirmed_password != password:
         return 'Las contraseñas deben ser iguales'
+    return ''
+
+
+def validate_profile(name, surname):
+    if len(name) > 20:
+        return 'El nombre debe ser menor a 20 caracteres'
+    if len(surname) > 20:
+        return 'Los apellidos deben ser menores a 20 caracteres'
+    return ''
+
+def validate_passwords(new_password, confirmed_new_password):
+    if not re.search(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$", new_password):
+        return 'La nueva contraseña debe tener un mínimo 8 caracteres, y al menos una letra y un número'
+    elif confirmed_new_password != new_password:
+        return 'Las nuevas contraseñas deben ser iguales'
     return ''
 
 
@@ -62,6 +79,47 @@ def sign_up(request):
             return render(request, 'signup.html')
     return render(request, 'signup.html')
 
+
+def profile(request):
+    if request.user.is_authenticated:
+        return render(request, 'profile.html')
+    return redirect(sign_in)
+
+
+def update_profile(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            name = request.POST['name']
+            surname = request.POST['surname']
+            validation = validate_profile(name, surname)
+            if validation == '':
+                user = User.objects.get(id=request.user.id)
+                user.first_name = name
+                user.last_name = surname
+                user.save()
+                messages.success(request, 'Perfil actualizado correctamente')
+            else:
+                messages.error(request, validation)
+            return render(request, 'profile.html')
+    return redirect(sign_in)
+
+
+def update_password(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            new_password = request.POST['new_password1']
+            confirmed_new_password = request.POST['new_password2']
+            validation = validate_passwords(new_password, confirmed_new_password)
+            if validation == '':
+                user = User.objects.get(id=request.user.id)
+                user.set_password(new_password)
+                user.save()
+                login(request, user)
+                messages.success(request, 'Contraseña cambiada correctamente')
+            else:
+                messages.error(request, validation)
+            return render(request, 'profile.html')
+    return redirect(sign_in)
 
 def log_out(request):
     if not request.user.is_authenticated: return redirect(index)

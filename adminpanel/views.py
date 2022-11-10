@@ -7,10 +7,10 @@ from authentication.views import sign_in
 from detection.models import Detection
 import os
 
-def admin(request):
+def adminpanel(request):
     if not request.user.is_authenticated: return redirect(sign_in)
     elif not request.user.is_staff: return HttpResponseForbidden()
-    return render(request, 'admin.html')
+    return render(request, 'adminpanel.html')
 
 
 def users(request):

@@ -42,52 +42,52 @@
             <aside id="colorlib-aside" role="complementary" class="js-fullheight">
             <nav id="colorlib-main-menu" role="navigation">
             <ul>
-            <li class="colorlib-active"><a href="/">Inicio</a></li>
+            <li><a href="/">Inicio</a></li>
             {% if user.is_staff %}
             <li><a href="/admin">Panel de administración</a></li>
             {% endif %}
             <li><a href="/devices/list">Dispositivos</a></li>
             <li><a href="/detection/list">Detecciones</a></li>
             <li><a href="/detection/training">Entrenar diccionario de datos</a></li>
-            <li><a href="/authentication/profile">Mi perfil</a></li>
+            <li class="colorlib-active"><a href="/authentication/profile">Mi perfil</a></li>
             <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
             </ul>
             </nav>
             </aside>
             <div id="colorlib-main">
-                <h1>¡Bienvenido a LookUS!</h1>             
+                <h1>Mi perfil</h1>             
                 <br>
-                <strong>¿Qué ofrecemos?</strong>
+                {% if messages %}
+					{% for message in messages %}
+						{% if message.tags == 'success' %}
+							<div class="alert alert-success">
+								{{ message }}
+							</div>
+						{% endif %}
+						{% if message.tags == 'error' %}
+							<div class="alert alert-danger">
+								{{ message }}
+							</div>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
                 <p>
-                    LookUS es una aplicación web que permite a los usuarios registrados de la empresa LookUS detectar los dispositivos que están en su zona de trabajo.
+                    En esta sección podrás cambiar los atributos de tu perfil, tanto nombre, apellidos como contraseña. 
                 </p>
-                <strong>¿Cómo funciona?</strong>
-                <p>
-                    El usuario registrado podrá registrar uno o varios dispositivos en el sistema, los cuales podrán ser detectados posteriormente con el fin<br>
-                    de saber si se trata de un router, una cámara de seguridad o una impresora.
-                </p>
-                <div id="leftbox">
-                    <h2 style="color: #f66151">Detecta</h2>
-                    <p>Usa nuestro servicio inteligente para detectar los dispositivos conectados a tu red
-                        de manera que puedas conocer de primera mano si se tratan de cámaras de seguridad, 
-                        impresoras o páginas webs personales.
-                    </p>
-                </div>
-                <div id="middlebox">
-                    <h2 style="color: #f66151">Genera reportes</h2>
-                    <p>LookUS generará por ti una serie de reportes con los resultados de cada detección,
-                        entre los que se incluyen la fecha de la misma, los puertos abiertos de cada dispositivo
-                        o las cabeceras HTTP encontradas.
-                    </p>
-                </div>
-                <div id="rightbox">
-                    <h2 style="color: #f66151">Entrena</h2>
-                    <p>LookUS posee diccionarios preparados para realizar las detecciones.
-                        ¿No has quedado satisfecho con alguna detección?
-                        Puedes añadir tus propios dispositivos para entrenar nuestro modelo de datos y generar
-                        detecciones mucho más precisas.
-                    </p>
-                </div>
+
+                <form method="post" action="/authentication/profile/update_profile/">
+                    {% csrf_token %}
+                    <strong>Nombre: </strong><input type="text" name="name" placeholder={{user.first_name}}><br><br>
+                    <strong>Apellidos: </strong><input type="text" name="surname" placeholder={{user.last_name}}><br><br>
+                    <input type="submit" value="Actualizar perfil">
+                </form>
+                <hr>
+                <form method="post" action="/authentication/profile/update_password/">
+                    {% csrf_token %}
+                    <strong>Introduce tu nueva contraseña: </strong><input type="password" name="new_password1"><br><br>
+                    <strong>Confirma tu nueva contraseña: </strong><input type="password" name="new_password2"><br><br>
+                    <input type="submit" value="Confirmar cambio de contraseña">
+                </form>
             </div>
         </div>
     </body>
