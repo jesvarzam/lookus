@@ -31,6 +31,14 @@
 <form method="post" action="/authentication/sign_up/" class="signup-form">
 {% csrf_token %}
 <div class="form-group">
+<label class="label">Nombre</label>
+<input type="text" name="first_name" class="form-control" placeholder="Nombre">
+</div>
+<div class="form-group">
+<label class="label">Apellidos</label>
+<input type="text" name="last_name" class="form-control" placeholder="Apellidos">
+</div>
+<div class="form-group">
 <label class="label">Usuario</label>
 <input type="text" name="username" class="form-control" placeholder="Usuario">
 </div>

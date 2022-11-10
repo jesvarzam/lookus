@@ -1,0 +1,94 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LookUS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'signup/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'navigation/css/A.style.css.pagespeed.cf.MS7FITfQl0.css' %}">
+        <style>
+            #leftbox {
+                float:left; 
+                width:30%;
+                height:400px;
+                text-align: justify;
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+            #middlebox{
+                float:left; 
+                width:30%;
+                height: 400px;
+                text-align: justify;
+                margin-left: 10px;
+                margin-right: 5px;
+            }
+            #rightbox{
+                float:right;
+                width:30%;
+                height:400px;
+                text-align: justify;
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="colorlib-page">
+            <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+            <aside id="colorlib-aside" role="complementary" class="js-fullheight">
+            <nav id="colorlib-main-menu" role="navigation">
+            <ul>
+            <li><a href="/">Inicio</a></li>
+            {% if user.is_staff %}
+            <li><a href="/admin">Panel de administración</a></li>
+            {% endif %}
+            <li><a href="/devices/list">Dispositivos</a></li>
+            <li><a href="/detection/list">Detecciones</a></li>
+            <li><a href="/detection/training">Entrenar diccionario de datos</a></li>
+            <li class="colorlib-active"><a href="/authentication/profile">Mi perfil</a></li>
+            <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
+            </ul>
+            </nav>
+            </aside>
+            <div id="colorlib-main">
+                <h1>Mi perfil</h1>             
+                <br>
+                {% if messages %}
+					{% for message in messages %}
+						{% if message.tags == 'success' %}
+							<div class="alert alert-success">
+								{{ message }}
+							</div>
+						{% endif %}
+						{% if message.tags == 'error' %}
+							<div class="alert alert-danger">
+								{{ message }}
+							</div>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+                <p>
+                    En esta sección podrás cambiar los atributos de tu perfil, tanto nombre, apellidos como contraseña. 
+                </p>
+
+                <form method="post" action="/authentication/profile/update_profile/">
+                    {% csrf_token %}
+                    <strong>Nombre: </strong><input type="text" name="name" placeholder={{user.first_name}}><br><br>
+                    <strong>Apellidos: </strong><input type="text" name="surname" placeholder={{user.last_name}}><br><br>
+                    <input type="submit" value="Actualizar perfil">
+                </form>
+                <hr>
+                <form method="post" action="/authentication/profile/update_password/">
+                    {% csrf_token %}
+                    <strong>Introduce tu nueva contraseña: </strong><input type="password" name="new_password1"><br><br>
+                    <strong>Confirma tu nueva contraseña: </strong><input type="password" name="new_password2"><br><br>
+                    <input type="submit" value="Confirmar cambio de contraseña">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
