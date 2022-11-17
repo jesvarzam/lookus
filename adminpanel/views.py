@@ -28,7 +28,8 @@ def user_details(request, user_id):
         return HttpResponseNotFound(HttpResponse('ERROR 404: No existe ningún usuario con ese id'))
     devices = Device.objects.filter(user__id=user_id)
     detections = Detection.objects.filter(device__user__id=user_id)
-    return render(request, 'user_details.html', {'user_details': user_details, 'devices': devices, 'detections': detections})
+    own_dicc_exists = os.path.exists('detection/diccs/' + str(user_details.username)+ str(user_id))
+    return render(request, 'user_details.html', {'user_details': user_details, 'devices': devices, 'detections': detections, 'own_dicc_exists': own_dicc_exists})
 
 
 def remove_user(request, user_id):
@@ -124,3 +125,8 @@ def remove_all_detections(request):
     
     messages.success(request, 'Detecciones borradas correctamente')
     return redirect(detections)
+
+
+def view_user_dicc(request):
+    if not request.user.is_authenticated: return redirect(sign_in)
+    if not request.user.is_staff: return HttpResponseForbidden()
