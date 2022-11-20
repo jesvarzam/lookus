@@ -112,11 +112,7 @@
 							<td><img src="{% static 'icons/tick.png' %}" width="25" height="25" alt="Sí"></td>
 							
 							<td>
-								<a href="/detection/list">
-									Ver detección
-								</a>
-								|
-								<a href="/devices/remove/{{device.id}}" onclick="return confirm('¿Está seguro de que quiere borrar este dispositivo?')">
+								<a href="/devices/remove/{{device.id}}" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar este dispositivo?')">
 									Borrar
 								</a>
 							</td>
@@ -127,7 +123,7 @@
 									Detectar
 								</a>
 								|
-								<a href="/devices/remove/{{device.id}}" onclick="return confirm('¿Está seguro de que quiere borrar este dispositivo?')">
+								<a href="/devices/remove/{{device.id}}" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar este dispositivo?')">
 									Borrar
 								</a>
 							{% endif %}
@@ -188,7 +184,7 @@
 						<tr>
 							<td>Router</td>
 							<td>
-								<a href="/detection/results/{{ detection.id }}" class="btn btn-primary">
+								<a href="/admin/users/dicc" class="btn btn-primary">
 									Ver diccionario
 								</a>
 								<a href="/detection/remove/{{ detection.id }}" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar esta detección?')">
