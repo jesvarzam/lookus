@@ -10,7 +10,7 @@ def index(request):
     return redirect(sign_in)
 
 
-def validate(username, password, confirmed_password, first_name, last_name):
+def validate(first_name, last_name, username, password, confirmed_password):
     if len(first_name) > 20:
         return 'El nombre debe ser menor a 20 caracteres'
     if len(last_name) > 20:
@@ -60,12 +60,12 @@ def sign_in(request):
 def sign_up(request):
     if request.user.is_authenticated: return redirect(index)
     if request.method == "POST":
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
         username=request.POST['username']
         password=request.POST['password1']
         confirmed_password=request.POST['password2']
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        validation = validate(username, password, confirmed_password, first_name, last_name)
+        validation = validate(first_name, last_name, username, password, confirmed_password)
         if validation == '':
             user = User.objects.create_user(username=username, password=password)
             user.first_name = first_name
