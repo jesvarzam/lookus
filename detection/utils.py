@@ -26,7 +26,12 @@ def return_response(device):
 
     whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL).stdout.decode('utf-8')
     whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
-    http_device = follow_redirect(whatweb, http_device)
+    while has_redirect(whatweb, http_device):
+        print("ANTES" + http_device)
+        http_device = follow_redirect(whatweb, http_device)
+        whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL).stdout.decode('utf-8')
+        whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
+        print("DESPUES" + http_device)
     try:
         response = requests.get(http_device, verify=False, timeout=10).text.lower()
     except:
@@ -94,6 +99,21 @@ def get_single_format(device):
     if re.search(r"^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$", device):
         return 'Dirección IP'
     return 'Dirección URL'
+
+
+def has_redirect(whatweb, url):
+    split_headers = whatweb.split('\n')
+    for split_h in split_headers:
+        headers = split_h.split(',')
+        if '302' in split_h:
+            for h in headers:
+                if 'RedirectLocation' in h:
+                    return True
+        elif '301' in split_h:
+            for h in headers:
+                if 'RedirectLocation' in h:
+                    return True
+    return False
 
 
 def follow_redirect(whatweb, url):
@@ -188,17 +208,14 @@ def check_keywords(possible_devices, response):
 
     for keyword in PRINTER_KEYWORDS:
         if keyword in response:
-            # print('Keyword de impresora encontrada: ' + keyword)
             possible_devices['Impresora'] += 3
     
     for keyword in ROUTER_KEYWORDS:
         if keyword in response:
-            # print('Keyword de router encontrada: ' + keyword)
             possible_devices['Router'] += 3
     
     for keyword in CAMERA_KEYWORDS:
         if keyword in response:
-            # print('Keyword de cámara encontrada: ' + keyword)
             possible_devices['Cámara'] += 3
 
     return possible_devices
@@ -206,28 +223,28 @@ def check_keywords(possible_devices, response):
 
 def analyze_response(possible_devices, response, user, use_own_dicc):
 
-    if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/web_dicc.txt')
+    if use_own_dicc: f = open('training/diccs/' + str(user.username) + str(user.id) + '/web_dicc.txt')
     else: f = open('detection/diccs/web_dicc.txt')
     for line in f:
         if line.strip() in response and line.strip() not in WHITELIST:
             # print('Palabra de web encontrada: ' + line.strip())
             possible_devices['Página web personal'] += 1
     
-    if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/router_dicc.txt')
+    if use_own_dicc: f = open('training/diccs/' + str(user.username) + str(user.id) + '/router_dicc.txt')
     else: f = open('detection/diccs/router_dicc.txt')
     for line in f:
         if line.strip() in response and line.strip() not in WHITELIST:
             # print('Palabra de router encontrada: ' + line.strip())
             possible_devices['Router'] += 1
     
-    if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/printer_dicc.txt')
+    if use_own_dicc: f = open('training/diccs/' + str(user.username) + str(user.id) + '/printer_dicc.txt')
     else: f = open('detection/diccs/printer_dicc.txt')
     for line in f:
         if line.strip() in response and line.strip() not in WHITELIST:
             # print('Palabra de impresora encontrada: ' + line.strip())
             possible_devices['Impresora'] += 1
 
-    if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/camera_dicc.txt')
+    if use_own_dicc: f = open('training/diccs/' + str(user.username) + str(user.id) + '/camera_dicc.txt')
     else: f = open('detection/diccs/camera_dicc.txt')
     for line in f:
         if line.strip() in response and line.strip() not in WHITELIST:
