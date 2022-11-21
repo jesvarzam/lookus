@@ -1,0 +1,9 @@
+printer
+print
+queue
+cola
+impresora
+bandeja
+imprimir
+status
+estado

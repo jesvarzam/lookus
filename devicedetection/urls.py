@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', include('adminpanel.urls')),
     path('authentication/', include('authentication.urls')),
     path('detection/', include('detection.urls')),
-    path('devices/', include('devices.urls'))
+    path('devices/', include('devices.urls')),
+    path('training/', include('training.urls'))
 ]

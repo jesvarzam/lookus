@@ -22,7 +22,7 @@
             {% endif %}
             <li><a href="/devices/list">Dispositivos</a></li>
             <li><a href="/detection/list">Detecciones</a></li>
-            <li class="colorlib-active"><a href="/detection/training">Entrenar diccionario de datos</a></li>
+            <li class="colorlib-active"><a href="/training">Entrenar diccionario de datos</a></li>
             <li><a href="/authentication/profile">Mi perfil</a></li>
             <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
             </ul>
@@ -45,9 +45,53 @@
 					{% endfor %}
 				{% endif %}
                 {% if own_dicc_exists %}
-                <a href="/detection/training/remove_dicc" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quieres borrar tu diccionario de datos?')">
+                <a href="/training/remove_diccs" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quieres borrar tu diccionario de datos?')">
 					Borrar tu diccionario de datos
 				</a>
+                <hr>
+                <h2 style="color: #f66151">Diccionarios entrenados</h2>
+				<table id="user_diccs_table" class="table table-striped table-bordered display">
+					<thead>
+						<tr>
+							<th>Dispositivo asociado al diccionario</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Router</td>
+							<td>
+                                <form action="/training/see_dicc/">
+                                    <input type="submit" name="router_" value="Ver diccionario">
+                                </form>
+							</td>
+						</tr>
+						<tr>
+							<td>Servidor web personal</td>
+							<td>
+								<form action="/training/see_dicc/">
+                                    <input type="submit" name="web_" value="Ver diccionario">
+                                </form>
+							</td>
+						</tr>
+						<tr>
+							<td>Cámara de seguridad</td>
+							<td>
+								<form action="/training/see_dicc/">
+                                    <input type="submit" name="camera_" value="Ver diccionario">
+                                </form>
+							</td>
+						</tr>
+						<tr>
+							<td>Impresora</td>
+							<td>
+								<form action="/training/see_dicc/">
+                                    <input type="submit" name="printer_" value="Ver diccionario">
+                                </form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
                 <hr>
                 {% endif %}
                 <p>LookUS posee diccionarios predeterminados para la detección de dispositivos.<br> Sin embargo, el usuario puede entrenar estos diccionarios añadiendo
@@ -57,7 +101,7 @@
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit">Enviar y entrenar</button>
+                    <button type="submit" onclick="return confirm('¿Está seguro de que quiere entrenar el diccionario? Este proceso puede demorarse')">Enviar y entrenar</button>
                 </form>
                 <hr>
                 <p>
@@ -73,9 +117,9 @@
                         "Tipo de dispositivo": []<br>
                     Los tipos de dispositivo a añadir son "Paǵina web personal", "Router", "Impresora" y "Cámara"<br>
 
-                    Pulsa <a href="/detection/training/json_example">aquí</a> para descargar un ejemplo de cómo sería el formato adecuado para subir el archivo .json.
+                    Pulsa <a href="/training/json_example">aquí</a> para descargar un ejemplo de cómo sería el formato adecuado para subir el archivo .json.
                 </strong>
-                <form method="post" enctype="multipart/form-data" action="/detection/training_with_file/">
+                <form method="post" enctype="multipart/form-data" action="/training/training_with_file/">
                     {% csrf_token %}
                     <input type="file" name="training_file">
                     <button type="submit" onclick="return confirm('¿Está seguro de que quiere entrenar el diccionario con este archivo? Este proceso puede demorarse')">

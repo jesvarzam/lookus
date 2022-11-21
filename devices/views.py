@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from detection.utils import checkRangeFormat, checkSingleFormat, get_single_format
 from detection.models import Device
-from adminpanel.views import devices as devices_admin
+from adminpanel.views import devices as devices_admin, user_details
 from authentication.views import *
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -89,7 +89,7 @@ def list_devices(request):
     filter = False
     if len(request.GET) > 0 and len(devices) == 0: filter = True
     own_dicc_exists = False
-    if os.path.exists('detection/diccs/' + str(request.user.username) + str(request.user.id)): own_dicc_exists = True
+    if os.path.exists('training/diccs/' + str(request.user.username) + str(request.user.id)): own_dicc_exists = True
     return render(request, 'list_devices.html', {'devices': devices, 'own_dicc_exists': own_dicc_exists, 'filter': filter})
 
 
@@ -116,7 +116,7 @@ def remove(request, device_id):
     messages.success(request, 'Dispositivo borrado correctamente')
 
     if request.user.is_staff and request.user.id != device.user.id:
-        return redirect(devices_admin)
+        return redirect(user_details, device.user.id)
     return redirect(list_devices)
 
 

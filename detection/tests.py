@@ -8,13 +8,17 @@ class DetectionTestCase(TestCase):
     def setUp(self) -> None:
         User.objects.create_user(username='testinguser', password='testinguser123')
         self.client.post('/authentication/sign_in/', {'username': 'testinguser', 'password': 'testinguser123'}, follow=True)
-        response = self.client.post('/devices/add/', {'device_name': '127.0.0.1'}, follow=True)
-        self.assertEquals(response.status_code, 200)
-        self.assertTrue('127.0.0.1' in response.content.decode('utf-8'))
-    
+        response = self.client.post('/devices/add/', {'device_name': '127.0.0.1'}, follow=True)    
 
     def tearDown(self) -> None:
         return super().tearDown()
+
+    def test_should_access_detections_view(self):
+        response = self.client.post('/authentication/sign_up/', {'first_name': 'Testing', 'last_name' : 'User',
+                        'username': 'anotheruser', 'password1': 'testingpass123', 'password2': 'testingpass123'}, follow=True)
+        response = self.client.get('/detection/list/', follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.wsgi_request.path, '/detection/list/')
     
 
     def test_should_detect_added_device(self):
@@ -46,3 +50,20 @@ class DetectionTestCase(TestCase):
         response = self.client.get('/detection/results/{}/'.format(device_id), follow=True)
         self.assertEquals(response.status_code, 200)
         self.assertTrue('127.0.0.1' in response.content.decode('utf-8'))
+
+    
+    def test_should_export_report_to_pdf(self):
+        device_id = Device.objects.get(name='127.0.0.1').id
+        self.client.post('/detection/detect/{}/'.format(device_id), follow=True)
+        response = self.client.get('/detection/pdf/{}/'.format(device_id), follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.wsgi_request.path, '/detection/pdf/{}/'.format(device_id))
+
+    
+    def test_should_remove_detection(self):
+        device_id = Device.objects.get(name='127.0.0.1').id
+        response = self.client.post('/detection/detect/{}/'.format(device_id), follow=True)
+        response = self.client.post('/detection/remove/{}/'.format(device_id), follow=True)
+        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.wsgi_request.path, '/detection/list/')
+        self.assertTrue('127.0.0.1' not in response.content.decode('utf-8'))
