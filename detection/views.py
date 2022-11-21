@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import FileResponse, Http404
 from django.http.response import HttpResponse, HttpResponseForbidden, HttpResponseNotFound
-from .utils import single_device_detection, create_table_html, create_table_html_for_range, range_device_detection, train_devices
+from .utils import single_device_detection, create_table_html, create_table_html_for_range, range_device_detection
 from .models import Device, Detection
 from authentication.views import *
-from devices.views import checkFormats, list_devices
+from devices.views import list_devices
 from django.contrib import messages
 import os, pdfkit
 from adminpanel.views import user_details

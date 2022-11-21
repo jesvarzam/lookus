@@ -8,7 +8,7 @@ class DetectionTestCase(TestCase):
     def setUp(self) -> None:
         User.objects.create_user(username='testinguser', password='testinguser123')
         self.client.post('/authentication/sign_in/', {'username': 'testinguser', 'password': 'testinguser123'}, follow=True)
-        response = self.client.post('/devices/add/', {'device_name': '127.0.0.1'}, follow=True)    
+        self.client.post('/devices/add/', {'device_name': '127.0.0.1'}, follow=True)    
 
     def tearDown(self) -> None:
         return super().tearDown()

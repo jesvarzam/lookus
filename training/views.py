@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from django.http import FileResponse, Http404
-from django.http.response import HttpResponse, HttpResponseForbidden, HttpResponseNotFound
+from django.http import FileResponse
+from django.http.response import HttpResponse
 from detection.utils import train_devices
 from devices.views import checkFormats
+from authentication.views import sign_in
 from django.contrib import messages
 from .forms import TrainingForm
 import os, json, shutil
