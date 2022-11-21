@@ -87,7 +87,7 @@ def detect(request, device_id):
         http_info = 'El dispositivo no tiene un servidor HTTP, por lo que no se ha podido obtener información'
 
         use_own_dicc = request.POST.get("own_dicc", None)=="own_dicc_true"
-        dictionary_path_exists = "detection/diccs/" + str(request.user.username) + str(request.user.id)
+        dictionary_path_exists = "training/diccs/" + str(request.user.username) + str(request.user.id)
         if use_own_dicc and not os.path.exists(dictionary_path_exists):
             messages.error(request, 'No tienes un diccionario propio creado. Pulsa en el menú "Entrenar diccionario de datos" situado a la izquierda para añadirlo')
             return redirect(list_devices)
