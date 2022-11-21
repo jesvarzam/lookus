@@ -27,15 +27,15 @@ def return_response(device):
     whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL).stdout.decode('utf-8')
     whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
     while has_redirect(whatweb, http_device):
-        print("ANTES" + http_device)
         http_device = follow_redirect(whatweb, http_device)
         whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL).stdout.decode('utf-8')
         whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
-        print("DESPUES" + http_device)
     try:
         response = requests.get(http_device, verify=False, timeout=10).text.lower()
     except:
         response = ''
+    whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL).stdout.decode('utf-8')
+    whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb)
 
     full_response = response + whatweb
     return ['\n'.join(set(full_response.split('\n'))), response, whatweb]
