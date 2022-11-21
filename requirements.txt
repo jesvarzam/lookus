@@ -1,7 +1,7 @@
-validators==0.14.2
+validators
 django
-ldap3==2.8.1
-requests==2.20.1
+ldap3
+requests
 pdfkit
 python-nmap
 tzdata
