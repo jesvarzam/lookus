@@ -41,12 +41,12 @@ def return_response(device):
 def train_devices(devices, user):
 
     folder = str(user.username) + str(user.id)
-    if not os.path.exists('detection/diccs/' + folder):
-        os.mkdir('detection/diccs/' + folder)
-        os.system('cp detection/diccs/*_dicc.txt detection/diccs/' + folder)
+    if not os.path.exists('training/diccs/' + folder):
+        os.mkdir('training/diccs/' + folder)
+        os.system('cp training/diccs/*_dicc.txt training/diccs/' + folder)
     
     for d in devices:
-        f = open('detection/diccs/' + folder + '/' + d, 'a')
+        f = open('training/diccs/' + folder + '/' + d, 'a')
 
         for device in devices[d]:
             device = device.strip()
@@ -188,17 +188,17 @@ def check_keywords(possible_devices, response):
 
     for keyword in PRINTER_KEYWORDS:
         if keyword in response:
-            print('Keyword de impresora encontrada: ' + keyword)
+            # print('Keyword de impresora encontrada: ' + keyword)
             possible_devices['Impresora'] += 3
     
     for keyword in ROUTER_KEYWORDS:
         if keyword in response:
-            print('Keyword de router encontrada: ' + keyword)
+            # print('Keyword de router encontrada: ' + keyword)
             possible_devices['Router'] += 3
     
     for keyword in CAMERA_KEYWORDS:
         if keyword in response:
-            print('Keyword de cámara encontrada: ' + keyword)
+            # print('Keyword de cámara encontrada: ' + keyword)
             possible_devices['Cámara'] += 3
 
     return possible_devices
@@ -210,28 +210,28 @@ def analyze_response(possible_devices, response, user, use_own_dicc):
     else: f = open('detection/diccs/web_dicc.txt')
     for line in f:
         if line.strip() in response and line.strip() not in WHITELIST:
-            print('Palabra de web encontrada: ' + line.strip())
+            # print('Palabra de web encontrada: ' + line.strip())
             possible_devices['Página web personal'] += 1
     
     if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/router_dicc.txt')
     else: f = open('detection/diccs/router_dicc.txt')
     for line in f:
         if line.strip() in response and line.strip() not in WHITELIST:
-            print('Palabra de router encontrada: ' + line.strip())
+            # print('Palabra de router encontrada: ' + line.strip())
             possible_devices['Router'] += 1
     
     if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/printer_dicc.txt')
     else: f = open('detection/diccs/printer_dicc.txt')
     for line in f:
         if line.strip() in response and line.strip() not in WHITELIST:
-            print('Palabra de impresora encontrada: ' + line.strip())
+            # print('Palabra de impresora encontrada: ' + line.strip())
             possible_devices['Impresora'] += 1
 
     if use_own_dicc: f = open('detection/diccs/' + str(user.username) + str(user.id) + '/camera_dicc.txt')
     else: f = open('detection/diccs/camera_dicc.txt')
     for line in f:
         if line.strip() in response and line.strip() not in WHITELIST:
-            print('Palabra de cámara encontrada: ' + line.strip())
+            # print('Palabra de cámara encontrada: ' + line.strip())
             possible_devices['Cámara'] += 1
 
     return possible_devices
@@ -430,7 +430,7 @@ def range_device_detection(range_device, user, use_own_dicc):
     for device in ipaddress.IPv4Network(range_device.name):
 
         device = str(device)
-
+        print("DETECTANDO {}".format(device))
         detection = {}
         detection['Device'] = device
 
@@ -440,19 +440,22 @@ def range_device_detection(range_device, user, use_own_dicc):
             device_name_port_scan = getIP(device)
 
         total_open_ports = []
-
+        print("ESCANENANDO PUERTOS")
         nm = nmap.PortScanner()
         port_scan = nm.scan(device_name_port_scan, arguments='-p- --open -sS --min-rate 5000 -n -Pn')['scan']
         if device_name_port_scan in port_scan.keys():
             total_open_ports = [*port_scan[device_name_port_scan]['tcp'].keys()]
-
+        print("ESCANEO DE PUERTOS FINALIZADO")
         if len(total_open_ports) > 0:
+            print("OBTENIENDO RESPUESTA HTTP")
             full_response_list = return_response(device)
+            print("RESPUESTA HTTP OBTENIDA")
             full_response = full_response_list[0]
             response = full_response_list[1]
             whatweb = full_response_list[2]
 
             if full_response!='':
+                print("CALCULANDO PROBABILIDADES CON RESPUESTA")
                 probabilities = detectDevice(total_open_ports, full_response, user, use_own_dicc)
                 if sum(probabilities.values()) == 0:
                     factor = 0.0
@@ -466,6 +469,7 @@ def range_device_detection(range_device, user, use_own_dicc):
                 detection['Whatweb'] = whatweb
             
             else:
+                print("CALCULANDO PROBABILIDADES SIN RESPUESTA")
                 probabilities = detectPorts(total_open_ports)
                 if sum(probabilities.values()) == 0:
                     factor = 0.0
@@ -479,6 +483,8 @@ def range_device_detection(range_device, user, use_own_dicc):
         else: 
             detection['No open ports'] = 'No se han detectado puertos abiertos'
             detection['Device type'] = 'Desconocido'
+        
+        print("DISPOSITIVO {} DETECTADO".format(device))
 
         res.append(detection)
     

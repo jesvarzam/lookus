@@ -2,12 +2,11 @@ from django.shortcuts import render, redirect
 from django.http import FileResponse, Http404
 from django.http.response import HttpResponse, HttpResponseForbidden, HttpResponseNotFound
 from .utils import single_device_detection, create_table_html, create_table_html_for_range, range_device_detection, train_devices
-from .forms import TrainingForm
 from .models import Device, Detection
 from authentication.views import *
 from devices.views import checkFormats, list_devices
 from django.contrib import messages
-import os, pdfkit, json, shutil
+import os, pdfkit
 
 
 def list_detections(request):
@@ -128,13 +127,16 @@ def detect(request, device_id):
         # Detección de dispositivo rango empieza
         else:
             res = range_device_detection(device_to_detect, request.user, request.POST.get("own_dicc", None)=="own_dicc_true")
+            print("DETECCIÓN FINALIZADA")
             detection = Detection.objects.create(device=device_to_detect, device_type='Rango de red', open_ports='N/A')
             detection.save()
             messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))
             device_to_detect.detected = True
             device_to_detect.save()
 
+            print("CREANDO REPORTE")
             create_table_html_for_range(res, device_to_detect.name, detection)
+            print("REPORTE CREADO")
             return redirect(list_devices)
         # Detección de dispositivo rango acaba
 
@@ -159,86 +161,3 @@ def pdf(request, detection_id):
         return FileResponse(open(pdf_path, 'rb'), content_type='application/pdf')
     except FileNotFoundError:
         raise Http404()
-
-    
-def training(request):
-
-    if not request.user.is_authenticated: return redirect(sign_in)
-
-    if request.method == 'POST':
-        form = TrainingForm(request.POST)
-        if form.is_valid():
-
-            devices = {}
-            
-            web_servers = form.cleaned_data['web_servers'].strip().split(',')
-            routers = form.cleaned_data['routers'].strip().split(',')
-            printers = form.cleaned_data['printers'].strip().split(',')
-            cameras = form.cleaned_data['cameras'].strip().split(',')
-
-            devices['web_dicc.txt'] = web_servers
-            devices['router_dicc.txt'] = routers
-            devices['printer_dicc.txt'] = printers
-            devices['camera_dicc.txt'] = cameras
-
-            train_devices(devices, request.user)
-
-            messages.success(request, 'Diccionario de datos entrenado correctamente')
-            return redirect(training)
-    
-        else:
-            form = TrainingForm()
-    
-    own_dicc_exists = False
-    if os.path.exists('detection/diccs/' + str(request.user.username)+ str(request.user.id)): own_dicc_exists = True
-    return render(request, 'training.html', {'own_dicc_exists': own_dicc_exists, 'form': TrainingForm()})
-
-
-def training_with_file(request):
-    if not request.user.is_authenticated: return redirect(sign_in)
-    
-    if request.method == 'POST' and request.FILES['training_file']:
-        if os.path.splitext(str(request.FILES['training_file']))[1] != '.json':
-            messages.error(request, """Extensión de archivo no permitida, recuerda que solo se pueden subir archivos con extensión .json""")
-            return redirect(training)
-            
-        devices_json = json.loads(request.FILES['training_file'].read().decode())
-
-        for k in devices_json:
-            devices = devices_json[k]
-        
-            if (not checkFormats(devices) and len(devices) > 0) or k not in ['Página web personal', 'Router', 'Impresora', 'Cámara']:
-                messages.error(request, """El archivo contiene algún dispositivo en formato incorrecto. 
-                Por favor, comprueba que el formato de todos los dispositivos es correcto y vuelve a intentarlo.""")
-                return redirect(training)
-        
-        devices = {}
-        devices['web_dicc.txt'] = devices_json['Página web personal']
-        devices['router_dicc.txt'] = devices_json['Router']
-        devices['printer_dicc.txt'] = devices_json['Impresora']
-        devices['camera_dicc.txt'] = devices_json['Cámara']
-
-        train_devices(devices, request.user)
-        
-        messages.success(request, 'Modelo de datos entrenado correctamente')
-        return redirect(training)
-    else:
-        return redirect(training)
-
-    
-def json_example(request):
-    json_path = 'detection/templates/example.json'
-    response = HttpResponse(open(json_path, 'rb'), content_type='application/json')
-    response['Content-Disposition'] = "attachment; filename=%s" % 'example.json'
-    return response
-
-
-def remove_dicc(request):
-    if not request.user.is_authenticated: return redirect(sign_in)
-    dicc_path = 'detection/diccs/' + str(request.user.username) + str(request.user.id)
-    if not os.path.exists(dicc_path):
-        messages.error(request, 'No tienes ningún diccionario de datos añadido, completa el formulario situado en esta página para crear uno')
-        return redirect(training)
-    shutil.rmtree(dicc_path)
-    messages.success(request, 'Diccionario de datos eliminado correctamente')
-    return redirect(training)

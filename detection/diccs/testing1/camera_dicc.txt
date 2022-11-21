@@ -1,0 +1,11 @@
+camera
+cámara
+security
+seguridad
+login
+acceder
+iniciar sesión
+username
+password
+usuario
+contraseña

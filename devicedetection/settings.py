@@ -44,14 +44,16 @@ INSTALLED_APPS = [
     'detection',
     'authentication',
     'devices',
-    'adminpanel'
+    'adminpanel',
+    'training'
 ]
 
 MODULES = [
     'authentication',
     'detection',
     'devices',
-    'adminpanel'
+    'adminpanel',
+    'training'
 ]
 
 MIDDLEWARE = [

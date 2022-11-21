@@ -57,7 +57,7 @@
             {% endif %}
             <li class="colorlib-active"><a href="/devices/list">Dispositivos</a></li>
             <li><a href="/detection/list">Detecciones</a></li>
-			<li><a href="/detection/training">Entrenar diccionario de datos</a></li>
+			<li><a href="/training">Entrenar diccionario de datos</a></li>
 			<li><a href="/authentication/profile">Mi perfil</a></li>
             <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
             </ul>
@@ -137,7 +137,7 @@
 								<form id="detection_form" method="post" action="/detection/detect/{{device.id}}/">
 									{% csrf_token %}
 									{% if device.format == 'Rango' %}
-									<a href="#" onclick="if (confirm('¿Está seguro de que quiere detectar este rango de red?\n\nNOTA: en ocasiones este proceso puede demorarse un poco')) {this.parentNode.submit();}">
+									<a href="#" onclick="if (confirm('¿Está seguro de que quiere detectar este rango de red?\n\nNOTA: los rangos de red contienen múltiples dispositivos, \npor lo que  este proceso puede demorarse más de lo normal')) {this.parentNode.submit();}">
 										Detectar dispositivo
 									</a>
 									{% else %}

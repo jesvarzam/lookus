@@ -22,7 +22,7 @@
             {% endif %}
             <li><a href="/devices/list">Dispositivos</a></li>
             <li><a href="/detection/list">Detecciones</a></li>
-            <li class="colorlib-active"><a href="/detection/training">Entrenar diccionario de datos</a></li>
+            <li class="colorlib-active"><a href="/training">Entrenar diccionario de datos</a></li>
             <li><a href="/authentication/profile">Mi perfil</a></li>
             <li><a href="/authentication/log_out">Cerrar sesión como {{user.username}}</a></li>
             </ul>
@@ -45,7 +45,7 @@
 					{% endfor %}
 				{% endif %}
                 {% if own_dicc_exists %}
-                <a href="/detection/training/remove_dicc" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quieres borrar tu diccionario de datos?')">
+                <a href="/training/remove_dicc" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quieres borrar tu diccionario de datos?')">
 					Borrar tu diccionario de datos
 				</a>
                 <hr>
@@ -57,7 +57,7 @@
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit">Enviar y entrenar</button>
+                    <button type="submit" onclick="return confirm('¿Está seguro de que quiere entrenar el diccionario? Este proceso puede demorarse')">Enviar y entrenar</button>
                 </form>
                 <hr>
                 <p>
@@ -73,9 +73,9 @@
                         "Tipo de dispositivo": []<br>
                     Los tipos de dispositivo a añadir son "Paǵina web personal", "Router", "Impresora" y "Cámara"<br>
 
-                    Pulsa <a href="/detection/training/json_example">aquí</a> para descargar un ejemplo de cómo sería el formato adecuado para subir el archivo .json.
+                    Pulsa <a href="/training/json_example">aquí</a> para descargar un ejemplo de cómo sería el formato adecuado para subir el archivo .json.
                 </strong>
-                <form method="post" enctype="multipart/form-data" action="/detection/training_with_file/">
+                <form method="post" enctype="multipart/form-data" action="/training/training_with_file/">
                     {% csrf_token %}
                     <input type="file" name="training_file">
                     <button type="submit" onclick="return confirm('¿Está seguro de que quiere entrenar el diccionario con este archivo? Este proceso puede demorarse')">

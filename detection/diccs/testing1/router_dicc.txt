@@ -1,0 +1,266 @@
+login
+username
+password
+usuario
+contraseña
+iniciar sesión
+admin
+movistar
+vodafone
+orange
+yoigo
+reset
+
+	x[(((len + 64) >>> 9) << 4) + 14] = len;
+<head>
+</div><!--layout end-->
+			<div class="top_rbox toptitle">base</div>
+	return md5_cmn(b ^ c ^ d, a, b, x, s, t);
+	return array(a, b, c, d);
+		c = md5_ii(c, d, a, b, x[i+ 2], 15, 718787259);
+		a = md5_ii(a, b, c, d, x[i+12], 6 , 1700485571);
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <!--top end-->
+		d = md5_hh(d, a, b, c, x[i+ 8], 11, -2022574463);
+function uiapply()
+					hiddensubmit.setattribute("class", "txtbox gray");
+					hiddensubmit.setattribute("onblur", "changetypetotext(this);");
+function safe_add(x, y) {
+<html xmlns="http://www.w3.org/1999/xhtml">
+        <div class="logo"></div>
+					hiddensubmit.setattribute("id", "syspasswd_1");
+					document.getelementbyid("syspasswd_1").value = "";
+		b = md5_gg(b, c, d, a, x[i+ 0], 20, -373897302);
+		d = md5_hh(d, a, b, c, x[i+12], 11, -421815835);
+    <div id="pageloading">
+	var d = 271733878;
+    <div class="layout">
+				document.getelementbyid("passwordinput").appendchild(hiddensubmit);
+    <!--loading-->
+	for(var i = 0; i < str.length * chrsz; i += chrsz) {
+	footer(menutype);
+					document.getelementbyid("leaveblur").value = "1";
+		var oldb = b;
+<script>
+	for(var i = 0; i < binarray.length * 4; i++) {
+		}
+			<input type="hidden" name="submitvalue" id="submitvalue">
+		a = md5_gg(a, b, c, d, x[i+ 5], 5 , -701558691);
+		a = md5_hh(a, b, c, d, x[i+ 5], 4 , -378558);
+function binl2hex(binarray) {
+		d = md5_ff(d, a, b, c, x[i+ 9], 12, -1958414417);
+					hiddensubmit.setattribute("onfocus", "changetypetopassword(this);");
+		b = md5_gg(b, c, d, a, x[i+12], 20, -1926607734);
+        </div>
+	return str;
+		{
+		str += hex_tab.charat((binarray[i>>2] >> ((i%4)*8+4)) & 0xf) + hex_tab.charat((binarray[i>>2] >> ((i%4)*8 )) & 0xf);
+					{
+		d = md5_hh(d, a, b, c, x[i+ 0], 11, -358537222);
+		b = md5_hh(b, c, d, a, x[i+ 6], 23, 76029189);
+		b = md5_hh(b, c, d, a, x[i+14], 23, -35309556);
+			<input type="hidden" name="sessionkey" id="sessionkey" value=""/>
+	var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+		if(leaveblurvalue == "1")
+	<div class="topborder">
+    <!--main end-->
+function core_md5(x, len) {
+        <div id="loadingimg"><img src="/html/mhs/images/loading.gif" width="102" height="116" /></div>
+ï»¿
+			return true;
+	</div>
+</html>
+	</form>
+		b = md5_ff(b, c, d, a, x[i+ 7], 22, -45705983);
+		a = md5_gg(a, b, c, d, x[i+ 9], 5 , 568446438);
+  	'beforesend': function(xhr) {
+function md5_hh(a, b, c, d, x, s, t) {
+	<div class="mainborder">
+			passwd = document.getelementbyid("syspasswd_1").value;
+			<script type="text/javascript">
+	return (num << cnt) | (num >>> (32 - cnt));
+<script type="text/javascript" src="/html/mhs/js/apis/jquery.utils.homestation.min.js"></script>
+<script type="text/javascript" src="/html/mhs/js/languages.js"></script>
+  });  
+				if(isie)
+		a = md5_ii(a, b, c, d, x[i+ 0], 6 , -198630844);
+	var bin = array();
+    
+	var b = -271733879;
+function hex_md5(s){
+		b = md5_ff(b, c, d, a, x[i+15], 22, 1236535329);
+				else
+		d = md5_hh(d, a, b, c, x[i+ 4], 11, 1272893353);
+		a = md5_ii(a, b, c, d, x[i+ 8], 6 , 1873313359);
+	<!--wrapper&wrapper2end-->
+					for(i=0; i<object.value.length; i++)
+		b = safe_add(b, oldb);
+function md5_cmn(q, a, b, x, s, t) {
+		d = md5_ii(d, a, b, c, x[i+ 7], 10, 1126891415);
+		a = md5_hh(a, b, c, d, x[i+ 9], 4 , -640364487);
+			alert( "password is wrong!" );
+		d = md5_ff(d, a, b, c, x[i+13], 12, -40341101);
+	var mask = (1 << chrsz) - 1;
+		a = md5_ff(a, b, c, d, x[i+ 4], 7 , -176418897);
+		else
+		if ( passwd == "" || passwd.length > 64 )
+					object.type='password';
+	title(menutype);
+					var bulletstring = "";
+		c = md5_hh(c, d, a, b, x[i+ 3], 16, -722521979);
+		xhr.setrequestheader("if-modified-since", "0");
+            <div class="sampleimg"></div>
+			document.getelementbyid("syspasswd").value = hex_md5(passwd+":"+sid);
+	login_description(menutype);
+		c = md5_ii(c, d, a, b, x[i+14], 15, -1416354905);
+	var c = -1732584194;
+		c = md5_ff(c, d, a, b, x[i+10], 17, -42063);
+	<div class="topborder2">
+					document.getelementbyid("syspasswd").value = object.value;
+					hiddensubmit.setattribute("type", "text");
+function str2binl(str) {
+		d = md5_gg(d, a, b, c, x[i+ 6], 9 , -1069501632);
+				function changetypetotext(object)
+		xhr.setrequestheader("pragma", "no-cache");
+ </div></div>
+		xhr.setrequestheader("expires", "0");
+function md5_gg(a, b, c, d, x, s, t) {
+			return false;
+				}
+		c = md5_hh(c, d, a, b, x[i+15], 16, 530742520);
+		c = md5_gg(c, d, a, b, x[i+ 3], 14, -187363961);
+		b = md5_ii(b, c, d, a, x[i+ 1], 21, -2054922799);
+            <li class="first">
+				var hiddensubmit = document.createelement("input");
+					document.getelementbyid("syspasswd_1").value = bulletstring;
+	x[len >> 5] |= 0x80 << ((len) % 32);
+		a = md5_ff(a, b, c, d, x[i+ 8], 7 , 1770035416);
+	var str = "";
+function md5_ff(a, b, c, d, x, s, t) {
+		c = md5_hh(c, d, a, b, x[i+11], 16, 1839030562);
+<!doctype html public "-//w3c//dtd xhtml 1.0 transitional//en" "http://www.w3.org/tr/xhtml1/dtd/xhtml1-transitional.dtd">
+		a = safe_add(a, olda);
+				function changetypetopassword(object)
+		d = md5_ii(d, a, b, c, x[i+11], 10, -1120210379);
+		c = md5_ff(c, d, a, b, x[i+ 2], 17, 606105819);
+					object.type='text';
+    <div class="wrapper">
+				var isie = navigator.useragent.search("msie") > -1;
+	return md5_cmn((b & d) | (c & (~d)), a, b, x, s, t);
+		d = md5_ii(d, a, b, c, x[i+15], 10, -30611744);
+	<div class="wrapper2">
+			<input name="syspasswd" id="syspasswd" type="password" style='display:none'/>
+		a = md5_ff(a, b, c, d, x[i+12], 7 , 1804603682);
+        <div class="artbox">
+	return md5_cmn(c ^ (b | (~d)), a, b, x, s, t);
+		b = md5_gg(b, c, d, a, x[i+ 8], 20, 1163531501);
+				{
+		d = safe_add(d, oldd);
+			var sid = '7572b187';
+            <li>2.0</li>
+		a = md5_gg(a, b, c, d, x[i+ 1], 5 , -165796510);
+<script type="text/javascript">
+		b = md5_ii(b, c, d, a, x[i+ 5], 21, -57434055);
+					hiddensubmit.setattribute("type", "password");
+		<div class="artbox" id="passwordinput">
+		</div>
+    <form id="login" name="passwarning"  method="post" onsubmit="uiapply();" autocomplete="off">
+var hexcase = 0;
+		c = md5_ff(c, d, a, b, x[i+ 6], 17, -1473231341);
+		a = md5_hh(a, b, c, d, x[i+13], 4 , 681279174);
+		d = md5_ii(d, a, b, c, x[i+ 3], 10, -1894986606);
+</head>
+<script type="text/javascript" src="/html/mhs/js/apis/jquery-1.6.3.min.js"></script>
+	return bin;
+http://192.168.1.1/cgi-bin/login_mhs.cgi [200 ok] country[reserved][zz], ip[192.168.1.1], jquery[1.6.3], object, passwordfield[fake_syspasswd,syspasswd], script[text/javascript], uncommonheaders[x-content-type-options,content-security-policy], x-frame-options[sameorigin], x-xss-protection[1]
+					}
+<!--footer start-->
+		d = md5_ff(d, a, b, c, x[i+ 5], 12, 1200080426);
+			document.getelementbyid("syspasswd_1").value = "";
+		c = md5_gg(c, d, a, b, x[i+15], 14, -660478335);
+            <span class="sub"><a href="#" onclick="window.alert('si has olvidado la nueva contraseã±a que estableciste para acceder a tu router deberã¡s realizar un reset de fã¡brica. pulsa durante al menos 10 segundos el botã³n reset situado en la parte trasera de tu equipo.')">â¿has olvidado tu contraseã±a?</a></span>
+		d = md5_gg(d, a, b, c, x[i+14], 9 , -1019803690);
+					hiddensubmit.setattribute("autocomplete", "new-password");
+		a = md5_hh(a, b, c, d, x[i+ 1], 4 , -1530992060);
+	return md5_cmn((b & c) | ((~b) & d), a, b, x, s, t);
+			<input name="leaveblur" id="leaveblur" type="hidden" value="0" />
+
+</script>
+            </li>
+        <div class="artbox black2">
+    <div class="footerborder">
+<link type="text/css" rel="stylesheet" href="/html/mhs/css/style.css" />
+<script type="text/javascript" src="/html/mhs/js/apis/jquery-ui-1.8rc2.custom.min.js"></script>
+		c = md5_gg(c, d, a, b, x[i+ 7], 14, 1735328473);
+	var hex_tab = hexcase ? "0123456789abcdef" : "0123456789abcdef";
+<script type="text/javascript" src="/html/mhs/js/commons.js"></script>
+    </div>
+		c = md5_hh(c, d, a, b, x[i+ 7], 16, -155497632);
+	return binl2hex(core_md5(str2binl(s), s.length * chrsz));
+function bit_rol(num, cnt) {
+					document.getelementbyid("leaveblur").value = "0";
+		a = md5_gg(a, b, c, d, x[i+13], 5 , -1444681467);
+		var passwd;
+		bin[i>>5] |= (str.charcodeat(i / chrsz) & mask) << (i%32);
+		var oldc = c;
+		b = md5_ff(b, c, d, a, x[i+11], 22, -1990404162);
+    <!--main-->
+	return (msw << 16) | (lsw & 0xffff);
+			<input name="submit" type="submit" id="submit" class="sendbtu" value="comprobar" />
+					hiddensubmit.setattribute("name", "syspasswd_1");
+		c = md5_ii(c, d, a, b, x[i+10], 15, -1051523);
+		c = md5_ii(c, d, a, b, x[i+ 6], 15, -1560198380);
+		a = md5_ii(a, b, c, d, x[i+ 4], 6 , -145523070);
+		//var session_key = document.getelementbyid("sessionkey").value;
+	var menutype = '0';
+        </ul>
+		c = md5_gg(c, d, a, b, x[i+11], 14, 643717713);
+	var a = 1732584193;
+ <!--footer end-->   
+		var oldd = d;
+		d = md5_gg(d, a, b, c, x[i+10], 9 , 38016083);
+	return safe_add(bit_rol(safe_add(safe_add(a, q), safe_add(x, t)), s),b);
+</body>
+		d = md5_ff(d, a, b, c, x[i+ 1], 12, -389564586);
+					hiddensubmit.setattribute("maxlength", "64");
+						bulletstring += "â¢";
+	}
+    <!--top-->
+		<div class="toptitle2">base</div>
+		var leaveblurvalue = document.getelementbyid("leaveblur").value;
+        <ul>
+			//document.getelementbyid("syspasswd").value = encode(session_key, passwd);
+function md5_ii(a, b, c, d, x, s, t) {
+		c = md5_ff(c, d, a, b, x[i+14], 17, -1502002290);
+	<!--stlye_mins end-->
+			<input name="fake_syspasswd" id="fake_syspasswd" type="password" value="" style='display:none' />
+</script> 
+		b = md5_ff(b, c, d, a, x[i+ 3], 22, -1044525330);
+			document.getelementbyid("leaveblur").value = "0";
+<script type="text/javascript" src="/html/mhs/js/main.js"></script>
+	for(var i = 0; i < x.length; i += 16) {
+			//session key
+		a = md5_ff(a, b, c, d, x[i+ 0], 7 , -680876936);
+		b = md5_gg(b, c, d, a, x[i+ 4], 20, -405537848);
+		b = md5_ii(b, c, d, a, x[i+13], 21, 1309151649);
+			passwd = document.getelementbyid("syspasswd").value;
+				
+	var lsw = (x & 0xffff) + (y & 0xffff);
+{
+			<div class="top_lbox logobox_in"><img src="/html/mhs/img/logo.png"/></div>
+		c = safe_add(c, oldc);
+}
+		//session key
+<body>
+			</script>
+		b = md5_ii(b, c, d, a, x[i+ 9], 21, -343485551);
+		xhr.setrequestheader("cache-control", "no-cache");
+<script type="text/javascript" src="/html/js/wizard/apis/encode.js"></script>
+		b = md5_hh(b, c, d, a, x[i+10], 23, -1094730640);
+var chrsz   = 8;
+	<!--stlye_mins-->
+		d = md5_gg(d, a, b, c, x[i+ 2], 9 , -51403784);
+		var olda = a;
+		b = md5_hh(b, c, d, a, x[i+ 2], 23, -995338651);
+$.ajaxsetup({
+			document.getelementbyid("submitvalue").value = "1";
