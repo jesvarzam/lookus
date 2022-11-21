@@ -70,7 +70,7 @@
             </nav>
             </aside>
 			<div id="colorlib-main">
-				<h1>Detalles del usuario {{user_details.username}}</h1>
+				<h1>Detalles del usuario {{user_d.username}}</h1>
 				{% if messages %}
 					{% for message in messages %}
 						{% if message.tags == 'success' %}
@@ -92,6 +92,9 @@
                 {% else %}
 				<br>
                 <h2 style="color: #f66151">Dispositivos añadidos por el usuario</h2>
+				<a href="/admin/remove_user_devices/{{ user_d.id }}/" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar todos los dispositivos?')">
+					Borrar todos los dispositivos
+				</a>
 				<strong>Buscar dispositivo por nombre: </strong>
                 <input type="text" id="search_device_name" onclick="searchDetectionByDeviceName()" placeholder="Introduce aquí el nombre del dispositivo"><br>
                 <table class="table table-striped table-bordered">
@@ -132,7 +135,7 @@
 					</tbody>
 				</table>
 				{% endif %}
-                <hr style="border: none">
+                <hr>
 				{% if not detections %}
 				<strong>
                     Este usuario no ha realizado ninguna detección de sus dispositivos añadidos.
@@ -140,6 +143,9 @@
                 {% else %}
 				<br>
 				<h2 style="color: #f66151">Detecciones realizadas por el usuario</h2>
+				<a href="/admin/remove_user_detections/{{ user_d.id }}/" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar todas las detecciones?')">
+					Borrar todas las detecciones
+				</a>
 				<strong>Buscar detección por nombre de dispositivo: </strong>
                 <input type="text" id="search_device_name" onclick="searchDetectionByDeviceName()" placeholder="Introduce aquí el nombre del dispositivo"><br>
                 <table id="detections_table" class="table table-striped table-bordered display">
@@ -170,9 +176,17 @@
 					</tbody>
 				</table>
 				{% endif %}
-
-				{% if own_dicc_exists %}
+				<hr>
+				{% if not own_dicc_exists %}
+				<strong>
+                    Este usuario no ha realizado ningún entrenamiento.
+                </strong>
+				{% else %}
 				<h2 style="color: #f66151">Diccionarios entrenados por el usuario</h2>
+				<a href="/admin/remove_diccs/{{ user_d.id }}/" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quieres borrar los diccionarios de datos?')">
+					Borrar diccionarios de datos
+				</a>
+                <hr>
 				<table id="user_diccs_table" class="table table-striped table-bordered display">
 					<thead>
 						<tr>
@@ -184,45 +198,33 @@
 						<tr>
 							<td>Router</td>
 							<td>
-								<a href="/training/see_dicc" nameclass="btn btn-primary">
-									Ver diccionario
-								</a>
-								<a href="/detection/remove/{{ detection.id }}" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar esta detección?')">
-									Eliminar
-								</a>
+								<form action="/admin/see_dicc/{{ user_d.id }}/">
+                                    <input type="submit" name="router_" value="Ver diccionario">
+                                </form>
 							</td>
 						</tr>
 						<tr>
 							<td>Servidor web personal</td>
 							<td>
-								<a href="/detection/results/{{ detection.id }}" class="btn btn-primary">
-									Ver diccionario
-								</a>
-								<a href="/detection/remove/{{ detection.id }}" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar esta detección?')">
-									Eliminar
-								</a>
+								<form action="/admin/see_dicc/{{ user_d.id }}/">
+                                    <input type="submit" name="web_" value="Ver diccionario">
+                                </form>
 							</td>
 						</tr>
 						<tr>
 							<td>Cámara de seguridad</td>
 							<td>
-								<a href="/detection/results/{{ detection.id }}" class="btn btn-primary">
-									Ver diccionario
-								</a>
-								<a href="/detection/remove/{{ detection.id }}" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar esta detección?')">
-									Eliminar
-								</a>
+								<form action="/admin/see_dicc/{{ user_d.id }}/">
+                                    <input type="submit" name="camera_" value="Ver diccionario">
+                                </form>
 							</td>
 						</tr>
 						<tr>
 							<td>Impresora</td>
 							<td>
-								<a href="/detection/results/{{ detection.id }}" class="btn btn-primary">
-									Ver diccionario
-								</a>
-								<a href="/detection/remove/{{ detection.id }}" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar esta detección?')">
-									Eliminar
-								</a>
+								<form action="/admin/see_dicc/{{ user_d.id }}/">
+                                    <input type="submit" name="printer_" value="Ver diccionario">
+                                </form>
 							</td>
 						</tr>
 					</tbody>

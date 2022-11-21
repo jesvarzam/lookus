@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseForbidden, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseNotFound, FileResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
 from devices.models import Device
 from authentication.views import sign_in
 from detection.models import Detection
-import os
+import os, shutil
 
 def adminpanel(request):
     if not request.user.is_authenticated: return redirect(sign_in)
@@ -23,13 +23,13 @@ def user_details(request, user_id):
     if not request.user.is_authenticated: return redirect(sign_in)
     elif not request.user.is_staff: return HttpResponseForbidden()
     try:
-        user_details = User.objects.get(id=user_id)
+        user_d = User.objects.get(id=user_id)
     except:
         return HttpResponseNotFound(HttpResponse('ERROR 404: No existe ningún usuario con ese id'))
     devices = Device.objects.filter(user__id=user_id)
     detections = Detection.objects.filter(device__user__id=user_id)
-    own_dicc_exists = os.path.exists('detection/diccs/' + str(user_details.username)+ str(user_id))
-    return render(request, 'user_details.html', {'user_details': user_details, 'devices': devices, 'detections': detections, 'own_dicc_exists': own_dicc_exists})
+    own_dicc_exists = os.path.exists('training/diccs/' + str(user_d.username)+ str(user_id))
+    return render(request, 'user_details.html', {'user_d': user_d, 'devices': devices, 'detections': detections, 'own_dicc_exists': own_dicc_exists})
 
 
 def remove_user(request, user_id):
@@ -84,6 +84,36 @@ def remove_all_devices(request):
     return redirect(devices)
     
 
+def remove_user_devices(request, user_id):
+    if not request.user.is_authenticated: return redirect(sign_in)
+    if not request.user.is_staff: return HttpResponseForbidden()
+    try:
+        user = User.objects.get(id=user_id)
+    except:
+        return HttpResponseNotFound(HttpResponse('ERROR 404: No existe ningún usuario con ese id'))
+
+    devices = Device.objects.filter(user__id=user_id)
+
+    for device in devices:
+        if device.detected:
+            html_path = 'detection/templates/reports/{}.html'.format(device.detection.id)
+            pdf_path = 'detection/templates/reports/{}.pdf'.format(device.detection.id)
+            temp_html_path = 'detection/templates/reports/{}pdf.html'.format(device.detection.id)
+    
+            if os.path.exists(html_path):
+                os.remove(html_path)
+            
+            if os.path.exists(pdf_path):
+                os.remove(pdf_path)
+            
+            if os.path.exists(temp_html_path):
+                os.remove(temp_html_path)
+        
+        device.delete()
+    
+    messages.success(request, 'Dispositivos borrados correctamente')
+    return redirect(user_details, user_id)
+
 def detections(request):
     if not request.user.is_authenticated: return redirect(sign_in)
     elif not request.user.is_staff: return HttpResponseForbidden()
@@ -127,6 +157,62 @@ def remove_all_detections(request):
     return redirect(detections)
 
 
-def view_user_dicc(request):
+def remove_user_detections(request, user_id):
     if not request.user.is_authenticated: return redirect(sign_in)
     if not request.user.is_staff: return HttpResponseForbidden()
+    try:
+        user = User.objects.get(id=user_id)
+    except:
+        return HttpResponseNotFound(HttpResponse('ERROR 404: No existe ningún usuario con ese id'))
+    detections = Detection.objects.filter(device__user__id=user_id)
+
+    for d in detections:
+        html_path = 'detection/templates/reports/{}.html'.format(d.id)
+        pdf_path = 'detection/templates/reports/{}.pdf'.format(d.id)
+        temp_html_path = 'detection/templates/reports/{}pdf.html'.format(d.id)
+    
+        if os.path.exists(html_path):
+            os.remove(html_path)
+        
+        if os.path.exists(pdf_path):
+            os.remove(pdf_path)
+        
+        if os.path.exists(temp_html_path):
+            os.remove(temp_html_path)
+        
+        device = Device.objects.get(detection=d.id)
+        device.detected = False
+        device.save()
+        d.delete()
+    
+    messages.success(request, 'Detecciones borradas correctamente')
+    return redirect(user_details, user_id)
+
+
+def see_dicc(request, user_id):
+    if not request.user.is_authenticated: return redirect(sign_in)
+    if not request.user.is_staff: return HttpResponseForbidden()
+    try:
+        user = User.objects.get(id=user_id)
+    except:
+        return HttpResponseNotFound(HttpResponse('ERROR 404: No existe ningún usuario con ese id'))
+    device_type = [key for key in request.GET][0]
+    dicc_path = 'training/diccs/' + str(user.username) + str(user.id) + '/' + device_type + 'dicc.txt'
+    return FileResponse(open(dicc_path, 'rb'), content_type='text/plain')
+
+
+def remove_diccs(request, user_id):
+    if not request.user.is_authenticated: return redirect(sign_in)
+    if not request.user.is_staff: return HttpResponseForbidden()
+    try:
+        user = User.objects.get(id=user_id)
+    except:
+        return HttpResponseNotFound(HttpResponse('ERROR 404: No existe ningún usuario con ese id'))
+    dicc_path = 'training/diccs/' + str(user.username) + str(user.id)
+    print(dicc_path)
+    if not os.path.exists(dicc_path):
+        messages.error(request, 'Este usuario no tiene un diccionario de datos añadido.')
+        return redirect(user_details, user.id)
+    shutil.rmtree(dicc_path)
+    messages.success(request, 'Diccionario de datos eliminado correctamente')
+    return redirect(user_details, user.id)

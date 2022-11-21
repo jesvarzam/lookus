@@ -7,6 +7,7 @@ from authentication.views import *
 from devices.views import checkFormats, list_devices
 from django.contrib import messages
 import os, pdfkit
+from adminpanel.views import user_details
 
 
 def list_detections(request):
@@ -47,6 +48,8 @@ def remove(request, detection_id):
     device.save()
 
     messages.success(request, 'Detección borrada satisfactoriamente')
+    if request.user.is_staff and request.user.id != device.user.id:
+        return redirect(user_details, device.user.id)
     return redirect(list_detections)
 
 
@@ -127,16 +130,13 @@ def detect(request, device_id):
         # Detección de dispositivo rango empieza
         else:
             res = range_device_detection(device_to_detect, request.user, request.POST.get("own_dicc", None)=="own_dicc_true")
-            print("DETECCIÓN FINALIZADA")
             detection = Detection.objects.create(device=device_to_detect, device_type='Rango de red', open_ports='N/A')
             detection.save()
             messages.success(request, 'El dispositivo {} se ha detectado correctamente'.format(device_to_detect.name))
             device_to_detect.detected = True
             device_to_detect.save()
 
-            print("CREANDO REPORTE")
             create_table_html_for_range(res, device_to_detect.name, detection)
-            print("REPORTE CREADO")
             return redirect(list_devices)
         # Detección de dispositivo rango acaba
 

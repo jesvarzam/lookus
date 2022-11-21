@@ -66,7 +66,7 @@ def training_with_file(request):
 
         train_devices(devices, request.user)
         
-        messages.success(request, 'Modelo de datos entrenado correctamente')
+        messages.success(request, 'Diccionario de datos entrenado correctamente')
         return redirect(training)
     else:
         return redirect(training)
@@ -79,7 +79,14 @@ def json_example(request):
     return response
 
 
-def remove_dicc(request):
+def see_dicc(request):
+    if not request.user.is_authenticated: return redirect(sign_in)
+    device_type = [key for key in request.GET][0]
+    dicc_path = 'training/diccs/' + str(request.user.username) + str(request.user.id) + '/' + device_type + 'dicc.txt'
+    return FileResponse(open(dicc_path, 'rb'), content_type='text/plain')
+
+
+def remove_diccs(request):
     if not request.user.is_authenticated: return redirect(sign_in)
     dicc_path = 'training/diccs/' + str(request.user.username) + str(request.user.id)
     if not os.path.exists(dicc_path):

@@ -93,6 +93,9 @@
                 <strong>No se han encontrado detecciones con ese filtro.</strong>
                 <p>Pulsa <a href="/admin/detections">aquí</a> para volver al listado de detecciones.</p>
                 {% else %}
+                <a href="/admin/detections/remove_all/" class="btn btn-danger" onclick="return confirm('¿Está seguro de que quiere borrar todas las detecciones?')">
+					Borrar todas las detecciones
+				</a>
                     <br>
                     <strong>Buscar detección por usuario: </strong>
                     <input type="text" style="display:inline" id="search_detection_username" onkeyup="searchingDetectionByUser()" placeholder="Introduce aquí el usuario">

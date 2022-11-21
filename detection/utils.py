@@ -43,7 +43,7 @@ def train_devices(devices, user):
     folder = str(user.username) + str(user.id)
     if not os.path.exists('training/diccs/' + folder):
         os.mkdir('training/diccs/' + folder)
-        os.system('cp training/diccs/*_dicc.txt training/diccs/' + folder)
+        os.system('cp detection/diccs/*_dicc.txt training/diccs/' + folder)
     
     for d in devices:
         f = open('training/diccs/' + folder + '/' + d, 'a')
@@ -430,7 +430,6 @@ def range_device_detection(range_device, user, use_own_dicc):
     for device in ipaddress.IPv4Network(range_device.name):
 
         device = str(device)
-        print("DETECTANDO {}".format(device))
         detection = {}
         detection['Device'] = device
 
@@ -440,22 +439,17 @@ def range_device_detection(range_device, user, use_own_dicc):
             device_name_port_scan = getIP(device)
 
         total_open_ports = []
-        print("ESCANENANDO PUERTOS")
         nm = nmap.PortScanner()
         port_scan = nm.scan(device_name_port_scan, arguments='-p- --open -sS --min-rate 5000 -n -Pn')['scan']
         if device_name_port_scan in port_scan.keys():
             total_open_ports = [*port_scan[device_name_port_scan]['tcp'].keys()]
-        print("ESCANEO DE PUERTOS FINALIZADO")
         if len(total_open_ports) > 0:
-            print("OBTENIENDO RESPUESTA HTTP")
             full_response_list = return_response(device)
-            print("RESPUESTA HTTP OBTENIDA")
             full_response = full_response_list[0]
             response = full_response_list[1]
             whatweb = full_response_list[2]
 
             if full_response!='':
-                print("CALCULANDO PROBABILIDADES CON RESPUESTA")
                 probabilities = detectDevice(total_open_ports, full_response, user, use_own_dicc)
                 if sum(probabilities.values()) == 0:
                     factor = 0.0
@@ -469,7 +463,6 @@ def range_device_detection(range_device, user, use_own_dicc):
                 detection['Whatweb'] = whatweb
             
             else:
-                print("CALCULANDO PROBABILIDADES SIN RESPUESTA")
                 probabilities = detectPorts(total_open_ports)
                 if sum(probabilities.values()) == 0:
                     factor = 0.0
@@ -484,7 +477,6 @@ def range_device_detection(range_device, user, use_own_dicc):
             detection['No open ports'] = 'No se han detectado puertos abiertos'
             detection['Device type'] = 'Desconocido'
         
-        print("DISPOSITIVO {} DETECTADO".format(device))
 
         res.append(detection)
     
