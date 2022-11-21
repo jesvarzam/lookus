@@ -36,8 +36,6 @@ def return_response(device):
         response = requests.get(http_device, verify=False, timeout=10).text.lower()
     except:
         response = ''
-    whatweb = subprocess.run(['whatweb', http_device], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL).stdout.decode('utf-8')
-    whatweb = re.sub('\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]', '', whatweb).lower()
 
     full_response = response + whatweb
     return ['\n'.join(set(full_response.split('\n'))), response, whatweb]
